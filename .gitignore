@@ -1,0 +1,5 @@
+_saidas/*
+!_saidas/.gitkeep
+node_modules/
+tools/node_modules/
+*.bak

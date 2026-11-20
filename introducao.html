@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O que é o Prompt de Comando — a tela que espera um pedido | Guia CMD</title>
+<meta name="description" content="O que é o Prompt de Comando (cmd) do Windows, para quem nunca usou terminal: o prompt C:\Users\ana>, o que é um comando, a diferença para o PowerShell, e o primeiro pedido com echo.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>O que é o <span class="hl">Prompt de Comando</span></h1>
+
+<p class="intro">Antes de listar pastas ou copiar arquivos, vale entender <strong>o que é essa janela</strong> e o que significa aquela linha que termina em <code>&gt;</code>. Nesta aula você vê a ideia, lê o prompt e monta o primeiro pedido — ainda sem inventar a resposta do computador. As saídas reais entram depois da coleta, a partir de <code>_saidas-anon/</code>.</p>
+
+<div class="note">
+<strong>Você vai aprender</strong>
+<ul>
+  <li>O que é o <strong>Prompt de Comando</strong>, o <code>cmd.exe</code> que já vem no Windows.</li>
+  <li>O que é o <strong>prompt</strong> <code>C:\Users\ana&gt;</code> e o que cada pedaço dele quer dizer.</li>
+  <li>A diferença, em uma frase, entre o <code>cmd</code> e o PowerShell.</li>
+  <li>A rodar um comando: digitar e apertar <kbd>Enter</kbd>.</li>
+  <li>O <code>echo</code>, que escreve um texto na tela — o primeiro pedido deste guia.</li>
+</ul>
+</div>
+
+<p><strong>Placeholder:</strong> todas as saídas desta aula ainda estão marcadas como <strong>a coletar</strong>. Nada aqui foi inventado de memória. Quando a Mira liberar a versão anonimizada em <code>_saidas-anon/</code>, as caixas <code>pre.term</code> ganham a resposta verdadeira, colhida no <code>cmd</code> de um Windows em português, na pasta da usuária fictícia <code>ana</code>, no computador <code>NOTEBOOK</code>.</p>
+
+<hr>
+
+<h2>A ideia: um balcão de atendimento</h2>
+<p>Pense no balcão de uma repartição. O atendente fica parado, olhando para você, até você falar o que quer. Você faz o pedido, ele resolve, entrega a resposta e volta a olhar para você, pronto para o próximo pedido.</p>
+<p>O Prompt de Comando funciona igual. A linha que termina em <code>&gt;</code> é o atendente esperando: o <strong>prompt</strong>. Você digita o pedido (o <strong>comando</strong>), aperta <kbd>Enter</kbd>, ele mostra a resposta (a <strong>saída</strong>) e o prompt aparece de novo.</p>
+
+<div class="table-wrap">
+<table class="ref">
+<tr><th>No balcão</th><th>No Prompt de Comando</th></tr>
+<tr><td>O atendente esperando</td><td>O prompt <code>C:\Users\ana&gt;</code></td></tr>
+<tr><td>O seu pedido</td><td>O comando que você digita</td></tr>
+<tr><td>"Pode falar"</td><td>A tecla <kbd>Enter</kbd>, que entrega o pedido</td></tr>
+<tr><td>A resposta no papel</td><td>A saída que aparece embaixo do comando</td></tr>
+</table>
+</div>
+
+<h3>Lendo o prompt</h3>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana&gt; « a coletar: só o prompt, sem comando</pre>
+<dl class="anatomy">
+  <dt>C:</dt>
+  <dd>o disco em que você está. No Windows, o disco principal quase sempre se chama <code>C:</code>.</dd>
+  <dt>\Users\ana</dt>
+  <dd>a pasta atual. Neste guia, a pasta pessoal da usuária fictícia <code>ana</code>. No seu computador, o nome no meio será o seu.</dd>
+  <dt>&gt;</dt>
+  <dd>o sinal de que o <code>cmd</code> está esperando o próximo comando.</dd>
+</dl>
+
+<div class="note">
+<strong>cmd e PowerShell, em uma frase</strong>
+<p>Os dois são terminais do Windows. O <code>cmd</code> devolve <strong>texto</strong>: uma lista, uma mensagem, uma linha. O PowerShell devolve um <strong>objeto</strong> — uma ficha com várias informações. Este guia ensina só o Prompt de Comando. Se você também quer o PowerShell, há um guia irmão, mas aqui o foco é o <code>cmd</code>.</p>
+</div>
+
+<hr>
+
+<h2>1. O primeiro pedido: <code>echo</code></h2>
+<p>O <code>echo</code> pede ao computador que escreva um texto na tela. É o “olá” deste guia: simples, visível, e já ensina o ciclo digitar → <kbd>Enter</kbd> → ler a resposta.</p>
+
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana&gt; echo Ola, Ana
+« a coletar: saída real de echo Ola, Ana — não inventar</pre>
+<dl class="anatomy">
+  <dt>echo</dt>
+  <dd>o comando: “escreva isto na tela”.</dd>
+  <dt>Ola, Ana</dt>
+  <dd>o texto que você quer ver. Neste exemplo não usamos acento de propósito: a coleta ainda vai decidir como o <code>cmd</code> mostra caracteres especiais (a regra é rodar <code>chcp 65001</code> antes, ou converter na captura).</dd>
+</dl>
+
+<div class="tip">
+<strong>A coletar.</strong>
+<p>A linha com « é um recado do guia, não uma resposta do computador. A saída verdadeira só entra depois da coleta e da anonimização. Não complete esta caixa de memória.</p>
+</div>
+
+<hr>
+
+<h2>Formas diferentes de escrever na tela</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>echo texto</code></td><td>O jeito deste guia: pede ao <code>cmd</code> que escreva o texto e vá para a linha seguinte.</td></tr>
+<tr><td><code>echo.</code></td><td>Para pular uma linha em branco (o ponto encostado no <code>echo</code> é proposital). A saída real ainda está a coletar.</td></tr>
+<tr><td><code>echo off</code> / <code>echo on</code></td><td>Em arquivos <code>.bat</code>, para esconder ou mostrar os próprios comandos. Isso fica para a aula de arquivos de lote, no Nível 3.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario">
+<strong>Digitar o nome do comando errado</strong>
+<p>Se você escrever <code>eco Ola</code> (sem o “h”), o <code>cmd</code> responde com uma mensagem de erro. <strong>A mensagem real ainda está a coletar</strong> — não inventamos o texto e não traduzimos a frase do Windows. Quando ela chegar de <code>_saidas-anon/</code>, esta caixa mostra a mensagem linha por linha, em inglês ou em português, exatamente como o terminal escreveu, com a explicação em seguida.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana&gt; eco Ola
+« a coletar: mensagem de erro real de um comando inexistente — nunca inventar, nunca traduzir</pre>
+</div>
+
+<hr>
+
+<h2>Referência rápida</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td>A linha que termina em <code>&gt;</code></td><td>É o prompt: o <code>cmd</code> está esperando um comando. O meio dela é a pasta onde você está.</td></tr>
+<tr><td><code>echo texto</code></td><td>Escreve o texto na tela.</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>Entrega o pedido. A resposta aparece embaixo e o prompt volta.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Exercícios</h2>
+
+<div class="exercise">
+<h3>1. Complete o comando</h3>
+<p>Complete para escrever <code>Ola, Ana</code> na tela:</p>
+<div class="ex-code"><input data-answer="echo" aria-label="comando"> Ola, Ana</div>
+</div>
+
+<div class="exercise">
+<h3>2. O que é o prompt?</h3>
+<p>No prompt <code>C:\Users\ana&gt;</code>, qual é a pasta atual?</p>
+<div class="ex-code"><input data-answer="C:\Users\ana|C:\Users\ana\" aria-label="pasta"></div>
+</div>
+
+<div class="mc" data-answer="2">
+<p class="mc-q">3. O que é o Prompt de Comando?</p>
+<label><input type="radio" name="q3"> Um programa para editar fotos</label>
+<label><input type="radio" name="q3"> O terminal clássico do Windows, em que você pede coisas por escrito e lê a resposta em texto</label>
+<label><input type="radio" name="q3"> Um atalho do PowerShell, com o mesmo tipo de resposta</label>
+<label><input type="radio" name="q3"> Um site para aprender comandos, que roda no navegador</label>
+</div>
+
+<div class="mc" data-answer="1">
+<p class="mc-q">4. No prompt <code>C:\Users\ana&gt;</code>, o que o <code>&gt;</code> quer dizer?</p>
+<label><input type="radio" name="q4"> Que o <code>cmd</code> está esperando o próximo comando</label>
+<label><input type="radio" name="q4"> Que o último comando deu errado</label>
+<label><input type="radio" name="q4"> Que você está no PowerShell</label>
+<label><input type="radio" name="q4"> Que a pasta atual é a raiz do disco</label>
+</div>
+
+<div class="mc" data-answer="3">
+<p class="mc-q">5. Qual é o ciclo certo para rodar um comando?</p>
+<label><input type="radio" name="q5"> Só colar a saída, sem digitar nada</label>
+<label><input type="radio" name="q5"> Fechar a janela e abrir de novo</label>
+<label><input type="radio" name="q5"> Digitar o pedido, apertar <kbd>Enter</kbd> e ler o que aparece embaixo</label>
+<label><input type="radio" name="q5"> Apertar <kbd>Enter</kbd> antes de digitar</label>
+</div>
+
+<div class="trycmd" data-goal="src:\becho\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> peça ao Prompt de Comando que escreva <code>Ola, Ana</code> na tela, com o comando <code>echo</code>.</p>
+<pre class="script" data-file="comandos.bat">
+</pre>
+<pre class="solucao" data-file="comandos.bat">echo Ola, Ana
+</pre>
+</div>
+
+<hr>
+
+<h2>Resumo</h2>
+<ul>
+  <li>O Prompt de Comando (<code>cmd</code>) é o terminal clássico do Windows: você pede por escrito e lê a resposta em texto.</li>
+  <li>O prompt <code>C:\Users\ana&gt;</code> é o <code>cmd</code> esperando um comando; o meio dele é a pasta onde você está.</li>
+  <li>Digite o comando e aperte <kbd>Enter</kbd>: a resposta aparece embaixo e o prompt volta.</li>
+  <li><code>echo texto</code> escreve o texto na tela. É o primeiro pedido deste guia.</li>
+  <li>As saídas reais desta aula ainda estão <strong>a coletar</strong>. Nada foi inventado, e mensagem de erro não se traduz.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
