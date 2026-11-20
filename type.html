@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lendo Arquivos (type) — ver o conteúdo de um arquivo no Prompt | Guia CMD</title>
-<meta name="description" content="O comando type no Prompt de Comando: ler um arquivo de texto, ler um arquivo numa subpasta e os erros reais de arquivo inexistente, de pasta no lugar de arquivo e de caminho inexistente.">
+<meta name="description" content="O comando type no Prompt de Comando: ler um arquivo de texto, ler vários na mesma linha (com o nome de cada um na tela), ler um arquivo numa subpasta e os erros reais de arquivo inexistente, de pasta no lugar de arquivo e de caminho inexistente.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -24,6 +24,7 @@
 <ul>
 <li>O <code>type</code>, que mostra o conteúdo de um arquivo de texto.</li>
 <li>A ler um arquivo numa subpasta, com o caminho relativo, como <code>fotos\legenda.txt</code>.</li>
+<li>A ler vários arquivos na mesma linha, e o jeito como o <code>cmd</code> escreve o nome de cada um antes do conteúdo.</li>
 <li>Os erros reais de um arquivo que não existe, de apontar o <code>type</code> para uma pasta e de um caminho que não existe.</li>
 </ul></div>
 <p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
@@ -56,12 +57,35 @@ Fotos das férias (arquivos de exemplo).
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
+<h2>3. Vários arquivos na mesma linha</h2>
+<p>O <code>type</code> aceita mais de um arquivo no mesmo pedido. No laboratório, <code>type notas.txt relatorio.txt</code> mostrou os dois conteúdos, um depois do outro. Antes de cada arquivo, o Prompt escreveu o nome dele, neste padrão: uma linha em branco, o nome do arquivo e mais duas linhas em branco, e só então o conteúdo.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type notas.txt relatorio.txt
+
+notas.txt
+
+
+Lista de compras
+- pão
+- leite
+- café
+
+relatorio.txt
+
+
+Relatório da semana
+Tudo certo na pasta de teste do guia.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<div class="tip"><strong>Por que aparecem os nomes</strong>
+<p>Com um arquivo só, o <code>type</code> mostra direto o conteúdo: você já sabe o que pediu. Com dois ou mais, o Prompt marca de quem é cada bloco, escrevendo o nome do arquivo antes do texto. Sem isso, as linhas de <code>notas.txt</code> e de <code>relatorio.txt</code> se misturariam na tela. A recoleta desta aula mostrou só o que apareceu no Prompt; não há, nesta captura, um redirecionamento com <code>&gt;</code>, então não afirmamos aqui o que iria ou não para um arquivo.</p>
+</div>
+<hr>
 <h2>Formas diferentes de ler um arquivo</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>type notas.txt</code></td><td>O jeito deste guia: ler um arquivo de texto da pasta atual.</td></tr>
 <tr><td><code>type fotos\legenda.txt</code></td><td>Quando o arquivo está numa subpasta, com o caminho relativo.</td></tr>
-<tr><td><code>type notas.txt relatorio.txt</code></td><td>O <code>type</code> aceita mais de um arquivo na mesma linha. A captura dessa forma, no laboratório, veio com ruído do invólucro da coleta; por isso não usamos essa saída como modelo. No Prompt aberto, experimente você mesmo.</td></tr>
+<tr><td><code>type notas.txt relatorio.txt</code></td><td>Para ler dois (ou mais) arquivos de uma vez. O Prompt escreve o nome de cada um antes do conteúdo, com linhas em branco em volta do nome.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
@@ -83,6 +107,7 @@ C:\Users\ana\guia-cmd-teste&gt;</pre></div>
 <tr><th>Você digita</th><th>O que faz</th></tr>
 <tr><td><code>type notas.txt</code></td><td>Mostra o conteúdo do arquivo na tela.</td></tr>
 <tr><td><code>type fotos\legenda.txt</code></td><td>O mesmo, com um caminho relativo.</td></tr>
+<tr><td><code>type notas.txt relatorio.txt</code></td><td>Mostra o conteúdo dos dois, com o nome de cada arquivo antes do texto.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
@@ -104,6 +129,11 @@ C:\Users\ana\guia-cmd-teste&gt;</pre></div>
 <label><input type="radio" name="q6"> <code>O nome do diretório é inválido.</code></label>
 <label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
 <label><input type="radio" name="q6"> Uma tradução nossa, “arquivo someu”</label></div>
+<div class="mc" data-answer="2"><p class="mc-q">7. No laboratório, o <code>type notas.txt relatorio.txt</code> escreveu o quê antes do conteúdo de cada arquivo?</p>
+<label><input type="radio" name="q7"> Nada: os dois textos vieram colados, sem marca</label>
+<label><input type="radio" name="q7"> O nome do arquivo, com uma linha em branco antes e duas linhas em branco depois do nome</label>
+<label><input type="radio" name="q7"> Só um traço <code>---</code> entre os dois arquivos</label>
+<label><input type="radio" name="q7"> A tradução “início do arquivo”</label></div>
 <div class="trycmd" data-goal="src:\btype\b;;out:Lista de compras;;out:- pão">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste do guia, mostre o conteúdo de <code>notas.txt</code> com <code>type</code>.</p>
 <pre class="script" data-file="comandos.bat">
@@ -131,11 +161,38 @@ type fotos
 Acesso negado.
 </pre>
 </div>
+
+<div class="trycmd" data-goal="src:\btype\b;;out:Lista de compras;;out:Relatório da semana">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, leia os dois arquivos de uma vez com <code>type notas.txt relatorio.txt</code> e observe o nome de cada um na tela.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type notas.txt relatorio.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+notas.txt
+
+
+Lista de compras
+- pão
+- leite
+- café
+
+relatorio.txt
+
+
+Relatório da semana
+Tudo certo na pasta de teste do guia.
+</pre>
+</div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li><code>type arquivo.txt</code> mostra o conteúdo de um arquivo de texto, sem alterá-lo.</li>
 <li>Com um caminho relativo, você lê um arquivo que está numa subpasta.</li>
+<li>Com dois ou mais arquivos na mesma linha, o Prompt escreve o nome de cada um antes do conteúdo, com linhas em branco em volta do nome.</li>
 <li>Arquivo inexistente, pasta no lugar de arquivo e caminho inexistente devolvem mensagens reais, que não se traduzem.</li>
 </ul>
 
