@@ -54,7 +54,7 @@ O lote 1 segue as listas da Luna (`/workspace/cmd-coleta/listas-lote1.md`); o `N
 
 Legenda do status: lista → coleta → escrita → revisão. O hash entra no commit em que a aula ficou pronta. Escrita do lote 1: Tito, só a partir de `_saidas-anon/cmd-lote1.txt`.
 
-Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 aulas**. `abrir-cmd` e `cls` ficam só no texto (sem saída coletada e sem missão rode-local). O `echo off` é explicado só em texto, sem saída. No `cmd` real há uma linha em branco entre a saída e o próximo prompt; essa linha entra nas sessões exibidas. O `echo texto > arquivo` grava o espaço que vier antes do `>`; o `type` mostra esse espaço no fim (dica nas aulas de `echo` e de redirecionamento). A primeira captura de `type notas.txt relatorio.txt` veio poluída pelo invólucro do PowerShell e não foi usada. A Mira recolheu e anonimizou de novo em `_saidas-anon/recoleta-type.txt` (checador OK): o `cmd` escreve uma linha em branco, o nome do arquivo e mais duas linhas em branco antes do conteúdo de cada arquivo. Essa saída entra na aula `type.html` (hash a preencher no commit seguinte).
+Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 aulas**. `abrir-cmd` e `cls` ficam só no texto (sem saída coletada e sem missão rode-local). O `echo off` é explicado só em texto, sem saída. No `cmd` real há uma linha em branco entre a saída e o próximo prompt; essa linha entra nas sessões exibidas. O `echo texto > arquivo` grava o espaço que vier antes do `>`; o `type` mostra esse espaço no fim (dica nas aulas de `echo` e de redirecionamento). A primeira captura de `type notas.txt relatorio.txt` veio poluída pelo invólucro do PowerShell e não foi usada. A Mira recolheu e anonimizou de novo em `_saidas-anon/recoleta-type.txt` (checador OK): o `cmd` escreve uma linha em branco, o nome do arquivo e mais duas linhas em branco antes do conteúdo de cada arquivo. Essa saída entra na aula `type.html` Hash da recoleta na aula: `193aaa0`.
 
 | Aula | Slug | Dono (lista/coleta · revisão) | Status | Hash |
 |---|---|---|---|---|
@@ -65,7 +65,7 @@ Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 
 | Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | escrita | `553e122` |
 | Criando e Apagando Pastas (`md` e `rd`) | `md-rd.html` | Luna · Mira | escrita | `553e122` |
 | Copiando, Movendo e Apagando (`copy`, `move`, `del` e `ren`) | `copy-move-del.html` | Luna · Mira | escrita | `553e122` |
-| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | escrita (recoleta com vários arquivos) | (recoleta, a seguir) |
+| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | escrita (recoleta com vários arquivos) | `193aaa0` |
 | Escrevendo na Tela (`echo`) | `echo.html` | Luna · Mira | escrita | `553e122` |
 | Limpando a Tela (`cls`) | `cls.html` | Luna · Mira | escrita (só texto; sem missão) | `553e122` |
 | A Ajuda (`help` e `/?`) | `help.html` | Luna · Mira | escrita | `553e122` |
