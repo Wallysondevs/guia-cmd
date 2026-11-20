@@ -3,3 +3,8 @@ _saidas/*
 node_modules/
 tools/node_modules/
 *.bak
+
+# auxiliares locais de geração das aulas
+__pycache__/
+tools/_aula_lib.py
+tools/_lote1-cmds.json
