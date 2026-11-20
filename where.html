@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onde Está o Comando (where) — localizar um executável no Prompt | Guia CMD</title>
+<meta name="description" content="O comando where no Prompt de Comando: achar o caminho de um programa no PATH. Saídas ainda a coletar; atenção a caminhos da pasta pessoal na anonimização.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Onde Está o Comando (<span class="hl">where</span>)</h1>
+
+
+<p class="intro">Às vezes você quer saber <strong>qual arquivo</strong> o Prompt vai rodar quando você digita um nome. O <code>where</code> procura esse nome no caminho de busca (o <code>PATH</code>) e mostra a localização. As saídas reais ainda estão a coletar. Se algum caminho apontar para a pasta pessoal de um usuário real, a Mira anonimiza antes de a aula usar a captura.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>where nome</code>, que mostra onde o sistema acha esse comando ou programa.</li>
+<li>Que o resultado é um caminho; esta aula não inventa esse caminho.</li>
+<li>A chave <code>/q</code>, que só indica se achou ou não (silencioso) — a saída real está a coletar.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<hr>
+<h2>A ideia: perguntar no balcão “quem atende este pedido?”</h2>
+<p>Você chega ao balcão e pergunta: “quando eu peço <code>find</code>, quem responde?”. O <code>where</code> aponta a porta da sala — o caminho do arquivo. Ele não roda o programa: só mostra onde ele está.</p>
+<hr>
+<h2>1. Localizar um comando</h2>
+<p>Pedidos típicos, que a coleta pode usar (a resposta, com o caminho real já anonimizado se precisar, entra depois):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;where find
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;where cmd
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>where</dt><dd>o comando: “onde está este nome?”.</dd><dt>find</dt><dd>o nome procurado no caminho de busca.</dd></dl>
+<hr>
+<h2>Formas diferentes de perguntar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>where find</code></td><td>Para ver o caminho do <code>find</code> que o Prompt encontraria.</td></tr>
+<tr><td><code>where cmd</code></td><td>Para ver o caminho do próprio Prompt.</td></tr>
+<tr><td><code>where /q find</code></td><td>Para só perguntar se existe, sem listar o caminho. A saída real está a coletar.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um nome que não está no caminho</strong>
+<p>O <code>where comandoinexistente</code> devolve alguma resposta (mensagem ou código de saída). O texto real ainda está a coletar — não inventamos nem traduzimos.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;where comandoinexistente
+
+« saída a coletar » — saída real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>where nome</code></td><td>Mostra o caminho em que o sistema acha esse nome.</td></tr>
+<tr><td><code>where /q nome</code></td><td>Pergunta em silêncio se o nome existe no caminho de busca.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para localizar o <code>find</code>:</p><div class="ex-code"><input data-answer="where" aria-label="comando"> find</div></div>
+<div class="exercise"><h3>2. O próprio cmd</h3><p>Complete para localizar o <code>cmd</code>:</p><div class="ex-code">where <input data-answer="cmd" aria-label="nome"></div></div>
+<div class="exercise"><h3>3. Silencioso</h3><p>Qual chave pede a forma silenciosa?</p><div class="ex-code">where <input data-answer="/q" aria-label="chave"> find</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>where find</code> faz?</p>
+<label><input type="radio" name="q4"> Roda o <code>find</code> num arquivo</label>
+<label><input type="radio" name="q4"> Mostra o caminho do programa <code>find</code> que o Prompt encontraria</label>
+<label><input type="radio" name="q4"> Apaga o <code>find</code> do sistema</label>
+<label><input type="radio" name="q4"> Cria um atalho na área de trabalho</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não mostra ainda um caminho como resposta?</p>
+<label><input type="radio" name="q5"> Porque a saída real ainda está a coletar, e um caminho inventado poderia ser falso ou vazar uma pasta pessoal</label>
+<label><input type="radio" name="q5"> Porque o <code>where</code> nunca mostra caminho</label>
+<label><input type="radio" name="q5"> Porque o comando não existe no <code>cmd</code></label>
+<label><input type="radio" name="q5"> Porque caminhos não se ensinam neste guia</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>where</code> altera o programa que ele encontra?</p>
+<label><input type="radio" name="q6"> Sim, ele move o programa para a pasta atual</label>
+<label><input type="radio" name="q6"> Sim, ele apaga as cópias extras</label>
+<label><input type="radio" name="q6"> Não: ele só mostra o caminho</label>
+<label><input type="radio" name="q6"> Só altera com a chave <code>/q</code></label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bwhere\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bwhere\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> pergunte ao Prompt onde está o <code>find</code>, com o <code>where</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+where find
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bwhere\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bwhere\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> repita a pergunta para o próprio <code>cmd</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+where cmd
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>where nome</code> mostra o caminho do programa correspondente no caminho de busca.</li>
+<li>Ele não roda nem altera o programa.</li>
+<li>O caminho real ainda está a coletar; se vier pasta pessoal, entra já anonimizado.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

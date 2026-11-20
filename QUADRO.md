@@ -34,10 +34,11 @@ Só leitura e demo, com `cmd /c`, numa pasta de teste com guarda e caminho absol
 
 | Papel | Quem |
 |---|---|
-| Esqueleto, `NIVEIS`, quadro, site, checador, testes | Tito |
+| Esqueleto, `NIVEIS` (só o Tito edita este arquivo), quadro, site, checador, testes | Tito |
 | Listas do lote 1 e script de coleta (`cmd /c`, pasta de teste com guarda) | Luna |
 | Revisão linha a linha e anonimização; mantém o `.proibido-cmd.txt` fora do repo | Mira |
-| Entra no CMD só depois do `pssim.js` do PowerShell | Zeca |
+| Lote 2, aulas de **arquivo/texto** (pipe com find/findstr/sort/more, attrib, xcopy, robocopy, tree, where, ver) | Tito |
+| Lote 2, aulas de **script** (`set`, `if`, `for`, `goto`/`call`, `%errorlevel%`, `&&`/`||`, `.bat`) | Zeca |
 
 Lote 1: Luna (listas e script de coleta, 119 comandos em 9 aulas) e Mira (revisão linha a linha e anonimização em `_saidas-anon/cmd-lote1.txt`). O Tito não coleta: neste Linux não há `cmd.exe`. A escrita das aulas do lote 1 usou só o arquivo anonimizado. O bruto em `_saidas/` não entra no git.
 
@@ -74,9 +75,36 @@ Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 
 
 O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas `pronta` no `NIVEIS` (sem `{pronta:false}`). A coleta foi da Luna, no Windows, com as guardas acima; a Mira anonimizou e o checador passou. Bruto em `_saidas/cmd-lote1-bruto.txt` (gitignorado, não apagar nem mover).
 
-## Nível 2 (proposta)
+## Nível 2
 
-O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Também nesta proposta: `xcopy`, `robocopy`, `attrib`, `tree`, `find`, `findstr`, `more`, `sort`, pipe `|`, `&&` / `||`, variáveis `%VAR%` com `set NOME=` (só com filtro ou nome), `where`, `tasklist`, `ver`, `date /t`, `time /t`, `hostname`.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). O PC do Wallyson estava offline: os esqueletos do Tito entram com placeholder visível « saída a coletar », sem inventar resposta do `cmd`. As páginas continuam `{pronta:false}` no `NIVEIS` até a coleta anonimizada da Mira. Metas `data-goal` das missões estão provisórias (`src` + `semerro`) e marcadas com `TODO`; `out`/`outre` só depois da saída real.
+
+Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o único que edita o `NIVEIS` em `assets/site.js`.
+
+### Aulas do Tito (arquivo/texto) — esqueleto, aguardando coleta
+
+| Aula | Slug | Status | Hash |
+|---|---|---|---|
+| Procurando Texto (`find`) | `find.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Procurando com `findstr` | `findstr.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Página a Página (`more`) | `more.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Ordenando (`sort`) | `sort.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| O Encadeamento (pipe) | `pipe.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Atributos (`attrib`) | `attrib.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Copiando Pastas (`xcopy`) | `xcopy.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Cópia Robusta (`robocopy`) | `robocopy.html` | esqueleto (saída a coletar; só na pasta de teste, sem `/MIR` nas missões) | (lote 2, a seguir) |
+| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Onde Está o Comando (`where`) | `where.html` | esqueleto (saída a coletar; anonimizar caminho pessoal se aparecer) | (lote 2, a seguir) |
+| A Versão do Windows (`ver`) | `ver.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+
+Ainda não há arquivo novo da Mira em `_saidas-anon/` para o lote 2. Quando chegar, o Tito substitui os placeholders só por essas saídas, finaliza as metas, roda o checador com `PROIBIDO` e o `testar-navegador`, e marca `pronta:true`.
+
+### Aulas do Zeca (script) — ele escreve; o Tito não mexe nesses arquivos
+
+`variaveis.html` (`set` / `%VAR%`, só com filtro ou nome), `if.html`, `for.html`, `goto.html` / `call.html`, `%errorlevel%`, `encadeamento.html` (`&&` / `||`), `arquivos-bat.html`. O Zeca não edita o `NIVEIS`; se criar páginas novas, o Tito inclui o slug.
+
+Demais itens do Nível 2 ainda na proposta, fora deste lote: `tasklist`, `date /t`, `time /t`, `hostname`, e o `ren.html` separado.
+
 
 ## Nível 3 (proposta) — notas de privacidade e admin
 

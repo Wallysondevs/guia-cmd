@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O Encadeamento (|) — mandar a saída de um comando para outro | Guia CMD</title>
+<meta name="description" content="O encadeamento | no Prompt de Comando: passar a saída de um comando para find, findstr, sort ou more. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>O Encadeamento (<span class="hl">|</span>)</h1>
+
+
+<p class="intro">Até agora cada comando trabalhava sozinho, ou gravava a saída num arquivo com <code>&gt;</code>. O <strong>pipe</strong> <code>|</code> (a barra vertical) liga dois comandos: o que o da esquerda escrever na tela vira a entrada do da direita. Os filtros clássicos desta aula são o <code>find</code>, o <code>findstr</code>, o <code>sort</code> e o <code>more</code> — cada um tem a sua aula; aqui eles entram encadeados. As saídas reais ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O símbolo <code>|</code>, que manda a saída padrão de um comando para o próximo.</li>
+<li>A filtrar uma lista com <code>find</code> ou <code>findstr</code>.</li>
+<li>A ordenar a saída com <code>sort</code> e a vê-la página a página com <code>more</code>.</li>
+<li>Que o pipe não é o mesmo que <code>&gt;</code> (arquivo) nem que <code>&amp;&amp;</code> (só roda o próximo se o anterior deu certo — isso fica na aula de script do Zeca).</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<hr>
+<h2>A ideia: uma calha entre duas mesas</h2>
+<p>O comando da esquerda trabalha e empurra o resultado por uma calha. O da direita recebe esse resultado como se você tivesse digitado aquele texto para ele. Nada disso grava um arquivo, a menos que no fim você ainda use um <code>&gt;</code>.</p>
+<hr>
+<h2>1. Filtrar uma lista com find ou findstr</h2>
+<p>O <code>dir /b</code> lista os nomes. Encadeado com o <code>find</code> ou o <code>findstr</code>, só passam os nomes que têm um certo texto — por exemplo, os <code>.txt</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | find ".txt"
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | findstr ".txt"
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A saída de cada um desses pedidos ainda está a coletar. Não afirmamos aqui se os dois vêm iguais: isso só se confirma com a captura real.</p>
+<hr>
+<h2>2. Ordenar a lista</h2>
+<p>O <code>sort</code> na ponta direita arruma as linhas que vieram da esquerda:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | sort
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Ver aos poucos</h2>
+<p>Quando a lista é longa, o <code>more</code> na ponta direita mostra página a página:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /s /b | more
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de encadear</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>dir /b | find ".txt"</code></td><td>Para ficar só com as linhas da lista que têm <code>.txt</code>.</td></tr>
+<tr><td><code>dir /b | findstr ".txt"</code></td><td>O mesmo papel, com o <code>findstr</code> (sintaxe diferente; saída a coletar).</td></tr>
+<tr><td><code>dir /b | sort</code></td><td>Para ver os nomes em ordem.</td></tr>
+<tr><td><code>dir /s /b | more</code></td><td>Para uma lista longa não escapar da tela.</td></tr>
+<tr><td><code>type notas.txt | find "leite"</code></td><td>Para filtrar o conteúdo de um arquivo, em vez de passar o arquivo direto ao <code>find</code>.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um comando da esquerda que falha</strong>
+<p>Se o comando da esquerda não existir, o Prompt responde com uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos. Também não afirmamos, sem captura, o que o comando da direita recebe nesse caso.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;comandoinexistente | sort
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>comando1 | comando2</code></td><td>A saída de <code>comando1</code> vira a entrada de <code>comando2</code>.</td></tr>
+<tr><td><code>dir /b | find "texto"</code></td><td>Filtra a lista de nomes.</td></tr>
+<tr><td><code>dir /b | sort</code></td><td>Ordena a lista de nomes.</td></tr>
+<tr><td><code>comando | more</code></td><td>Mostra a saída página a página.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. O símbolo</h3><p>Qual símbolo manda a saída de um comando para o próximo?</p><div class="ex-code"><input data-answer="|" aria-label="simbolo"></div></div>
+<div class="exercise"><h3>2. Filtrar</h3><p>Complete para filtrar a lista de nomes, ficando com as linhas que têm <code>.txt</code>:</p><div class="ex-code">dir /b | <input data-answer="find" aria-label="comando"> ".txt"</div></div>
+<div class="exercise"><h3>3. Ordenar</h3><p>Complete para ordenar a lista de nomes:</p><div class="ex-code">dir /b | <input data-answer="sort" aria-label="comando"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Qual é a diferença entre <code>|</code> e <code>&gt;</code>?</p>
+<label><input type="radio" name="q4"> Não há diferença: os dois gravam um arquivo</label>
+<label><input type="radio" name="q4"> O <code>|</code> manda a saída para outro comando; o <code>&gt;</code> grava a saída num arquivo</label>
+<label><input type="radio" name="q4"> O <code>|</code> apaga o arquivo; o <code>&gt;</code> cria uma pasta</label>
+<label><input type="radio" name="q4"> O <code>|</code> só funciona no PowerShell</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Nesta aula, quais comandos aparecem como filtros à direita do <code>|</code>?</p>
+<label><input type="radio" name="q5"> <code>find</code>, <code>findstr</code>, <code>sort</code> e <code>more</code></label>
+<label><input type="radio" name="q5"> Só o <code>del</code> e o <code>rd</code></label>
+<label><input type="radio" name="q5"> Só o <code>echo</code></label>
+<label><input type="radio" name="q5"> Só o <code>shutdown</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O pipe <code>|</code> é o mesmo que <code>&amp;&amp;</code>?</p>
+<label><input type="radio" name="q6"> Sim, os dois filtram linhas</label>
+<label><input type="radio" name="q6"> Sim, os dois gravam arquivos</label>
+<label><input type="radio" name="q6"> Não: o <code>|</code> passa a saída adiante; o <code>&amp;&amp;</code> só roda o próximo comando se o anterior deu certo, e fica para a aula de script</label>
+<label><input type="radio" name="q6"> Não, porque o <code>&amp;&amp;</code> não existe no <code>cmd</code></label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdir\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bdir\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, liste só os nomes com <code>dir /b</code> e mande essa lista para o <code>sort</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /b | sort
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfind\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bfind\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> liste os nomes com <code>dir /b</code> e filtre, com o <code>find</code>, as linhas que têm <code>.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /b | find ".txt"
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>|</code> liga a saída de um comando à entrada do próximo.</li>
+<li><code>find</code>, <code>findstr</code>, <code>sort</code> e <code>more</code> são os filtros desta aula; cada um também tem aula própria.</li>
+<li>Pipe não é redirecionamento para arquivo e não é o <code>&amp;&amp;</code>. As saídas reais ainda estão a coletar.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

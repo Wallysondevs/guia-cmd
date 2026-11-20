@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copiando Pastas (xcopy) — copiar pastas e arquivos no Prompt | Guia CMD</title>
+<meta name="description" content="O comando xcopy no Prompt de Comando: copiar pastas na pasta de teste, com as chaves /s, /e, /i e /y. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Copiando Pastas (<span class="hl">xcopy</span>)</h1>
+
+
+<p class="intro">O <code>copy</code> do Nível 1 copia arquivos. Para uma <strong>pasta inteira</strong>, com o que tem dentro, o Windows traz o <code>xcopy</code>. Nesta aula ele roda só dentro da pasta de teste. As saídas reais — inclusive a contagem de arquivos que o comando costuma escrever — ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>xcopy origem destino</code>, para copiar arquivos e pastas.</li>
+<li>As chaves <code>/s</code> (subpastas, sem as vazias), <code>/e</code> (também as vazias), <code>/i</code> (tratar o destino como pasta) e <code>/y</code> (não perguntar ao sobrescrever).</li>
+<li>Que a coleta e as missões ficam restritas à pasta de teste.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Não aponte o <code>xcopy</code> para a raiz do disco nem para pastas do sistema. A origem e o destino devem ser caminhos dentro de <code>C:\Users\ana\guia-cmd-teste</code> (ou da sua pasta de teste equivalente).</p>
+<hr>
+<h2>A ideia: uma fotocópia da gaveta</h2>
+<p>O <code>copy</code> tira uma fotocópia de uma folha. O <code>xcopy</code> pode fotocopiar a gaveta inteira — folhas e pastas de dentro — para outra gaveta. A origem permanece; o destino ganha uma cópia.</p>
+<hr>
+<h2>1. Copiar uma subpasta</h2>
+<p>Na pasta de teste, um destino novo (por exemplo, uma cópia de <code>fotos</code>) é um pedido típico. A chave <code>/e</code> inclui subpastas; a <code>/i</code> evita que o <code>xcopy</code> pergunte se o destino é arquivo ou pasta quando ele ainda não existe; a <code>/y</code> não pergunta ao sobrescrever.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;xcopy fotos fotos-copia /e /i /y
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>xcopy</dt><dd>o comando: “copie esta pasta ou estes arquivos”.</dd><dt>fotos</dt><dd>a origem, relativa, dentro da pasta de teste.</dd><dt>fotos-copia</dt><dd>o destino, também dentro da pasta de teste.</dd><dt>/e /i /y</dt><dd>subpastas, destino como pasta, sem pergunta de sobrescrita.</dd></dl>
+<hr>
+<h2>2. Só os arquivos de um tipo</h2>
+<p>O <code>xcopy</code> aceita curingas, como o <code>copy</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;xcopy *.txt docs-txt\ /i /y
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de copiar com xcopy</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>xcopy fotos fotos-copia /e /i /y</code></td><td>Para copiar a pasta, com subpastas, para um destino novo na pasta de teste, sem perguntas.</td></tr>
+<tr><td><code>xcopy fotos fotos-copia /s /i /y</code></td><td>Parecido, mas o <code>/s</code> não leva as subpastas que estiverem vazias.</td></tr>
+<tr><td><code>xcopy *.txt docs-txt\ /i /y</code></td><td>Para copiar um grupo de arquivos para uma subpasta.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Uma origem que não existe</strong>
+<p>O <code>xcopy pasta-nao-existe destino /i /y</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;xcopy pasta-nao-existe destino-x /i /y
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>xcopy origem destino</code></td><td>Copia arquivos ou pastas para o destino.</td></tr>
+<tr><td><code>/s</code></td><td>Inclui subpastas que não estão vazias.</td></tr>
+<tr><td><code>/e</code></td><td>Inclui também as subpastas vazias.</td></tr>
+<tr><td><code>/i</code></td><td>Trata o destino como pasta, se ele ainda não existir.</td></tr>
+<tr><td><code>/y</code></td><td>Não pergunta ao sobrescrever.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para copiar a pasta <code>fotos</code> para <code>fotos-copia</code>:</p><div class="ex-code"><input data-answer="xcopy" aria-label="comando"> fotos fotos-copia /e /i /y</div></div>
+<div class="exercise"><h3>2. Sem pergunta</h3><p>Qual chave evita a pergunta ao sobrescrever?</p><div class="ex-code">xcopy fotos fotos-copia /e /i <input data-answer="/y" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. Subpastas vazias</h3><p>Qual chave inclui também as subpastas vazias?</p><div class="ex-code">xcopy fotos fotos-copia <input data-answer="/e" aria-label="chave"> /i /y</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Qual é a diferença principal, neste guia, entre <code>copy</code> e <code>xcopy</code>?</p>
+<label><input type="radio" name="q4"> O <code>xcopy</code> só apaga arquivos</label>
+<label><input type="radio" name="q4"> O <code>copy</code> copia arquivos; o <code>xcopy</code> também serve para copiar pastas, com subpastas</label>
+<label><input type="radio" name="q4"> Não há diferença</label>
+<label><input type="radio" name="q4"> O <code>xcopy</code> só existe no PowerShell</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Onde esta aula pede para rodar o <code>xcopy</code>?</p>
+<label><input type="radio" name="q5"> Só dentro da pasta de teste, com origem e destino relativos a ela</label>
+<label><input type="radio" name="q5"> Na raiz do disco <code>C:</code></label>
+<label><input type="radio" name="q5"> Em <code>C:\Windows</code></label>
+<label><input type="radio" name="q5"> Em qualquer lugar, inclusive em pastas do sistema</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. A chave <code>/i</code> serve para quê?</p>
+<label><input type="radio" name="q6"> Para apagar a origem depois da cópia</label>
+<label><input type="radio" name="q6"> Para traduzir a saída</label>
+<label><input type="radio" name="q6"> Para tratar o destino como pasta, se ele ainda não existir</label>
+<label><input type="radio" name="q6"> Para copiar só arquivos ocultos</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bxcopy\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bxcopy\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, copie a pasta <code>fotos</code> para <code>fotos-copia</code> com <code>xcopy</code>, usando <code>/e /i /y</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+xcopy fotos fotos-copia /e /i /y
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>xcopy</code> copia arquivos e pastas; nesta aula, só dentro da pasta de teste.</li>
+<li><code>/s</code>, <code>/e</code>, <code>/i</code> e <code>/y</code> são as chaves desta aula.</li>
+<li>As saídas reais ainda estão a coletar: não inventamos a contagem de arquivos que o comando escrever.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

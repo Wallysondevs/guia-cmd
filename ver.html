@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Versão do Windows (ver) — ver a versão do sistema no Prompt | Guia CMD</title>
+<meta name="description" content="O comando ver no Prompt de Comando: mostrar a versão do Windows. Saída ainda a coletar; não inventamos o texto da versão.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>A Versão do Windows (<span class="hl">ver</span>)</h1>
+
+
+<p class="intro">O <code>ver</code> é um pedido curto: “qual é a <strong>versão</strong> deste Windows?”. O Prompt responde com uma linha (às vezes mais de uma) que identifica o sistema. O texto exato depende da máquina e ainda está a coletar — não inventamos um número de versão.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>ver</code>, que mostra a versão do Windows nesta sessão do Prompt.</li>
+<li>Que a resposta é texto do próprio sistema, e só entra na aula depois da coleta anonimizada (o <code>ver</code> em geral não traz nome de usuário, mas a regra continua: não inventar).</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<hr>
+<h2>A ideia: olhar a plaquinha do aparelho</h2>
+<p>Todo aparelho tem uma plaquinha com o modelo e o número da edição. O <code>ver</code> é o pedido para ler essa plaquinha do Windows, na tela do Prompt. Não muda nada no sistema: só mostra.</p>
+<hr>
+<h2>1. Pedir a versão</h2>
+<p>O comando não leva caminho de arquivo. Basta o nome:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ver
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>ver</dt><dd>o comando: “mostre a versão do Windows”.</dd></dl>
+<hr>
+<h2>Formas diferentes</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>ver</code></td><td>O jeito desta aula: pedir a versão do Windows nesta sessão.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<p>O <code>ver</code> é um comando interno curto e, no uso desta aula, não leva arquivo. Não inventamos aqui um caso de erro. Se a coleta trouxer alguma variação ou mensagem inesperada, ela entra nesta seção com o texto real, sem tradução.</p>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>ver</code></td><td>Mostra a versão do Windows nesta sessão do Prompt.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver a versão do Windows:</p><div class="ex-code"><input data-answer="ver" aria-label="comando"></div></div>
+<div class="exercise"><h3>2. O que ele mostra</h3><p>Em uma palavra, o que o <code>ver</code> pede para o sistema mostrar? (escreva <code>versão</code> ou <code>versao</code>)</p><div class="ex-code"><input data-answer="versão|versao" aria-label="resposta"></div></div>
+<div class="exercise"><h3>3. Ele altera o sistema?</h3><p>O <code>ver</code> muda alguma configuração do Windows? (escreva <code>não</code> ou <code>nao</code>)</p><div class="ex-code"><input data-answer="não|nao" aria-label="resposta"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>ver</code> faz?</p>
+<label><input type="radio" name="q4"> Instala uma versão nova do Windows</label>
+<label><input type="radio" name="q4"> Mostra a versão do Windows nesta sessão do Prompt</label>
+<label><input type="radio" name="q4"> Apaga os arquivos temporários</label>
+<label><input type="radio" name="q4"> Muda o idioma do sistema</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula ainda não mostra o texto da versão?</p>
+<label><input type="radio" name="q5"> Porque a saída real ainda está a coletar, e um número inventado seria falso</label>
+<label><input type="radio" name="q5"> Porque o <code>ver</code> não escreve nada</label>
+<label><input type="radio" name="q5"> Porque a versão é segredo e não se ensina</label>
+<label><input type="radio" name="q5"> Porque o comando só existe no PowerShell</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>ver</code> precisa de um nome de arquivo?</p>
+<label><input type="radio" name="q6"> Sim, sempre</label>
+<label><input type="radio" name="q6"> Só se você usar <code>/f</code></label>
+<label><input type="radio" name="q6"> Não: nesta aula basta o próprio comando</label>
+<label><input type="radio" name="q6"> Sim, o arquivo <code>ver.txt</code></label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bver\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bver\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> peça a versão do Windows com o comando <code>ver</code>. Cole o que o Prompt responder (ainda vamos conferir o texto exato quando a coleta chegar).</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ver
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>ver</code> mostra a versão do Windows e não altera o sistema.</li>
+<li>O texto exato ainda está a coletar: não foi inventado.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

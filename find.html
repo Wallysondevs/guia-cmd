@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procurando Texto (find) — localizar uma frase num arquivo no Prompt | Guia CMD</title>
+<meta name="description" content="O comando find no Prompt de Comando: procurar um texto num arquivo, as chaves /i, /n, /c e /v, e o que o cmd responde quando o arquivo não existe. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Procurando Texto (<span class="hl">find</span>)</h1>
+
+
+<p class="intro">Quando o arquivo é longo, ler tudo com o <code>type</code> cansa. O <code>find</code> procura uma <strong>frase exata</strong> dentro de um arquivo e mostra só as linhas que combinam. Nesta aula você vê a ideia, as chaves mais úteis e o que pedir na pasta de teste — as respostas do Prompt ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>find "texto" arquivo</code>, que procura a frase no arquivo.</li>
+<li>As chaves <code>/i</code> (sem diferenciar maiúsculas), <code>/n</code> (número da linha), <code>/c</code> (só a quantidade) e <code>/v</code> (linhas que <em>não</em> têm a frase).</li>
+<li>Que o <code>find</code> e o <code>findstr</code> não são o mesmo comando: a sintaxe é outra, e cada um tem a sua aula.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<hr>
+<h2>A ideia: um carimbo no texto</h2>
+<p>Imagine que você passa um carimbo por cada linha do arquivo e só deixa na mesa as linhas que têm a palavra procurada. O <code>find</code> faz isso. Ele não altera o arquivo: só mostra o que combinou, na tela.</p>
+<hr>
+<h2>1. Procurar uma frase</h2>
+<p>Na pasta de teste, o <code>notas.txt</code> é uma lista de compras. Para achar a linha do leite:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;find "leite" notas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>find</dt><dd>o comando: “procure esta frase”.</dd><dt>"leite"</dt><dd>a frase, entre aspas. No <code>find</code>, as aspas fazem parte do jeito clássico do comando.</dd><dt>notas.txt</dt><dd>o arquivo em que ele procura.</dd></dl>
+<hr>
+<h2>2. Chaves úteis</h2>
+<p>O <code>/i</code> ignora maiúsculas e minúsculas. O <code>/n</code> mostra o número da linha. O <code>/c</code> mostra só quantas linhas combinaram. O <code>/v</code> inverte: mostra as linhas que <strong>não</strong> têm a frase.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;find /i "leite" notas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;find /n "leite" notas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;find /c "leite" notas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de procurar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>find "leite" notas.txt</code></td><td>O jeito deste guia: procurar a frase no arquivo.</td></tr>
+<tr><td><code>find /i "leite" notas.txt</code></td><td>Quando maiúsculas e minúsculas não devem importar.</td></tr>
+<tr><td><code>find /n "leite" notas.txt</code></td><td>Quando você quer o número da linha junto do texto.</td></tr>
+<tr><td><code>find /c "leite" notas.txt</code></td><td>Quando basta saber quantas linhas combinaram.</td></tr>
+<tr><td><code>find /v "leite" notas.txt</code></td><td>Para ver as linhas que não têm a frase.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um arquivo que não existe</strong>
+<p>O <code>find "leite" arquivo-nao-existe.txt</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos o texto e não traduzimos a frase do Windows.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;find "leite" arquivo-nao-existe.txt
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>find "texto" arquivo</code></td><td>Mostra as linhas do arquivo que têm a frase.</td></tr>
+<tr><td><code>find /i "texto" arquivo</code></td><td>O mesmo, sem diferenciar maiúsculas.</td></tr>
+<tr><td><code>find /n</code> / <code>/c</code> / <code>/v</code></td><td>Número da linha, só a quantidade, ou as linhas que não combinam.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para procurar a palavra <code>leite</code> em <code>notas.txt</code>:</p><div class="ex-code"><input data-answer="find" aria-label="comando"> "leite" notas.txt</div></div>
+<div class="exercise"><h3>2. Sem diferenciar maiúsculas</h3><p>Qual chave faz o <code>find</code> ignorar maiúsculas e minúsculas?</p><div class="ex-code">find <input data-answer="/i" aria-label="chave"> "leite" notas.txt</div></div>
+<div class="exercise"><h3>3. Só a quantidade</h3><p>Qual chave pede só o número de linhas que combinaram?</p><div class="ex-code">find <input data-answer="/c" aria-label="chave"> "leite" notas.txt</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>find</code> faz?</p>
+<label><input type="radio" name="q4"> Apaga as linhas que têm a frase</label>
+<label><input type="radio" name="q4"> Mostra as linhas de um arquivo que têm a frase procurada</label>
+<label><input type="radio" name="q4"> Cria um arquivo novo com a frase</label>
+<label><input type="radio" name="q4"> Muda para a pasta do arquivo</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a diferença, neste guia, entre <code>find</code> e <code>findstr</code>?</p>
+<label><input type="radio" name="q5"> São comandos diferentes, cada um com a sua sintaxe e a sua aula</label>
+<label><input type="radio" name="q5"> São o mesmo comando, com dois nomes</label>
+<label><input type="radio" name="q5"> O <code>findstr</code> só existe no PowerShell</label>
+<label><input type="radio" name="q5"> O <code>find</code> só funciona com pastas</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. A chave <code>/v</code> serve para quê?</p>
+<label><input type="radio" name="q6"> Para procurar em todas as subpastas</label>
+<label><input type="radio" name="q6"> Para traduzir a mensagem de erro</label>
+<label><input type="radio" name="q6"> Para mostrar as linhas que <em>não</em> têm a frase</label>
+<label><input type="radio" name="q6"> Para apagar o arquivo</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfind\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bfind\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, procure a palavra <code>leite</code> em <code>notas.txt</code> com o <code>find</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+find "leite" notas.txt
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfind\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bfind\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> repita a busca com a chave que ignora maiúsculas, <code>find /i</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+find /i "leite" notas.txt
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>find "texto" arquivo</code> mostra as linhas que têm a frase, sem alterar o arquivo.</li>
+<li><code>/i</code>, <code>/n</code>, <code>/c</code> e <code>/v</code> mudam o jeito de mostrar o resultado.</li>
+<li>O <code>findstr</code> é outro comando, com outra sintaxe. As saídas reais desta aula ainda estão a coletar.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

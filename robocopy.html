@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cópia Robusta (robocopy) — copiar pastas com o robocopy no Prompt | Guia CMD</title>
+<meta name="description" content="O comando robocopy no Prompt de Comando: copiar pastas só dentro da pasta de teste, com /e, e o cuidado de não usar /MIR nesta aula. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Cópia Robusta (<span class="hl">robocopy</span>)</h1>
+
+
+<p class="intro">O <code>robocopy</code> (“robust copy”) também copia pastas, com um relatório mais detalhado e opções para retomar uma cópia. Nesta aula ele roda <strong>somente dentro da pasta de teste</strong>, com origem e destino literais nessa pasta. As saídas reais — o <code>robocopy</code> costuma escrever um relatório comprido — ainda estão a coletar: não inventamos uma linha sequer desse relatório.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>robocopy origem destino</code>, com caminhos dentro da pasta de teste.</li>
+<li>A chave <code>/e</code>, para incluir subpastas (também as vazias).</li>
+<li>Que a chave <code>/MIR</code> (espelhar, apagando no destino o que não está na origem) <strong>não entra nas missões desta aula</strong>: o risco de apagar demais é alto se o caminho sair da pasta de teste.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<div class="tip"><strong>Guarda</strong>
+<p>A coleta deste comando começa com <code>cd /d C:\Users\ana\guia-cmd-teste || exit /b 1</code>. No seu computador, faça o mesmo na sua pasta de teste. Não aponte o <code>robocopy</code> para a raiz do disco, para a pasta pessoal inteira nem para pastas do sistema.</p>
+</div>
+<hr>
+<h2>A ideia: um carregador que anota tudo</h2>
+<p>Se o <code>xcopy</code> é a fotocópia da gaveta, o <code>robocopy</code> é um carregador que ainda escreve um relatório: o que copiou, o que pulou, o que falhou. O relatório verdadeiro só entra depois da coleta. Até lá, a caixa abaixo fica com o placeholder.</p>
+<hr>
+<h2>1. Copiar uma subpasta</h2>
+<p>Um pedido típico, só na pasta de teste: copiar <code>fotos</code> para um destino novo, com subpastas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy fotos fotos-robo /e
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>robocopy</dt><dd>o comando.</dd><dt>fotos</dt><dd>a origem, relativa, dentro da pasta de teste.</dd><dt>fotos-robo</dt><dd>o destino, também relativo, dentro da pasta de teste.</dd><dt>/e</dt><dd>inclui subpastas, inclusive as vazias.</dd></dl>
+<hr>
+<h2>Formas diferentes de usar o robocopy nesta aula</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>robocopy fotos fotos-robo /e</code></td><td>O jeito desta aula: copiar a pasta, com subpastas, para um destino dentro da pasta de teste.</td></tr>
+<tr><td><code>robocopy /?</code></td><td>Para ler a ajuda oficial do comando (saída longa, a coletar se entrar na captura).</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Uma origem que não existe</strong>
+<p>O <code>robocopy pasta-nao-existe destino-robo /e</code>, ainda dentro da pasta de teste, devolve alguma resposta (código de saída e, em geral, um relatório ou uma mensagem). O texto real ainda está a coletar — não inventamos nem traduzimos.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy pasta-nao-existe destino-robo /e
+
+« saída a coletar » — saída real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>robocopy origem destino /e</code></td><td>Copia a pasta, com subpastas, para o destino. Só na pasta de teste.</td></tr>
+<tr><td><code>/MIR</code></td><td>Espelha e pode apagar no destino. <strong>Não usamos</strong> nesta aula.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para copiar <code>fotos</code> para <code>fotos-robo</code> com subpastas:</p><div class="ex-code"><input data-answer="robocopy" aria-label="comando"> fotos fotos-robo /e</div></div>
+<div class="exercise"><h3>2. Subpastas</h3><p>Qual chave inclui as subpastas, também as vazias?</p><div class="ex-code">robocopy fotos fotos-robo <input data-answer="/e" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. O que não usar</h3><p>Qual chave esta aula pede para <strong>não</strong> usar nas missões, por apagar demais no destino? (escreva <code>/MIR</code>)</p><div class="ex-code"><input data-answer="/MIR|/mir" aria-label="chave"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Onde o <code>robocopy</code> desta aula pode rodar?</p>
+<label><input type="radio" name="q4"> Na raiz do disco <code>C:</code></label>
+<label><input type="radio" name="q4"> Só dentro da pasta de teste, com origem e destino literais nessa pasta</label>
+<label><input type="radio" name="q4"> Em <code>C:\Windows\System32</code></label>
+<label><input type="radio" name="q4"> Em qualquer caminho, inclusive o da pasta pessoal inteira</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não usa <code>/MIR</code> nas missões?</p>
+<label><input type="radio" name="q5"> Porque espelhar pode apagar no destino o que não está na origem, e o risco é alto fora da pasta de teste</label>
+<label><input type="radio" name="q5"> Porque a chave não existe</label>
+<label><input type="radio" name="q5"> Porque o <code>/MIR</code> só funciona no PowerShell</label>
+<label><input type="radio" name="q5"> Porque o <code>/e</code> já apaga a origem</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O que fazemos com o relatório longo que o <code>robocopy</code> costuma escrever?</p>
+<label><input type="radio" name="q6"> Inventamos um relatório de memória, para a aula não ficar vazia</label>
+<label><input type="radio" name="q6"> Traduzimos um relatório em inglês encontrado na internet</label>
+<label><input type="radio" name="q6"> Deixamos a caixa como « saída a coletar » até a captura anonimizada chegar</label>
+<label><input type="radio" name="q6"> Apagamos a aula, porque relatório não se ensina</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\brobocopy\\b;;semerro -->
+<div class="trycmd" data-goal="src:\brobocopy\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> ainda na pasta de teste, copie <code>fotos</code> para <code>fotos-robo</code> com <code>robocopy</code> e a chave <code>/e</code>. Não use <code>/MIR</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+robocopy fotos fotos-robo /e
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>robocopy</code> copia pastas e escreve um relatório. Nesta aula, só dentro da pasta de teste, com guarda no início da coleta.</li>
+<li>Usamos <code>/e</code>. Não usamos <code>/MIR</code> nas missões.</li>
+<li>Nenhuma linha do relatório foi inventada: a saída real ainda está a coletar.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

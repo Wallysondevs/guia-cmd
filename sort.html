@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordenando (sort) — colocar linhas em ordem no Prompt | Guia CMD</title>
+<meta name="description" content="O comando sort no Prompt de Comando: ordenar as linhas de um arquivo ou de outro comando, a chave /r para ordem inversa, e o uso com o encadeamento |. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Ordenando (<span class="hl">sort</span>)</h1>
+
+
+<p class="intro">Uma lista fora de ordem é difícil de olhar. O <code>sort</code> lê linhas e as devolve <strong>em ordem</strong> — de um arquivo ou da saída de outro comando, quando vier com o <code>|</code>. Nesta aula você vê o comando sozinho; o encadeamento com outros filtros fica também na aula do pipe. As saídas reais ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>sort arquivo</code>, que mostra as linhas do arquivo em ordem.</li>
+<li>A chave <code>/r</code>, que inverte a ordem.</li>
+<li>A ideia de receber linhas de outro comando pelo <code>|</code> (o detalhe do pipe está na aula do encadeamento).</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<hr>
+<h2>A ideia: um baralho que se arruma sozinho</h2>
+<p>Cada linha é uma carta. O <code>sort</code> empilha as cartas em ordem e as mostra na tela. O arquivo original fica como estava, a menos que você peça para gravar o resultado em outro arquivo (isso usa o redirecionamento que você já viu no Nível 1).</p>
+<hr>
+<h2>1. Ordenar um arquivo</h2>
+<p>O <code>agenda.txt</code> da pasta de teste é um bom candidato: o <code>sort</code> lê as linhas e as devolve em ordem.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sort agenda.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>sort</dt><dd>o comando: “mostre estas linhas em ordem”.</dd><dt>agenda.txt</dt><dd>o arquivo de origem.</dd></dl>
+<hr>
+<h2>2. Ordem inversa</h2>
+<p>A chave <code>/r</code> pede a ordem contrária:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sort /r agenda.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de ordenar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>sort agenda.txt</code></td><td>Para ver as linhas do arquivo em ordem, na tela.</td></tr>
+<tr><td><code>sort /r agenda.txt</code></td><td>Para ver a ordem inversa.</td></tr>
+<tr><td><code>dir /b | sort</code></td><td>Para ordenar a saída de outro comando. A aula do <code>|</code> aprofunda isso.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um arquivo que não existe</strong>
+<p>O <code>sort arquivo-nao-existe.txt</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sort arquivo-nao-existe.txt
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>sort arquivo</code></td><td>Mostra as linhas do arquivo em ordem.</td></tr>
+<tr><td><code>sort /r arquivo</code></td><td>Mostra as linhas em ordem inversa.</td></tr>
+<tr><td><code>comando | sort</code></td><td>Ordena o que o comando da esquerda escreveu.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para mostrar as linhas de <code>agenda.txt</code> em ordem:</p><div class="ex-code"><input data-answer="sort" aria-label="comando"> agenda.txt</div></div>
+<div class="exercise"><h3>2. Ordem inversa</h3><p>Qual chave inverte a ordem?</p><div class="ex-code">sort <input data-answer="/r" aria-label="chave"> agenda.txt</div></div>
+<div class="exercise"><h3>3. Encadear</h3><p>Qual símbolo manda a saída de um comando para o <code>sort</code>?</p><div class="ex-code">dir /b <input data-answer="|" aria-label="simbolo"> sort</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O <code>sort agenda.txt</code>, sozinho, altera o arquivo?</p>
+<label><input type="radio" name="q4"> Sim, ele regrava o arquivo em ordem</label>
+<label><input type="radio" name="q4"> Não: ele mostra as linhas em ordem na tela; o arquivo fica como estava</label>
+<label><input type="radio" name="q4"> Só altera se o arquivo for <code>.txt</code></label>
+<label><input type="radio" name="q4"> Ele apaga o arquivo depois de mostrar</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. A chave <code>/r</code> serve para quê?</p>
+<label><input type="radio" name="q5"> Mostrar as linhas em ordem inversa</label>
+<label><input type="radio" name="q5"> Procurar um texto</label>
+<label><input type="radio" name="q5"> Copiar o arquivo</label>
+<label><input type="radio" name="q5"> Esconder a saída</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. De onde o <code>sort</code> pode receber as linhas?</p>
+<label><input type="radio" name="q6"> Só de pastas, nunca de arquivos</label>
+<label><input type="radio" name="q6"> Só da internet</label>
+<label><input type="radio" name="q6"> De um arquivo ou da saída de outro comando, pelo <code>|</code></label>
+<label><input type="radio" name="q6"> Só do <code>echo</code></label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bsort\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bsort\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre as linhas de <code>agenda.txt</code> em ordem com o <code>sort</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+sort agenda.txt
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bsort\\b;;semerro -->
+<div class="trycmd" data-goal="src:\bsort\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> mostre o mesmo arquivo em ordem inversa, com <code>sort /r</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+sort /r agenda.txt
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>sort arquivo</code> mostra as linhas em ordem, sem alterar o arquivo (a menos que você redirecione a saída).</li>
+<li><code>/r</code> inverte a ordem.</li>
+<li>Com o <code>|</code>, o <code>sort</code> pode ordenar a saída de outro comando. As saídas reais ainda estão a coletar.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
