@@ -54,8 +54,8 @@ Legenda do status: lista → coleta → escrita → revisão. O hash entra no co
 
 | Aula | Slug | Dono (lista/coleta · revisão) | Status | Hash |
 |---|---|---|---|---|
-| Início | `index.html` | Tito (esqueleto) | escrita (capa; sem saída a coletar) | (commit inicial) |
-| O que é o Prompt de Comando | `introducao.html` | Tito (página modelo) · Luna/Mira (saídas) | escrita (placeholders “a coletar”) | (commit inicial) |
+| Início | `index.html` | Tito (esqueleto) | escrita (capa; sem saída a coletar) | `671edbe` |
+| O que é o Prompt de Comando | `introducao.html` | Tito (página modelo) · Luna/Mira (saídas) | escrita (placeholders “a coletar”) | `671edbe` |
 | Abrindo o Prompt de Comando | `abrir-cmd.html` | Luna · Mira | lista |  |
 | Listando (`dir`) | `dir.html` | Luna · Mira | lista |  |
 | Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | lista |  |
