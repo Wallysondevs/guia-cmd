@@ -60,17 +60,17 @@ Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 
 |---|---|---|---|---|
 | Início | `index.html` | Tito (esqueleto) | escrita (capa; sem saída a coletar) | `671edbe` |
 | O que é o Prompt de Comando | `introducao.html` | Tito (página modelo) | escrita (esqueleto; um placeholder de missão) | `671edbe` |
-| Abrindo o Prompt de Comando | `abrir-cmd.html` | Luna · Mira | escrita (só texto; sem missão) | (lote 1, a seguir) |
-| Listando (`dir`) | `dir.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Criando e Apagando Pastas (`md` e `rd`) | `md-rd.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Copiando, Movendo e Apagando (`copy`, `move`, `del` e `ren`) | `copy-move-del.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Escrevendo na Tela (`echo`) | `echo.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Limpando a Tela (`cls`) | `cls.html` | Luna · Mira | escrita (só texto; sem missão) | (lote 1, a seguir) |
-| A Ajuda (`help` e `/?`) | `help.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Curingas (`*` e `?`) | `curingas.html` | Luna · Mira | escrita | (lote 1, a seguir) |
-| Redirecionamento (`>` e `>>`) | `redirecionamento.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Abrindo o Prompt de Comando | `abrir-cmd.html` | Luna · Mira | escrita (só texto; sem missão) | `553e122` |
+| Listando (`dir`) | `dir.html` | Luna · Mira | escrita | `553e122` |
+| Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | escrita | `553e122` |
+| Criando e Apagando Pastas (`md` e `rd`) | `md-rd.html` | Luna · Mira | escrita | `553e122` |
+| Copiando, Movendo e Apagando (`copy`, `move`, `del` e `ren`) | `copy-move-del.html` | Luna · Mira | escrita | `553e122` |
+| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | escrita | `553e122` |
+| Escrevendo na Tela (`echo`) | `echo.html` | Luna · Mira | escrita | `553e122` |
+| Limpando a Tela (`cls`) | `cls.html` | Luna · Mira | escrita (só texto; sem missão) | `553e122` |
+| A Ajuda (`help` e `/?`) | `help.html` | Luna · Mira | escrita | `553e122` |
+| Curingas (`*` e `?`) | `curingas.html` | Luna · Mira | escrita | `553e122` |
+| Redirecionamento (`>` e `>>`) | `redirecionamento.html` | Luna · Mira | escrita | `553e122` |
 
 O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas `pronta` no `NIVEIS` (sem `{pronta:false}`). A coleta foi da Luna, no Windows, com as guardas acima; a Mira anonimizou e o checador passou. Bruto em `_saidas/cmd-lote1-bruto.txt` (gitignorado, não apagar nem mover).
 
@@ -104,5 +104,5 @@ O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` dest
 - [x] Esqueleto em `/workspace/planos-trabalho/guia-cmd` (git local, sem push) — `671edbe`; quadro com o hash — `4121b7f`
 - [x] `NIVEIS` em 3 níveis, slugs em kebab-case alinhados às listas da Luna; lote 1 (index, introdução e as 11 páginas do Nível 1) sem `{pronta:false}`; Níveis 2 e 3 continuam `{pronta:false}`
 - [x] Lote 1 coletado (bruto gitignorado) e anonimizado pela Mira em `_saidas-anon/cmd-lote1.txt`
-- [x] Lote 1 escrito (9 aulas com saída real + `abrir-cmd` e `cls` só em texto), missões rode-local, checador de privacidade OK, `testar-missoes.js` e `testar-navegador.js --todas` OK (18 “Missão cumprida!” com a saída real, 76 negativos sem falso positivo; `introducao` “Quase lá!” com `(sem saída)`). Hash do lote: a preencher no commit seguinte.
+- [x] Lote 1 escrito (9 aulas com saída real + `abrir-cmd` e `cls` só em texto), missões rode-local, checador de privacidade OK, `testar-missoes.js` e `testar-navegador.js --todas` OK (18 “Missão cumprida!” com a saída real, 76 negativos sem falso positivo; `introducao` “Quase lá!” com `(sem saída)`). Hash do lote: `553e122`.
 - [x] Telas de duas aulas: `/workspace/telas/cmd-dir.png` e `/workspace/telas/cmd-echo.png` (fora do repo)
