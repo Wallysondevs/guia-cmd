@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listando (dir) — ver pastas e arquivos no Prompt de Comando | Guia CMD</title>
+<meta name="description" content="O comando dir no Prompt de Comando: listagem completa, dir /b, dir /w, arquivos ocultos com dir /a, subpastas com dir /s, ordenação e os erros reais de pasta inexistente e de opção inválida.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Listando (<span class="hl">dir</span>)</h1>
+
+
+<p class="intro">A primeira pergunta útil, numa pasta nova, é: <strong>o que tem aqui?</strong> O <code>dir</code> (de <em>directory</em>, “diretório”) lista arquivos e pastas. Nesta aula você vê a lista completa, a lista curta, os arquivos ocultos, o que existe nas subpastas e o que o <code>cmd</code> responde quando o caminho ou a opção não existem.</p>
+
+<div class="note">
+<strong>Você vai aprender</strong>
+<ul>
+  <li>O <code>dir</code>, que lista o conteúdo da pasta atual, com data, tamanho e nome.</li>
+  <li>O <code>dir /b</code> (só os nomes) e o <code>dir /w</code> (em colunas).</li>
+  <li>O <code>dir /a</code> e o <code>dir /a:h</code>, que mostram também os arquivos ocultos.</li>
+  <li>O <code>dir /s</code> e o <code>dir /s /b</code>, que descem nas subpastas.</li>
+  <li>A ordenar com <code>/o:n</code>, <code>/o:-d</code> e <code>/o:s</code>.</li>
+  <li>Os erros reais de um caminho que não existe e de uma opção inválida.</li>
+</ul>
+</div>
+
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+
+<hr>
+
+<h2>A ideia: abrir a gaveta e olhar</h2>
+<p>A pasta atual é uma gaveta. O <code>dir</code> abre a gaveta e lista o que tem dentro: cada arquivo, cada subpasta, a data e o tamanho. Ele não pega nada, não muda nada e não entra nas outras gavetas — a menos que você peça, com <code>/s</code>.</p>
+
+<hr>
+
+<h2>1. A lista completa</h2>
+<p>Na pasta de teste, o <code>dir</code> sozinho respondeu isto:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+20/11/2026  20:05    &lt;DIR&gt;          .
+20/11/2026  20:05    &lt;DIR&gt;          ..
+20/11/2026  20:05                22 agenda.txt
+20/11/2026  20:05    &lt;DIR&gt;          backup
+20/11/2026  20:05    &lt;DIR&gt;          docs
+20/11/2026  20:05    &lt;DIR&gt;          fotos
+20/11/2026  20:05    &lt;DIR&gt;          lixeira
+20/11/2026  20:05                44 notas.txt
+20/11/2026  20:05                32 rascunho.tmp
+20/11/2026  20:05                81 relatorio.docx
+20/11/2026  20:05                61 relatorio.txt
+               5 arquivo(s)            240 bytes
+               6 pasta(s)   312.456.789.504 bytes disponíveis
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy">
+  <dt>dir</dt>
+  <dd>o comando: “liste o conteúdo desta pasta”.</dd>
+</dl>
+<p>No topo, o Windows informa o volume do disco e o número de série. Neste guia, o número já foi anonimizado para <code>XXXX-XXXX</code> (ícs literais, não é um serial de verdade). Em seguida vêm a pasta, uma linha para cada item e o total de arquivos e pastas. As pastas aparecem como <code>&lt;DIR&gt;</code>. Os nomes <code>.</code> e <code>..</code> são a pasta atual e a pasta de cima; você vai usá-los no <code>cd</code>.</p>
+<p>Repare também na linha em branco entre o fim da saída e o próximo prompt: no Prompt de Comando de verdade, ela sempre aparece.</p>
+
+<hr>
+
+<h2>2. Só os nomes: <code>dir /b</code></h2>
+<p>A chave <code>/b</code> (de <em>bare</em>, “nu”) tira cabeçalho, data, tamanho e totais. Sobram os nomes, um por linha — o jeito mais fácil de ler e o que mais se usa em scripts:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas.txt
+rascunho.tmp
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+
+<hr>
+
+<h2>3. Em colunas: <code>dir /w</code></h2>
+<p>A chave <code>/w</code> (de <em>wide</em>, “largo”) mostra os nomes lado a lado. As pastas vêm entre colchetes:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /w
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+[.]              [..]             agenda.txt       [backup]
+[docs]           [fotos]          [lixeira]        notas.txt
+rascunho.tmp     relatorio.docx   relatorio.txt    
+               5 arquivo(s)            240 bytes
+               6 pasta(s)   312.456.789.504 bytes disponíveis
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+
+<hr>
+
+<h2>4. O que estava oculto: <code>dir /a</code> e <code>dir /a:h</code></h2>
+<p>O <code>dir</code> comum não mostrou o arquivo oculto da pasta de teste. Com <code>/a</code> (de <em>attributes</em>, “atributos”), ele entra na lista. Com <code>/a:h</code>, só os ocultos:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /a:h
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+20/11/2026  20:05                27 um-oculto.txt
+               1 arquivo(s)             27 bytes
+               0 pasta(s)   312.456.789.504 bytes disponíveis
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Apareceu só o <code>um-oculto.txt</code>. No <code>dir /a</code> (sem o <code>:h</code>), esse arquivo aparece no meio dos outros, e o total passa de 5 para 6 arquivos.</p>
+
+<hr>
+
+<h2>5. Descendo nas subpastas: <code>dir /s /b</code></h2>
+<p>A chave <code>/s</code> (de <em>subdirectories</em>) inclui o que está dentro das subpastas. Sem o <code>/b</code>, a saída é longa: o <code>dir</code> repete o cabeçalho do volume e uma tabela para cada pasta. O par <code>/s /b</code> é mais fácil de ler: um caminho completo por linha.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /s /b
+C:\Users\ana\guia-cmd-teste\agenda.txt
+C:\Users\ana\guia-cmd-teste\backup
+C:\Users\ana\guia-cmd-teste\docs
+C:\Users\ana\guia-cmd-teste\fotos
+C:\Users\ana\guia-cmd-teste\lixeira
+C:\Users\ana\guia-cmd-teste\notas.txt
+C:\Users\ana\guia-cmd-teste\rascunho.tmp
+C:\Users\ana\guia-cmd-teste\relatorio.docx
+C:\Users\ana\guia-cmd-teste\relatorio.txt
+C:\Users\ana\guia-cmd-teste\fotos\ferias.png
+C:\Users\ana\guia-cmd-teste\fotos\legenda.txt
+C:\Users\ana\guia-cmd-teste\fotos\praia.png
+C:\Users\ana\guia-cmd-teste\lixeira\dois.txt
+C:\Users\ana\guia-cmd-teste\lixeira\um.txt
+C:\Users\ana\guia-cmd-teste\lixeira\velho.tmp
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Aí estão, entre outros, os arquivos de <code>fotos</code> e de <code>lixeira</code>. Você também pode pedir só uma subpasta, como <code>dir fotos</code>.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir fotos
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste\fotos
+
+20/11/2026  20:05    &lt;DIR&gt;          .
+20/11/2026  20:05    &lt;DIR&gt;          ..
+20/11/2026  20:05                16 ferias.png
+20/11/2026  20:05                42 legenda.txt
+20/11/2026  20:05                16 praia.png
+               3 arquivo(s)             74 bytes
+               2 pasta(s)   312.456.789.504 bytes disponíveis
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+
+<hr>
+
+<h2>6. Ordenar: nome, data e tamanho</h2>
+<p>A chave <code>/o</code> (de <em>order</em>, “ordem”) muda a ordem da lista. <code>/o:n</code> é por nome, <code>/o:s</code> é por tamanho e <code>/o:-d</code> é por data, da mais nova para a mais antiga (o hífen inverte). Na pasta de teste, por tamanho, os arquivos cresceram de <code>agenda.txt</code> (22 bytes) até <code>relatorio.docx</code> (81 bytes):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /o:s
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+20/11/2026  20:05    &lt;DIR&gt;          .
+20/11/2026  20:05    &lt;DIR&gt;          ..
+20/11/2026  20:05    &lt;DIR&gt;          lixeira
+20/11/2026  20:05    &lt;DIR&gt;          backup
+20/11/2026  20:05    &lt;DIR&gt;          docs
+20/11/2026  20:05    &lt;DIR&gt;          fotos
+20/11/2026  20:05                22 agenda.txt
+20/11/2026  20:05                32 rascunho.tmp
+20/11/2026  20:05                44 notas.txt
+20/11/2026  20:05                61 relatorio.txt
+20/11/2026  20:05                81 relatorio.docx
+               5 arquivo(s)            240 bytes
+               6 pasta(s)   312.456.789.504 bytes disponíveis
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+
+<hr>
+
+<h2>Formas diferentes de listar</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>dir</code></td><td>Quando você quer data, tamanho e o total, de relance.</td></tr>
+<tr><td><code>dir /b</code></td><td>Quando quer só os nomes, um por linha. É o mais usado neste guia.</td></tr>
+<tr><td><code>dir /w</code></td><td>Quando quer ver muitos nomes de uma vez, em colunas.</td></tr>
+<tr><td><code>dir /a</code> e <code>dir /a:h</code></td><td>Quando precisa ver (ou ver só) os arquivos ocultos.</td></tr>
+<tr><td><code>dir /s /b</code></td><td>Quando quer os caminhos de tudo o que está nas subpastas.</td></tr>
+<tr><td><code>dir fotos</code> ou <code>dir notas.txt</code></td><td>Quando quer olhar uma subpasta ou um arquivo específico.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario">
+<strong>Uma pasta que não existe</strong>
+<p>Pedindo <code>dir pasta-nao-existe</code>, o <code>cmd</code> ainda mostra o cabeçalho do volume e, no fim, a mensagem real:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir pasta-nao-existe
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A frase <code>Arquivo não encontrado</code> veio exatamente assim do Prompt, em português. Não traduzimos.</p>
+</div>
+<div class="cenario">
+<strong>Uma opção que não existe</strong>
+<p>O <code>dir</code> não tem a chave <code>/z</code>. A resposta foi esta:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /z
+Opção inválida - "z".
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario">
+<strong>Tratar um arquivo como se fosse pasta</strong>
+<p>Com <code>dir notas.txt\x</code>, o <code>cmd</code> tentou abrir um caminho dentro de um arquivo. A mensagem foi a mesma de “não encontrado”, e o cabeçalho mostrou <code>Pasta de C:\Users\ana\guia-cmd-teste\notas.txt</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir notas.txt\x
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste\notas.txt
+
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+
+<hr>
+
+<h2>Referência rápida</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>dir</code></td><td>Lista arquivos e pastas da pasta atual, com data e tamanho.</td></tr>
+<tr><td><code>dir /b</code></td><td>Lista só os nomes, um por linha.</td></tr>
+<tr><td><code>dir /w</code></td><td>Lista os nomes em colunas; pastas entre colchetes.</td></tr>
+<tr><td><code>dir /a</code></td><td>Inclui arquivos ocultos.</td></tr>
+<tr><td><code>dir /a:h</code></td><td>Mostra só os ocultos.</td></tr>
+<tr><td><code>dir /s /b</code></td><td>Lista, em caminhos completos, o que há nas subpastas.</td></tr>
+<tr><td><code>dir /o:n</code>, <code>/o:s</code>, <code>/o:-d</code></td><td>Ordena por nome, por tamanho ou por data invertida.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Exercícios</h2>
+
+<div class="exercise">
+<h3>1. Só os nomes</h3>
+<p>Complete para listar só os nomes, um por linha:</p>
+<div class="ex-code">dir <input data-answer="/b" aria-label="chave"></div>
+</div>
+
+<div class="exercise">
+<h3>2. Ocultos</h3>
+<p>Complete para mostrar só os arquivos ocultos:</p>
+<div class="ex-code">dir <input data-answer="/a:h|/ah" aria-label="chave"></div>
+</div>
+
+<div class="exercise">
+<h3>3. Subpastas, só caminhos</h3>
+<p>Complete para listar os caminhos de tudo o que está nas subpastas, um por linha:</p>
+<div class="ex-code">dir <input data-answer="/s /b|/b /s" aria-label="chaves"></div>
+</div>
+
+<div class="mc" data-answer="2">
+<p class="mc-q">4. O que o <code>dir</code> sozinho faz?</p>
+<label><input type="radio" name="q4"> Muda para outra pasta</label>
+<label><input type="radio" name="q4"> Lista arquivos e pastas da pasta atual, com data, tamanho e um total</label>
+<label><input type="radio" name="q4"> Apaga os arquivos ocultos</label>
+<label><input type="radio" name="q4"> Cria a pasta <code>fotos</code></label>
+</div>
+
+<div class="mc" data-answer="1">
+<p class="mc-q">5. No laboratório, o <code>dir /b</code> mostrou <code>agenda.txt</code>, <code>backup</code>, <code>docs</code>… O que a chave <code>/b</code> tirou da lista?</p>
+<label><input type="radio" name="q5"> O cabeçalho do volume, as datas, os tamanhos e os totais</label>
+<label><input type="radio" name="q5"> Todos os arquivos <code>.txt</code></label>
+<label><input type="radio" name="q5"> As subpastas</label>
+<label><input type="radio" name="q5"> O nome da pasta atual</label>
+</div>
+
+<div class="mc" data-answer="3">
+<p class="mc-q">6. Qual é a mensagem real do <code>dir /z</code>, colhida no laboratório?</p>
+<label><input type="radio" name="q6"> <code>Arquivo não encontrado</code></label>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q6"> <code>Opção inválida - "z".</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “chave z não existe”</label>
+</div>
+
+<div class="trycmd" data-goal="src:\bdir\b;;src:/b;;out:agenda.txt;;out:notas.txt;;out:relatorio.txt">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste do guia, liste só os nomes, um por linha, com <code>dir /b</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /b
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas.txt
+rascunho.tmp
+relatorio.docx
+relatorio.txt
+</pre>
+</div>
+
+<div class="trycmd" data-goal="src:\bdir\b;;src:/a:h;;out:um-oculto.txt">
+<p class="try-task"><strong>Missão:</strong> ainda na pasta de teste, mostre só os arquivos ocultos, com <code>dir /a:h</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /a:h
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+20/11/2026  20:05                27 um-oculto.txt
+               1 arquivo(s)             27 bytes
+               0 pasta(s)   312.456.789.504 bytes disponíveis
+</pre>
+</div>
+
+<hr>
+
+<h2>Resumo</h2>
+<ul>
+  <li><code>dir</code> lista o que há na pasta atual: nomes, datas, tamanhos e um total. No topo vêm o volume e o número de série (neste guia, <code>XXXX-XXXX</code>).</li>
+  <li><code>dir /b</code> deixa só os nomes; <code>dir /w</code> os coloca em colunas.</li>
+  <li><code>dir /a</code> inclui ocultos; <code>dir /a:h</code> mostra só eles.</li>
+  <li><code>dir /s /b</code> desce nas subpastas, com o caminho completo.</li>
+  <li><code>/o:n</code>, <code>/o:s</code> e <code>/o:-d</code> mudam a ordem. Um caminho inexistente e uma opção inválida devolvem mensagens reais, que não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

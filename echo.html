@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escrevendo na Tela (echo) — mostrar um texto no Prompt de Comando | Guia CMD</title>
+<meta name="description" content="O comando echo no Prompt de Comando: escrever um texto, pular uma linha com echo., gravar em arquivo com &gt; e &gt;&gt; e os erros reais de redirecionar para uma pasta ou para um caminho inexistente. O echo off é explicado só em texto, sem saída colhida.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Escrevendo na Tela (<span class="hl">echo</span>)</h1>
+
+
+<p class="intro">O <code>echo</code> pede ao computador que <strong>escreva um texto</strong>. É o “olá” das mensagens na tela e, com um <code>&gt;</code>, também o jeito mais simples de gravar esse texto num arquivo. Nesta aula você vê o eco na tela, a linha em branco, a gravação em arquivo — e deixa o <code>echo off</code> só na explicação, sem caixa de saída.</p>
+<div class="note"><strong>Você vai aprender</strong>
+<ul>
+<li>O <code>echo texto</code>, que escreve o texto na tela.</li>
+<li>O <code>echo.</code> (com o ponto encostado), que pula uma linha em branco.</li>
+<li>O que <code>echo on</code> e <code>echo off</code> fazem no Prompt aberto — só em texto, sem saída colhida.</li>
+<li>A gravar e a acrescentar texto num arquivo com <code>&gt;</code> e <code>&gt;&gt;</code>.</li>
+<li>Os erros reais de redirecionar para uma pasta e para um caminho que não existe.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<hr>
+<h2>A ideia: um megafone</h2>
+<p>O <code>echo</code> é um megafone: o que você coloca na frente dele é o que aparece na tela. Com um <code>&gt;</code>, o megafone aponta para um arquivo em vez da tela.</p>
+<hr>
+<h2>1. Escrever na tela</h2>
+<p>O pedido <code>echo Olá, turma</code> devolveu exatamente o texto, sem a palavra <code>echo</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo Olá, turma
+Olá, turma
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>echo</dt><dd>o comando: “escreva isto”.</dd><dt>Olá, turma</dt><dd>o texto que você quer ver.</dd></dl>
+<hr>
+<h2>2. Uma linha em branco: <code>echo.</code></h2>
+<p>O ponto encostado no <code>echo</code> é proposital: pede uma linha vazia. A saída colhida foi isso — uma linha em branco — e depois o prompt voltou:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo.
+
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. <code>echo on</code> e <code>echo off</code>, só em texto</h2>
+<p>No Prompt aberto, o <code>echo off</code> esconde a repetição dos próprios comandos: o que você digitou deixa de ser “ecoado” antes da resposta. O <code>echo on</code> liga o eco de novo. Isso é especialmente útil dentro de um arquivo <code>.bat</code>, no Nível 3.</p>
+<p>Via <code>cmd /c</code>, o efeito interativo (o prompt “sumir” ou o comando deixar de se repetir) <strong>não aparece</strong>. Por isso esta aula explica o <code>echo off</code> e o <code>echo on</code> só em texto, sem caixa de saída, como combinado na coleta.</p>
+<hr>
+<h2>4. Gravar num arquivo: <code>&gt;</code> e <code>&gt;&gt;</code></h2>
+<p>O <code>&gt;</code> manda o texto para um arquivo, em vez da tela. O comando em si não imprime nada. Depois, o <code>type</code> mostra o que ficou gravado:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo Olá, turma &gt; saudacao.txt
+
+C:\Users\ana\guia-cmd-teste&gt;type saudacao.txt
+Olá, turma 
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Olhe com cuidado a linha do <code>type</code>: o arquivo ficou com <code>Olá, turma </code>, <strong>com um espaço no fim</strong>. Esse espaço é o que estava no comando, entre a palavra <code>turma</code> e o <code>&gt;</code>. O <code>echo</code> grava esse espaço. Na aula de redirecionamento a gente volta a esse detalhe.</p>
+<p>O <code>&gt;&gt;</code> acrescenta no fim, sem apagar o que já existia. Depois de mais uma linha, de um <code>echo.</code> (linha vazia) e de um <code>fim</code>, o arquivo ficou assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type saudacao.txt
+Olá, turma 
+segunda linha 
+ 
+fim 
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de usar o echo</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>echo Olá, turma</code></td><td>Para escrever o texto na tela.</td></tr>
+<tr><td><code>echo.</code></td><td>Para pular uma linha em branco (o ponto encostado é parte do comando).</td></tr>
+<tr><td><code>echo on</code> / <code>echo off</code></td><td>No Prompt aberto ou num <code>.bat</code>, para mostrar ou esconder os próprios comandos. Nesta aula, só em texto.</td></tr>
+<tr><td><code>echo texto &gt; arquivo.txt</code></td><td>Para gravar o texto num arquivo, substituindo o conteúdo anterior.</td></tr>
+<tr><td><code>echo texto &gt;&gt; arquivo.txt</code></td><td>Para acrescentar o texto no fim do arquivo.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Redirecionar para uma pasta</strong><p><code>fotos</code> é uma pasta. O pedido <code>echo texto &gt; fotos</code> devolveu:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo texto &gt; fotos
+Acesso negado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>Um caminho que não existe</strong><p>Com <code>echo texto &gt; pasta-nao-existe\x.txt</code>, a mensagem foi esta:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo texto &gt; pasta-nao-existe\x.txt
+O sistema não pode encontrar o caminho especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>echo texto</code></td><td>Escreve o texto na tela.</td></tr>
+<tr><td><code>echo.</code></td><td>Escreve uma linha em branco.</td></tr>
+<tr><td><code>echo off</code> / <code>echo on</code></td><td>Desliga ou liga o eco dos comandos, no Prompt aberto. Sem saída colhida nesta aula.</td></tr>
+<tr><td><code>echo texto &gt; arq.txt</code></td><td>Grava o texto no arquivo (e também o espaço que vier antes do <code>&gt;</code>).</td></tr>
+<tr><td><code>echo texto &gt;&gt; arq.txt</code></td><td>Acrescenta o texto no fim do arquivo.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para escrever <code>Olá, turma</code> na tela:</p><div class="ex-code"><input data-answer="echo" aria-label="comando"> Olá, turma</div></div>
+<div class="exercise"><h3>2. A linha em branco</h3><p>Complete para pular uma linha vazia (o ponto encostado conta):</p><div class="ex-code"><input data-answer="echo." aria-label="comando"></div></div>
+<div class="exercise"><h3>3. Acrescentar no arquivo</h3><p>Qual símbolo acrescenta o texto no <em>fim</em> do arquivo, sem apagar o que já existia?</p><div class="ex-code"><input data-answer=">>|&gt;&gt;" aria-label="símbolo"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>echo Olá, turma</code> fez no laboratório?</p>
+<label><input type="radio" name="q4"> Gravou o texto em <code>saudacao.txt</code>, sem mostrar nada</label>
+<label><input type="radio" name="q4"> Escreveu <code>Olá, turma</code> na tela</label>
+<label><input type="radio" name="q4"> Ligou o eco dos comandos</label>
+<label><input type="radio" name="q4"> Devolveu <code>Acesso negado.</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não mostra a saída do <code>echo off</code>?</p>
+<label><input type="radio" name="q5"> Porque o efeito interativo não aparece via <code>cmd /c</code>; a aula explica só em texto</label>
+<label><input type="radio" name="q5"> Porque o comando não existe no Windows</label>
+<label><input type="radio" name="q5"> Porque a saída é um segredo do laboratório</label>
+<label><input type="radio" name="q5"> Porque o <code>echo off</code> apaga o disco</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. No <code>type saudacao.txt</code> depois de <code>echo Olá, turma &gt; saudacao.txt</code>, por que havia um espaço no fim da linha?</p>
+<label><input type="radio" name="q6"> Porque o <code>type</code> acrescenta espaço em todo arquivo</label>
+<label><input type="radio" name="q6"> Porque o Windows traduziu o texto</label>
+<label><input type="radio" name="q6"> Porque o espaço que estava no comando, antes do <code>&gt;</code>, foi gravado no arquivo</label>
+<label><input type="radio" name="q6"> Porque o arquivo veio vazio</label></div>
+<div class="trycmd" data-goal="src:\becho\b;;outre:^Olá, turma\s*$">
+<p class="try-task"><strong>Missão:</strong> no Prompt, escreva <code>Olá, turma</code> na tela com o comando <code>echo</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo Olá, turma
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Olá, turma
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\becho\b;;src:\btype\b;;outre:^Olá, turma\s*$">
+<p class="try-task"><strong>Missão:</strong> grave o mesmo texto em <code>saudacao.txt</code> com <code>&gt;</code> e mostre o arquivo com <code>type</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo Olá, turma &gt; saudacao.txt
+type saudacao.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Olá, turma 
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>echo texto</code> escreve o texto na tela. <code>echo.</code> pula uma linha em branco.</li>
+<li><code>echo off</code> e <code>echo on</code> ligam ou desligam o eco dos comandos no Prompt aberto; nesta aula, isso fica só na explicação, sem saída colhida.</li>
+<li><code>&gt;</code> grava num arquivo (e leva o espaço que vier antes do símbolo); <code>&gt;&gt;</code> acrescenta no fim.</li>
+<li>Redirecionar para uma pasta ou para um caminho inexistente devolve mensagens reais, que não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

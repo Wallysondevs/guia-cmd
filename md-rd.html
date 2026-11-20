@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criando e Apagando Pastas (md e rd) — mkdir e rmdir no Prompt de Comando | Guia CMD</title>
+<meta name="description" content="Os comandos md e rd no Prompt de Comando: criar pastas, criar subpastas, apagar pasta vazia, o rd /s /q e os erros reais de pasta que não está vazia, de nome que já existe e de pasta inexistente. Cobre também os sinônimos mkdir e rmdir.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Criando e Apagando Pastas (<span class="hl">md</span> e <span class="hl">rd</span>)</h1>
+
+
+<p class="intro">Depois de andar pelas pastas que já existem, você vai <strong>criar</strong> e <strong>apagar</strong> as suas. O <code>md</code> (de <em>make directory</em>) cria uma pasta. O <code>rd</code> (de <em>remove directory</em>) apaga uma pasta vazia. Os dois têm sinônimos, <code>mkdir</code> e <code>rmdir</code>, e o <code>rd /s /q</code> apaga uma pasta com conteúdo — com cuidado, e só dentro da pasta de teste.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>md</code>, que cria uma pasta, e o <code>md pasta\sub</code>, que cria uma subpasta.</li>
+<li>O <code>md pasta1 pasta2</code>, que cria duas de uma vez.</li>
+<li>O <code>rd</code>, que apaga uma pasta <strong>vazia</strong>.</li>
+<li>O <code>rd /s /q</code>, que apaga uma pasta com conteúdo, sem perguntar.</li>
+<li>Os sinônimos <code>mkdir</code> e <code>rmdir</code>.</li>
+<li>Os erros reais de pasta que não está vazia, de nome que já existe e de pasta inexistente.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<p>Nunca use <code>rd /s /q</code> com variável ou com um caminho que você não tenha acabado de criar. Variável vazia pode virar <code>rd /s /q \</code>, e isso é perigoso. Neste laboratório, os nomes são literais, sempre dentro da pasta de teste.</p>
+<hr>
+<h2>A ideia: montar e desmontar uma caixa</h2>
+<p>O <code>md</code> monta uma caixa nova na prateleira. O <code>rd</code> só leva embora uma caixa <em>vazia</em>. Se ainda tem coisa dentro, ele recusa. Para desmontar a caixa com tudo o que está lá, você precisa do <code>/s</code> — e do <code>/q</code> para ele não ficar perguntando S/N.</p>
+<hr>
+<h2>1. Criar uma pasta e conferir</h2>
+<p>O <code>md projetos</code> não imprime nada quando dá certo. A conferência é o <code>dir /b /ad</code> (só as pastas): a lista ganhou <code>projetos</code>.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;md projetos
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b /ad
+backup
+docs
+fotos
+lixeira
+projetos
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>md</dt><dd>o comando: “crie esta pasta”.</dd><dt>projetos</dt><dd>o nome da pasta nova, na pasta atual.</dd><dt>dir /b /ad</dt><dd><code>/b</code> é só os nomes; <code>/ad</code> é só pastas (o atributo de diretório).</dd></dl>
+<hr>
+<h2>2. Uma subpasta e duas de uma vez</h2>
+<p>Com <code>md projetos\anexos</code>, o <code>cmd</code> cria <code>anexos</code> dentro de <code>projetos</code>. O <code>dir /s /b /ad</code> mostrou o caminho completo da nova subpasta:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;md projetos\anexos
+
+C:\Users\ana\guia-cmd-teste&gt;dir /s /b /ad
+C:\Users\ana\guia-cmd-teste\backup
+C:\Users\ana\guia-cmd-teste\docs
+C:\Users\ana\guia-cmd-teste\fotos
+C:\Users\ana\guia-cmd-teste\lixeira
+C:\Users\ana\guia-cmd-teste\projetos
+C:\Users\ana\guia-cmd-teste\projetos\anexos
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>md pasta1 pasta2</code> cria as duas na pasta atual. Depois do <code>dir /b /ad</code>, as duas apareceram na lista, ao lado de <code>projetos</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;md pasta1 pasta2
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b /ad
+backup
+docs
+fotos
+lixeira
+pasta1
+pasta2
+projetos
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Apagar: vazia, cheia e com <code>/s /q</code></h2>
+<p><code>rd pasta2</code> não imprimiu nada: <code>pasta2</code> estava vazia e saiu. Já o <code>rd projetos</code> recusou, porque <code>projetos</code> ainda tinha <code>anexos</code> dentro:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;rd pasta2
+
+C:\Users\ana\guia-cmd-teste&gt;rd projetos
+A pasta não está vazia.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com <code>/s</code> (também as subpastas) e <code>/q</code> (sem perguntar), o <code>rd</code> apagou <code>projetos</code> por inteiro, em silêncio:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;rd /s /q projetos
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>4. Os sinônimos <code>mkdir</code> e <code>rmdir</code></h2>
+<p>São o mesmo par, com o nome por extenso. O laboratório criou <code>temp1\temp2</code> com <code>mkdir</code> e apagou a árvore com <code>rmdir /s /q temp1</code>, os dois em silêncio:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;mkdir temp1\temp2
+
+C:\Users\ana\guia-cmd-teste&gt;rmdir /s /q temp1
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de criar e apagar pastas</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>md projetos</code> ou <code>mkdir projetos</code></td><td>Para criar uma pasta na pasta atual. Os dois nomes fazem a mesma coisa.</td></tr>
+<tr><td><code>md projetos\anexos</code></td><td>Para criar uma subpasta, quando a pasta de cima já existe.</td></tr>
+<tr><td><code>md pasta1 pasta2</code></td><td>Para criar duas (ou mais) de uma vez.</td></tr>
+<tr><td><code>rd pasta2</code> ou <code>rmdir pasta2</code></td><td>Para apagar uma pasta vazia.</td></tr>
+<tr><td><code>rd /s /q projetos</code></td><td>Para apagar uma pasta com conteúdo, sem perguntar — só com nome literal, dentro da pasta de teste.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>A pasta não está vazia</strong><p>O <code>rd projetos</code>, com a subpasta ainda lá, devolveu:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;rd projetos
+A pasta não está vazia.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>O nome já existe</strong><p>Depois de criar <code>projetos</code> de novo, um segundo <code>md projetos</code> respondeu:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;md projetos
+Já existe uma subpasta ou um arquivo projetos.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>A pasta não existe</strong><p>O <code>rd pasta-nao-existe</code> devolveu esta mensagem — note que, neste caso, o <code>cmd</code> fala em “arquivo”:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;rd pasta-nao-existe
+O sistema não pode encontrar o arquivo especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>md nome</code> / <code>mkdir nome</code></td><td>Cria a pasta. Não imprime nada quando dá certo.</td></tr>
+<tr><td><code>rd nome</code> / <code>rmdir nome</code></td><td>Apaga a pasta, mas só se estiver vazia.</td></tr>
+<tr><td><code>rd /s /q nome</code></td><td>Apaga a pasta e o conteúdo, sem perguntar. Só com nome literal, na pasta de teste.</td></tr>
+<tr><td><code>dir /b /ad</code></td><td>Confere: lista só as pastas da pasta atual.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Criar</h3><p>Complete para criar a pasta <code>projetos</code>:</p><div class="ex-code"><input data-answer="md|mkdir" aria-label="comando"> projetos</div></div>
+<div class="exercise"><h3>2. Apagar vazia</h3><p>Complete para apagar a pasta vazia <code>pasta2</code>:</p><div class="ex-code"><input data-answer="rd|rmdir" aria-label="comando"> pasta2</div></div>
+<div class="exercise"><h3>3. O sinônimo de md</h3><p>Qual é o outro nome do <code>md</code>?</p><div class="ex-code"><input data-answer="mkdir" aria-label="comando"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>rd projetos</code> (sem <code>/s</code>) faz quando a pasta tem uma subpasta?</p>
+<label><input type="radio" name="q4"> Apaga tudo, em silêncio</label>
+<label><input type="radio" name="q4"> Recusa, com a mensagem real <code>A pasta não está vazia.</code></label>
+<label><input type="radio" name="q4"> Pede uma senha de administrador</label>
+<label><input type="radio" name="q4"> Muda para dentro de <code>projetos</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que o <code>rd /s /q</code> desta aula usa um nome literal, dentro da pasta de teste?</p>
+<label><input type="radio" name="q5"> Porque uma variável vazia ou um caminho relativo perigoso pode apagar o que não devia; o <code>/q</code> ainda por cima não pergunta</label>
+<label><input type="radio" name="q5"> Porque o <code>rd</code> não aceita nomes literais</label>
+<label><input type="radio" name="q5"> Porque o <code>/q</code> significa “quero mesmo a raiz do disco”</label>
+<label><input type="radio" name="q5"> Porque o laboratório não sabe criar pastas</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a mensagem real do segundo <code>md projetos</code>, quando a pasta já existia?</p>
+<label><input type="radio" name="q6"> <code>A pasta não está vazia.</code></label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q6"> <code>Já existe uma subpasta ou um arquivo projetos.</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “nome repetido”</label></div>
+<div class="trycmd" data-goal="src:\bmd\b;;src:/ad;;outre:^projetos$;;out:fotos">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, crie a pasta <code>projetos</code> com <code>md</code> e confira com <code>dir /b /ad</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+md projetos
+dir /b /ad
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+backup
+docs
+fotos
+lixeira
+projetos
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\brd\b;;out:O sistema não pode encontrar o arquivo especificado.">
+<p class="try-task"><strong>Missão:</strong> tente apagar com <code>rd</code> uma pasta que não existe, <code>pasta-nao-existe</code>, e observe a mensagem real.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+rd pasta-nao-existe
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+O sistema não pode encontrar o arquivo especificado.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>md</code> (ou <code>mkdir</code>) cria pastas; não imprime nada quando dá certo. Confira com <code>dir /b /ad</code>.</li>
+<li><code>rd</code> (ou <code>rmdir</code>) só apaga pasta vazia. Com conteúdo, use <code>rd /s /q</code>, só com nome literal, dentro da pasta de teste.</li>
+<li>Pasta cheia, nome repetido e pasta inexistente devolvem mensagens reais, que não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

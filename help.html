@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Ajuda (help e /?) — achar a descrição de um comando no Prompt | Guia CMD</title>
+<meta name="description" content="Os comandos help e /? no Prompt de Comando: a ajuda de um comando, o echo /?, e os erros reais de um comando que a ajuda não conhece e de um nome que o cmd não reconhece.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>A Ajuda (<span class="hl">help</span> e <span class="hl">/?</span>)</h1>
+
+
+<p class="intro">Quando você esquece uma chave ou quer confirmar o que um comando faz, o próprio <code>cmd</code> explica. O <code>help</code> e o <code>/?</code> mostram o texto oficial do Windows, em português neste laboratório. Nesta aula você lê essa ajuda de verdade e vê o que acontece quando o nome do comando não existe.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>help comando</code> e o <code>comando /?</code>, que mostram a descrição oficial.</li>
+<li>Que os dois jeitos, no laboratório, devolveram o mesmo texto para o <code>dir</code> e para o <code>cd</code>.</li>
+<li>O <code>echo /?</code>, uma ajuda curta e completa.</li>
+<li>Os erros reais de um comando que a ajuda não conhece e de um nome que o <code>cmd</code> não reconhece.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<p>O <code>help</code> sozinho lista todos os comandos internos; a saída é longa (mais de cem linhas no laboratório). Aqui usamos a ajuda de um comando de cada vez, que é o jeito mais útil no dia a dia. No Prompt interativo, o <code>help</code> às vezes passa pelo <code>MORE</code>; se a tela pausar, a tecla de espaço continua.</p>
+<hr>
+<h2>A ideia: o folheto que vem na caixa</h2>
+<p>Cada comando traz um folheto de instruções. O <code>help</code> e o <code>/?</code> abrem esse folheto. Ele está na língua do Windows instalado — aqui, em português — e a gente <strong>não traduz</strong> o texto oficial.</p>
+<hr>
+<h2>1. <code>help dir</code> e <code>dir /?</code></h2>
+<p>Os dois pedidos devolveram o mesmo texto no laboratório. Esta é a saída real do <code>help dir</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;help dir
+Exibe uma lista de arquivos e subdiretórios em um diretório.
+
+DIR [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
+  [/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
+
+  [drive:][path][filename]
+              Especifica a unidade, o diretório e/ou arquivos a serem listados.
+
+  /A          Exibe arquivos com atributos especificados.
+  atributos   D  Diretórios              R  Arquivos somente leitura
+               H  Arquivos ocultos        A  Arquivos prontos para arquivamento
+               S  Arquivos de sistema     I  Arquivos sem conteúdo indexado
+               L  Pontos de nova análise             O  Arquivos offline
+               -  Prefixo significando negação
+  /B          Usa formatação básica (sem informações de cabeçalho ou resumo).
+  /C          Exibe o separador de milhar em tamanhos de arquivos. É o
+              padrão.  Use /-C para desabilitar a exibição do separador.
+  /D          O mesmo que amplo, mas os arquivos são classificados na lista por coluna.
+  /L          Usa letras minúsculas.
+  /N          Novo formato de lista longo onde os nomes de arquivos estão à extrema direita.
+  /O          Lista por arquivos na ordem classificada.
+  sortorder    N  Por nome (alfabético)       S  Por tamanho (menor primeiro)
+               E  Por extensão (alfabética)  D  Por data/hora (mais antiga primeiro)
+               G  Grupo de diretórios primeiro  -  Prefixo para inverter a ordem
+  /P          Pausa após cada tela de informações.
+  /Q          Exibe o proprietário do arquivo.
+  /R          Exibe fluxos de dados alternados do arquivo.
+  /S          Exibe os arquivos no diretório especificado e em todos os subdiretórios.
+  /T          Controla qual campo de tempo é exibido ou usado na classificação
+  timefield  C  Criação
+              A  Último Acesso
+              W  Última Gravação
+  /W          Usa o formato de lista amplo.
+  /X          Exibe os nomes curtos gerados para nomes de arquivos
+              diferentes do formato 8.3. O formato é /N com o nome curto
+              inserido antes do nome longo. Se nenhum nome curto estiver
+              presente, serão exibidos espaços no seu lugar.
+  /4          Exibe anos de quatro dígitos
+
+As opções podem estar predefinidas na variável de ambiente DIRCMD.
+Substituir nas opções predefinidas ao prefixar qualquer opção com - (hífen)--por exemplo, /-W.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>dir /?</code> foi idêntico, palavra por palavra. O mesmo aconteceu com <code>help cd</code> e <code>cd /?</code>. Use o jeito que preferir: uns lembram o <code>/?</code> no fim do comando; outros preferem o <code>help</code> na frente.</p>
+<hr>
+<h2>2. Uma ajuda curta: <code>echo /?</code></h2>
+<p>A do <code>echo</code> cabe numa olhada:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo /?
+Exibe mensagens ou ativa ou desativa o eco de comando.
+
+  ECHO [ON | OFF]
+  ECHO [message]
+
+Digite ECHO sem parâmetros para exibir a configuração do eco atual.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de pedir ajuda</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>help dir</code></td><td>Para ler a descrição oficial do <code>dir</code>.</td></tr>
+<tr><td><code>dir /?</code></td><td>O mesmo texto, pedido no próprio comando. No laboratório, idêntico ao <code>help dir</code>.</td></tr>
+<tr><td><code>help</code></td><td>Para ver a lista de todos os comandos internos (saída longa).</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um nome que a ajuda não conhece</strong>
+<p>O <code>help comandoinexistente</code> devolveu esta frase, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;help comandoinexistente
+O utilitário de ajuda não dá suporte a este comando. Experimente usar "comandoinexistente /?".
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>Um nome que o cmd não reconhece</strong>
+<p>Digitando o nome sozinho, sem <code>help</code>, o Prompt respondeu em duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;comandoinexistente
+'comandoinexistente' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>help comando</code></td><td>Mostra a ajuda oficial daquele comando.</td></tr>
+<tr><td><code>comando /?</code></td><td>O mesmo, pedido no próprio comando.</td></tr>
+<tr><td><code>help</code></td><td>Lista os comandos internos (saída longa).</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. A ajuda do dir</h3><p>Complete para pedir a ajuda oficial do <code>dir</code> com o <code>help</code> na frente:</p><div class="ex-code"><input data-answer="help" aria-label="comando"> dir</div></div>
+<div class="exercise"><h3>2. O outro jeito</h3><p>Complete para pedir a mesma ajuda no próprio comando:</p><div class="ex-code">dir <input data-answer="/?" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. A primeira linha do echo /?</h3><p>No laboratório, o <code>echo /?</code> começou com que frase? (basta o começo: <code>Exibe mensagens</code>)</p><div class="ex-code"><input data-answer="Exibe mensagens" aria-label="início"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, <code>help dir</code> e <code>dir /?</code> foram:</p>
+<label><input type="radio" name="q4"> Textos diferentes, um em inglês e outro em português</label>
+<label><input type="radio" name="q4"> O mesmo texto, palavra por palavra</label>
+<label><input type="radio" name="q4"> Um deu erro e o outro não</label>
+<label><input type="radio" name="q4"> Só o <code>/?</code> existe no <code>cmd</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a mensagem real de <code>help comandoinexistente</code>?</p>
+<label><input type="radio" name="q5"> <code>O utilitário de ajuda não dá suporte a este comando. Experimente usar "comandoinexistente /?".</code></label>
+<label><input type="radio" name="q5"> <code>'comandoinexistente' não é reconhecido como um comando interno</code></label>
+<label><input type="radio" name="q5"> <code>Arquivo não encontrado</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “esse comando não existe”</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. A primeira linha da ajuda do <code>echo</code>, colhida no laboratório, foi:</p>
+<label><input type="radio" name="q6"> <code>Cria uma pasta.</code></label>
+<label><input type="radio" name="q6"> <code>Copia um ou mais arquivos para outro local.</code></label>
+<label><input type="radio" name="q6"> <code>Exibe mensagens ou ativa ou desativa o eco de comando.</code></label>
+<label><input type="radio" name="q6"> <code>Exibe uma lista de arquivos e subdiretórios em um diretório.</code></label></div>
+<div class="trycmd" data-goal="src:\becho\b;;src:/\?;;out:Exibe mensagens ou ativa ou desativa o eco de comando.">
+<p class="try-task"><strong>Missão:</strong> peça a ajuda oficial do <code>echo</code> com <code>echo /?</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo /?
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Exibe mensagens ou ativa ou desativa o eco de comando.
+
+  ECHO [ON | OFF]
+  ECHO [message]
+
+Digite ECHO sem parâmetros para exibir a configuração do eco atual.
+</pre>
+</div>
+<div class="trycmd" data-goal="src:comandoinexistente;;out:não é reconhecido como um comando interno">
+<p class="try-task"><strong>Missão:</strong> rode um nome que o Prompt não conhece, <code>comandoinexistente</code>, e observe a mensagem real.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+comandoinexistente
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+'comandoinexistente' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>help comando</code> e <code>comando /?</code> mostram a ajuda oficial. No laboratório, os dois jeitos vieram iguais para o <code>dir</code> e para o <code>cd</code>.</li>
+<li>O texto da ajuda não se traduz: entra como o Windows escreveu.</li>
+<li>Um nome desconhecido devolve mensagens reais, diferentes no <code>help</code> e no Prompt sozinho.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

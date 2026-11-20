@@ -11,25 +11,23 @@ var NIVEIS = [
     { grupo: "Começando", itens: [
       ["index.html", "Início"],
       ["introducao.html", "O que é o Prompt de Comando"],
-      ["abrir-cmd.html", "Abrindo o Prompt de Comando", {pronta: false}]
+      ["abrir-cmd.html", "Abrindo o Prompt de Comando"]
     ]},
     { grupo: "Pastas e Arquivos", itens: [
-      ["dir.html", "Listando (dir)", {pronta: false}],
-      ["cd.html", "Mudando de Pasta (cd)", {pronta: false}],
-      ["md-rd.html", "Criando e Apagando Pastas (md e rd)", {pronta: false}],
-      ["copy.html", "Copiando (copy)", {pronta: false}],
-      ["move.html", "Movendo (move)", {pronta: false}],
-      ["del.html", "Apagando Arquivos (del)", {pronta: false}]
+      ["dir.html", "Listando (dir)"],
+      ["cd.html", "Mudando de Pasta (cd)"],
+      ["md-rd.html", "Criando e Apagando Pastas (md e rd)"],
+      ["copy-move-del.html", "Copiando, Movendo e Apagando (copy, move, del e ren)"]
     ]},
     { grupo: "Texto e Tela", itens: [
-      ["type.html", "Lendo Arquivos (type)", {pronta: false}],
-      ["echo.html", "Escrevendo na Tela (echo)", {pronta: false}],
-      ["cls.html", "Limpando a Tela (cls)", {pronta: false}]
+      ["type.html", "Lendo Arquivos (type)"],
+      ["echo.html", "Escrevendo na Tela (echo)"],
+      ["cls.html", "Limpando a Tela (cls)"]
     ]},
     { grupo: "Ajuda e Atalhos", itens: [
-      ["help.html", "A Ajuda (help e /?)", {pronta: false}],
-      ["curingas.html", "Curingas (* e ?)", {pronta: false}],
-      ["redirecionamento.html", "Redirecionamento (> e >>)", {pronta: false}]
+      ["help.html", "A Ajuda (help e /?)"],
+      ["curingas.html", "Curingas (* e ?)"],
+      ["redirecionamento.html", "Redirecionamento (> e >>)"]
     ]}
   ]},
   { id: "n2", nome: "Nível 2 · Intermediário", curto: "Intermediário", desc: "Mais comandos, filtros e variáveis", grupos: [

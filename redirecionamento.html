@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirecionamento (&gt; e &gt;&gt;) — gravar a saída de um comando num arquivo | Guia CMD</title>
+<meta name="description" content="O redirecionamento no Prompt de Comando: &gt; e &gt;&gt;, 2&gt; para erros, 2&gt;&amp;1 para juntar as duas saídas, nul, e o espaço que o echo grava antes do &gt;. Saídas reais da pasta de teste, inclusive os erros de caminho inexistente.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Redirecionamento (<span class="hl">&gt;</span> e <span class="hl">&gt;&gt;</span>)</h1>
+
+
+<p class="intro">Até agora a resposta do comando aparecia na tela. Com o <strong>redirecionamento</strong>, você manda essa resposta para um arquivo, ou a esconde de propósito. O <code>&gt;</code> cria (ou substitui) o arquivo; o <code>&gt;&gt;</code> acrescenta no fim. Também dá para desviar só as mensagens de erro, com <code>2&gt;</code>, ou as duas coisas juntas, com <code>2&gt;&amp;1</code>.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>&gt;</code>, que grava a saída num arquivo, e o <code>&gt;&gt;</code>, que acrescenta no fim.</li>
+<li>Que o <code>echo texto &gt; arquivo</code> grava também o espaço que vier antes do <code>&gt;</code>.</li>
+<li>O <code>2&gt;</code>, que desvia a mensagem de erro, e o <code>2&gt;&amp;1</code>, que junta erro e saída no mesmo arquivo.</li>
+<li>O dispositivo <code>nul</code>, que descarta a saída.</li>
+<li>Os erros reais de redirecionar para um caminho que não existe.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<hr>
+<h2>A ideia: desviar o rio</h2>
+<p>A saída do comando é um rio que normalmente desemboca na tela. O <code>&gt;</code> abre uma canaleta nova até um arquivo. O <code>&gt;&gt;</code> usa a mesma canaleta, mas acrescenta no fim, sem apagar o que já tinha. O <code>nul</code> é um ralo: a água some, e nada aparece.</p>
+<hr>
+<h2>1. Gravar e acrescentar</h2>
+<p>O <code>echo Primeira linha &gt; saida.txt</code> não imprimiu nada na tela. O <code>type saida.txt</code> mostrou a linha — e, de novo, <strong>com um espaço no fim</strong>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo Primeira linha &gt; saida.txt
+
+C:\Users\ana\guia-cmd-teste&gt;type saida.txt
+Primeira linha 
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<div class="tip"><strong>O espaço antes do &gt;</strong>
+<p>No comando <code>echo Primeira linha &gt; saida.txt</code> há um espaço entre a palavra <code>linha</code> e o <code>&gt;</code>. O <code>echo</code> trata esse espaço como parte do texto e o grava no arquivo. O <code>type</code> mostrou <code>Primeira linha </code>, com o espaço no fim. Se não quiser esse espaço, encoste o <code>&gt;</code> na última palavra, ou coloque o texto entre aspas com o tamanho certo. A mesma coisa já tinha aparecido na aula do <code>echo</code>, com <code>Olá, turma </code>.</p>
+</div>
+<p>O <code>&gt;&gt;</code> acrescentou a segunda linha, também com o espaço do comando. O arquivo ficou com duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo Segunda linha &gt;&gt; saida.txt
+
+C:\Users\ana\guia-cmd-teste&gt;type saida.txt
+Primeira linha 
+Segunda linha 
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Desviar a lista de uma pasta</h2>
+<p>O <code>dir /b &gt; lista.txt</code> não mostrou nada na tela: a lista foi para o arquivo. O <code>type lista.txt</code> trouxe os nomes, inclusive o próprio <code>lista.txt</code> e o <code>saida.txt</code> que acabamos de criar (o <code>dir</code> rodou depois de o arquivo já existir):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b &gt; lista.txt
+
+C:\Users\ana\guia-cmd-teste&gt;type lista.txt
+agenda.txt
+backup
+docs
+fotos
+lista.txt
+lixeira
+notas.txt
+rascunho.tmp
+relatorio.docx
+relatorio.txt
+saida.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Só o erro, ou as duas saídas juntas</h2>
+<p>O <code>dir pasta-nao-existe</code> normalmente mistura o cabeçalho do volume (saída padrão) com a mensagem <code>Arquivo não encontrado</code> (erro). Com <code>2&gt; erros.txt</code>, o cabeçalho continuou na tela, e o erro foi para o arquivo:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir pasta-nao-existe 2&gt; erros.txt
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+
+C:\Users\ana\guia-cmd-teste&gt;type erros.txt
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com <code>&gt; combo.txt 2&gt;&amp;1</code>, as duas coisas foram para o mesmo arquivo, e a tela ficou em silêncio. A ordem clássica do <code>cmd</code> é essa: primeiro o <code>&gt;</code> do arquivo, depois o <code>2&gt;&amp;1</code> (e não o contrário).</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir pasta-nao-existe &gt; combo.txt 2&gt;&amp;1
+
+C:\Users\ana\guia-cmd-teste&gt;type combo.txt
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>4. O ralo: <code>nul</code></h2>
+<p>O <code>dir /b &gt;nul</code> não mostrou a lista e não criou arquivo. O comando seguinte, um <code>echo</code>, voltou a escrever na tela normalmente:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b &gt;nul
+
+C:\Users\ana\guia-cmd-teste&gt;echo veio depois do redirecionamento para nul
+veio depois do redirecionamento para nul
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O par <code>&gt;nul 2&gt;&amp;1</code> descarta também o erro. O <code>type arquivo-nao-existe.txt 2&gt;nul</code> não mostrou a mensagem “arquivo especificado” — a tela ficou em silêncio:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir pasta-nao-existe &gt;nul 2&gt;&amp;1
+
+C:\Users\ana\guia-cmd-teste&gt;type arquivo-nao-existe.txt 2&gt;nul
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de redirecionar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>echo texto &gt; arq.txt</code></td><td>Para gravar a saída num arquivo novo (ou substituir o antigo). Leva o espaço que vier antes do <code>&gt;</code>.</td></tr>
+<tr><td><code>echo texto &gt;&gt; arq.txt</code></td><td>Para acrescentar no fim do arquivo.</td></tr>
+<tr><td><code>dir /b &gt; lista.txt</code></td><td>Para guardar a lista de nomes, em vez de mostrá-la na tela.</td></tr>
+<tr><td><code>dir pasta 2&gt; erros.txt</code></td><td>Para desviar só a mensagem de erro; o cabeçalho continua na tela.</td></tr>
+<tr><td><code>dir pasta &gt; combo.txt 2&gt;&amp;1</code></td><td>Para juntar saída e erro no mesmo arquivo. Nessa ordem.</td></tr>
+<tr><td><code>comando &gt;nul</code> ou <code>comando 2&gt;nul</code></td><td>Para descartar a saída ou o erro, sem criar arquivo.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>O caminho de destino não existe</strong>
+<p>O <code>echo texto &gt; pasta-nao-existe\x.txt</code> devolveu:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo texto &gt; pasta-nao-existe\x.txt
+O sistema não pode encontrar o caminho especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O mesmo aconteceu ao tentar criar o arquivo de erro dentro de uma pasta que não existe, com <code>dir pasta-nao-existe 2&gt; pasta-nao-existe\e.txt</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir pasta-nao-existe 2&gt; pasta-nao-existe\e.txt
+O sistema não pode encontrar o caminho especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>&gt; arquivo</code></td><td>Grava a saída no arquivo, substituindo o conteúdo.</td></tr>
+<tr><td><code>&gt;&gt; arquivo</code></td><td>Acrescenta a saída no fim do arquivo.</td></tr>
+<tr><td><code>2&gt; arquivo</code></td><td>Desvia só a mensagem de erro.</td></tr>
+<tr><td><code>&gt; arquivo 2&gt;&amp;1</code></td><td>Junta saída e erro no mesmo arquivo.</td></tr>
+<tr><td><code>&gt;nul</code> / <code>2&gt;nul</code></td><td>Descarta a saída ou o erro.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Criar o arquivo</h3><p>Qual símbolo grava a saída num arquivo, substituindo o que já existia?</p><div class="ex-code"><input data-answer=">|&gt;" aria-label="símbolo"></div></div>
+<div class="exercise"><h3>2. Acrescentar</h3><p>Qual símbolo acrescenta no fim, sem apagar o conteúdo anterior?</p><div class="ex-code"><input data-answer=">>|&gt;&gt;" aria-label="símbolo"></div></div>
+<div class="exercise"><h3>3. Juntar erro e saída</h3><p>Complete o fim do comando para mandar saída e erro para <code>combo.txt</code>, na ordem clássica do <code>cmd</code>:</p><div class="ex-code">dir pasta-nao-existe &gt; combo.txt <input data-answer="2>&amp;1|2&gt;&amp;1" aria-label="redirecionamento"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No <code>type saida.txt</code> depois de <code>echo Primeira linha &gt; saida.txt</code>, por que a linha terminava com um espaço?</p>
+<label><input type="radio" name="q4"> Porque o <code>type</code> acrescenta espaço em todo arquivo</label>
+<label><input type="radio" name="q4"> Porque o espaço que estava no comando, antes do <code>&gt;</code>, foi gravado no arquivo</label>
+<label><input type="radio" name="q4"> Porque o arquivo veio vazio</label>
+<label><input type="radio" name="q4"> Porque o Windows traduziu o texto</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Com <code>dir pasta-nao-existe 2&gt; erros.txt</code>, o que ficou no arquivo, no laboratório?</p>
+<label><input type="radio" name="q5"> Só a mensagem <code>Arquivo não encontrado</code></label>
+<label><input type="radio" name="q5"> O cabeçalho do volume e a mensagem de erro, juntos</label>
+<label><input type="radio" name="q5"> Nada: o arquivo veio vazio</label>
+<label><input type="radio" name="q5"> A lista <code>dir /b</code> da pasta de teste</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O que o <code>dir /b &gt;nul</code> fez no laboratório?</p>
+<label><input type="radio" name="q6"> Gravou a lista em um arquivo chamado <code>nul</code></label>
+<label><input type="radio" name="q6"> Mostrou a lista na tela e gravou uma cópia</label>
+<label><input type="radio" name="q6"> Não mostrou nada na tela e não criou arquivo; o <code>echo</code> seguinte voltou a escrever normalmente</label>
+<label><input type="radio" name="q6"> Apagou a pasta de teste</label></div>
+<div class="trycmd" data-goal="src:\becho\b;;src:\btype\b;;outre:^Primeira linha\s*$">
+<p class="try-task"><strong>Missão:</strong> grave <code>Primeira linha</code> em <code>saida.txt</code> com <code>&gt;</code> e mostre o arquivo com <code>type</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo Primeira linha &gt; saida.txt
+type saida.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Primeira linha 
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\becho\b;;out:O sistema não pode encontrar o caminho especificado.">
+<p class="try-task"><strong>Missão:</strong> tente gravar com <code>echo texto &gt; pasta-nao-existe\x.txt</code> e observe a mensagem real quando o caminho não existe.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo texto &gt; pasta-nao-existe\x.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+O sistema não pode encontrar o caminho especificado.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>&gt;</code> grava a saída num arquivo (e o <code>echo</code> leva o espaço que vier antes do símbolo). <code>&gt;&gt;</code> acrescenta no fim.</li>
+<li><code>2&gt;</code> desvia só o erro; <code>&gt; arquivo 2&gt;&amp;1</code> junta as duas coisas, nessa ordem.</li>
+<li><code>nul</code> descarta a saída ou o erro, sem criar arquivo.</li>
+<li>Um caminho de destino inexistente devolve a mensagem real, que não se traduz.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

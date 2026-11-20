@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lendo Arquivos (type) — ver o conteúdo de um arquivo no Prompt | Guia CMD</title>
+<meta name="description" content="O comando type no Prompt de Comando: ler um arquivo de texto, ler um arquivo numa subpasta e os erros reais de arquivo inexistente, de pasta no lugar de arquivo e de caminho inexistente.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Lendo Arquivos (<span class="hl">type</span>)</h1>
+
+
+<p class="intro">Listar o nome não basta: às vezes você quer <strong>ler o que está dentro</strong>. O <code>type</code> escreve na tela o conteúdo de um arquivo de texto. Nesta aula você lê os arquivos da pasta de teste e vê o que o <code>cmd</code> responde quando o alvo não é um arquivo que se possa ler.</p>
+<div class="note"><strong>Você vai aprender</strong>
+<ul>
+<li>O <code>type</code>, que mostra o conteúdo de um arquivo de texto.</li>
+<li>A ler um arquivo numa subpasta, com o caminho relativo, como <code>fotos\legenda.txt</code>.</li>
+<li>Os erros reais de um arquivo que não existe, de apontar o <code>type</code> para uma pasta e de um caminho que não existe.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<p>Não rodamos <code>type</code> no <code>relatorio.docx</code> nem nos <code>.png</code> de mentira da semente: eles só existem para aparecer no <code>dir</code>.</p>
+<hr>
+<h2>A ideia: abrir a carta e ler em voz alta</h2>
+<p>O arquivo é uma carta dentro da gaveta. O <code>type</code> abre a carta e lê o texto em voz alta, na tela. Ele não edita, não copia e não apaga: só mostra.</p>
+<hr>
+<h2>1. Ler um arquivo da pasta atual</h2>
+<p>O <code>notas.txt</code> da pasta de teste é uma lista de compras. O <code>type</code> mostrou isto:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type notas.txt
+Lista de compras
+- pão
+- leite
+- café
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>type</dt><dd>o comando: “mostre o conteúdo deste arquivo”.</dd><dt>notas.txt</dt><dd>o arquivo, na pasta atual.</dd></dl>
+<p>O <code>relatorio.txt</code> trouxe outra mensagem, em duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type relatorio.txt
+Relatório da semana
+Tudo certo na pasta de teste do guia.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Um arquivo numa subpasta</h2>
+<p>O caminho relativo <code>fotos\legenda.txt</code> aponta para um arquivo dentro de <code>fotos</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type fotos\legenda.txt
+Fotos das férias (arquivos de exemplo).
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de ler um arquivo</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>type notas.txt</code></td><td>O jeito deste guia: ler um arquivo de texto da pasta atual.</td></tr>
+<tr><td><code>type fotos\legenda.txt</code></td><td>Quando o arquivo está numa subpasta, com o caminho relativo.</td></tr>
+<tr><td><code>type notas.txt relatorio.txt</code></td><td>O <code>type</code> aceita mais de um arquivo na mesma linha. A captura dessa forma, no laboratório, veio com ruído do invólucro da coleta; por isso não usamos essa saída como modelo. No Prompt aberto, experimente você mesmo.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um arquivo que não existe</strong><p>O <code>type arquivo-nao-existe.txt</code> devolveu esta mensagem:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type arquivo-nao-existe.txt
+O sistema não pode encontrar o arquivo especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>Apontar o type para uma pasta</strong><p><code>fotos</code> é uma pasta, não um arquivo. O <code>cmd</code> respondeu:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type fotos
+Acesso negado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>Um caminho que não existe</strong><p>Com <code>type pasta-nao-existe\a.txt</code>, a mensagem foi esta:</p><pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type pasta-nao-existe\a.txt
+O sistema não pode encontrar o caminho especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>type notas.txt</code></td><td>Mostra o conteúdo do arquivo na tela.</td></tr>
+<tr><td><code>type fotos\legenda.txt</code></td><td>O mesmo, com um caminho relativo.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para mostrar o conteúdo de <code>notas.txt</code>:</p><div class="ex-code"><input data-answer="type" aria-label="comando"> notas.txt</div></div>
+<div class="exercise"><h3>2. Um arquivo na subpasta</h3><p>Complete o caminho para ler a legenda que está dentro de <code>fotos</code>:</p><div class="ex-code">type <input data-answer="fotos\legenda.txt|fotos/legenda.txt" aria-label="caminho"></div></div>
+<div class="exercise"><h3>3. A mensagem de pasta</h3><p>Qual foi a mensagem real, colhida no laboratório, de <code>type fotos</code>?</p><div class="ex-code"><input data-answer="Acesso negado.|Acesso negado" aria-label="mensagem"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>type</code> faz?</p>
+<label><input type="radio" name="q4"> Apaga o arquivo</label>
+<label><input type="radio" name="q4"> Mostra na tela o conteúdo de um arquivo de texto</label>
+<label><input type="radio" name="q4"> Muda para a pasta do arquivo</label>
+<label><input type="radio" name="q4"> Cria um arquivo vazio</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. No laboratório, o <code>type notas.txt</code> começou com qual linha?</p>
+<label><input type="radio" name="q5"> <code>Lista de compras</code></label>
+<label><input type="radio" name="q5"> <code>Relatório da semana</code></label>
+<label><input type="radio" name="q5"> <code>Fotos das férias (arquivos de exemplo).</code></label>
+<label><input type="radio" name="q5"> <code>Acesso negado.</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a mensagem real de <code>type arquivo-nao-existe.txt</code>?</p>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q6"> <code>O nome do diretório é inválido.</code></label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “arquivo someu”</label></div>
+<div class="trycmd" data-goal="src:\btype\b;;out:Lista de compras;;out:- pão">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste do guia, mostre o conteúdo de <code>notas.txt</code> com <code>type</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type notas.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Lista de compras
+- pão
+- leite
+- café
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btype\b;;out:Acesso negado.">
+<p class="try-task"><strong>Missão:</strong> ainda na pasta de teste, tente ler a pasta <code>fotos</code> com <code>type fotos</code> e observe a mensagem de erro real.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type fotos
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Acesso negado.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>type arquivo.txt</code> mostra o conteúdo de um arquivo de texto, sem alterá-lo.</li>
+<li>Com um caminho relativo, você lê um arquivo que está numa subpasta.</li>
+<li>Arquivo inexistente, pasta no lugar de arquivo e caminho inexistente devolvem mensagens reais, que não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

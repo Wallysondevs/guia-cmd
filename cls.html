@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limpando a Tela (cls) — o comando que apaga o que você já viu | Guia CMD</title>
+<meta name="description" content="O comando cls limpa a tela do Prompt de Comando. Aula só em texto: colher cls via cmd /c não mostra o efeito que você vê na janela.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Limpando a Tela (<span class="hl">cls</span>)</h1>
+
+
+<p class="intro">Depois de uns quantos <code>dir</code> e <code>type</code>, a janela enche. O <code>cls</code> (de <em>clear screen</em>, “limpar a tela”) apaga o que já apareceu e deixa só um prompt no alto, pronto para o próximo pedido. Esta aula é só de texto: colher o <code>cls</code> com <code>cmd /c</code> não produz uma saída útil e não mostra o efeito que você vê no Prompt aberto.</p>
+
+<div class="note">
+<strong>Você vai aprender</strong>
+<ul>
+  <li>O que o <code>cls</code> faz: limpar a tela do Prompt, sem apagar arquivo nenhum.</li>
+  <li>Que o prompt continua na mesma pasta; só some o histórico visível da janela.</li>
+  <li>Por que esta aula não traz uma caixa de saída colhida no laboratório.</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>A ideia: apagar o quadro, não os cadernos</h2>
+<p>Pense num quadro-negro. O <code>cls</code> apaga o que estava escrito no quadro. Os cadernos (os seus arquivos e pastas) continuam na mochila. A pasta atual também não muda: se você estava em <code>C:\Users\ana\guia-cmd-teste</code>, continua lá. Só some o texto que tinha rolado na janela.</p>
+
+<hr>
+
+<h2>1. Como se usa</h2>
+<p>No Prompt aberto, digite:</p>
+<p><code>cls</code></p>
+<p>e aperte <kbd>Enter</kbd>. A janela fica limpa e o prompt volta no canto superior esquerdo, na mesma pasta.</p>
+
+<div class="tip">
+<strong>Por que não há saída colhida aqui</strong>
+<p>No laboratório, cada comando roda num <code>cmd /c</code> separado, e a captura guarda o texto que o comando imprime. O <code>cls</code> não imprime um relatório: ele manda a janela se limpar. Fora de uma sessão interativa, isso no máximo vira códigos de controle, que não ensinam o efeito. Por isso a aula explica o <code>cls</code> só em texto, como combinado na coleta.</p>
+</div>
+
+<hr>
+
+<h2>Formas diferentes de limpar a vista</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>cls</code></td><td>O comando deste guia: limpa a tela do Prompt e mantém a pasta atual.</td></tr>
+<tr><td>Fechar e abrir o Prompt de novo</td><td>Também “limpa”, mas você perde a pasta atual e o histórico da sessão. É mais trabalho do que um <code>cls</code>.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario">
+<strong>Achar que o <code>cls</code> apaga arquivos</strong>
+<p>O tropeço é de expectativa, não de mensagem vermelha. O <code>cls</code> não apaga pasta, não mexe em arquivo e não desfaz um <code>del</code>. Ele só limpa o que estava visível na janela. Se você quiser apagar um arquivo, o comando é o <code>del</code>, na aula de copiar, mover e apagar — e com cuidado.</p>
+</div>
+
+<hr>
+
+<h2>Referência rápida</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>cls</code></td><td>Limpa a tela do Prompt. A pasta atual continua a mesma. Nenhum arquivo é apagado.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Exercícios</h2>
+
+<div class="exercise">
+<h3>1. Complete o comando</h3>
+<p>Complete para limpar a tela do Prompt:</p>
+<div class="ex-code"><input data-answer="cls" aria-label="comando"></div>
+</div>
+
+<div class="exercise">
+<h3>2. O que o cls não faz?</h3>
+<p>Qual comando deste guia é que apaga <em>arquivo</em>, e não só o texto da janela?</p>
+<div class="ex-code"><input data-answer="del" aria-label="comando"></div>
+</div>
+
+<div class="exercise">
+<h3>3. E a pasta?</h3>
+<p>Depois de um <code>cls</code>, a pasta atual muda?</p>
+<div class="ex-code"><input data-answer="não|nao|não muda|nao muda" aria-label="resposta"></div>
+</div>
+
+<div class="mc" data-answer="2">
+<p class="mc-q">4. O que o <code>cls</code> faz?</p>
+<label><input type="radio" name="q4"> Apaga todos os arquivos da pasta atual</label>
+<label><input type="radio" name="q4"> Limpa o texto visível da janela do Prompt, sem mudar de pasta e sem apagar arquivo</label>
+<label><input type="radio" name="q4"> Fecha o Prompt de Comando</label>
+<label><input type="radio" name="q4"> Formata o disco <code>C:</code></label>
+</div>
+
+<div class="mc" data-answer="3">
+<p class="mc-q">5. Por que esta aula não traz uma caixa com a saída colhida do <code>cls</code>?</p>
+<label><input type="radio" name="q5"> Porque o comando é secreto</label>
+<label><input type="radio" name="q5"> Porque o <code>cls</code> só existe no PowerShell</label>
+<label><input type="radio" name="q5"> Porque colher o <code>cls</code> via <code>cmd /c</code> não mostra o efeito de limpar a janela</label>
+<label><input type="radio" name="q5"> Porque o comando sempre dá erro</label>
+</div>
+
+<div class="mc" data-answer="1">
+<p class="mc-q">6. Você estava em <code>C:\Users\ana\guia-cmd-teste</code>, rodou <code>cls</code> e o prompt voltou. Onde você está?</p>
+<label><input type="radio" name="q6"> Na mesma pasta, <code>C:\Users\ana\guia-cmd-teste</code></label>
+<label><input type="radio" name="q6"> Na pasta pessoal da Ana, um nível acima</label>
+<label><input type="radio" name="q6"> Na raiz do disco <code>C:</code></label>
+<label><input type="radio" name="q6"> Em lugar nenhum: o Prompt fechou</label>
+</div>
+
+<hr>
+
+<h2>Resumo</h2>
+<ul>
+  <li><code>cls</code> limpa a tela do Prompt. A pasta atual não muda e nenhum arquivo é apagado.</li>
+  <li>É o equivalente a apagar o quadro, não os cadernos.</li>
+  <li>Esta aula não tem saída colhida: o efeito só aparece numa sessão interativa, na sua janela.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

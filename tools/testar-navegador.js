@@ -112,7 +112,9 @@ const stats = {
   negativos: 0,
   falsoPositivo: 0,
   quaseLa: 0,
-  quaseLaFalhou: 0
+  quaseLaFalhou: 0,
+  positivos: 0,
+  positivosFalhou: 0
 };
 
 function casoNegativo(nome, caso, r, problemas) {
@@ -152,10 +154,13 @@ async function testarComRodeLocal(pg, problemas, notas) {
       const pre = box.querySelector("pre.script");
       const sol = box.querySelector("pre.solucao");
       const trim = (s) => String(s || "").replace(/^\n+/, "").replace(/\s+$/, "");
+      const saida = box.querySelector("pre.saida-ok");
+      const saidaOk = saida ? saida.textContent.replace(/^\n+/, "").replace(/\n$/, "") : "";
       return {
         goal: box.getAttribute("data-goal") || "",
         script: pre ? trim(pre.textContent) : "",
-        solucao: sol ? trim(sol.textContent) : ""
+        solucao: sol ? trim(sol.textContent) : "",
+        saidaOk: saidaOk
       };
     }, i);
     const nome = "caixa " + (i + 1);
@@ -196,6 +201,25 @@ async function testarComRodeLocal(pg, problemas, notas) {
         stats.quaseLaFalhou++;
         if (!/Quase lá!/.test(marc.texto)) {
           problemas.push(nome + ": no positivo (só src/semerro) o esperado é “Quase lá!”, viu: " + JSON.stringify(marc.texto).slice(0, 160));
+        }
+      }
+    }
+
+    const precisaSaida = /(^|;;)\s*(out|outre|erro)\b/.test(c.goal);
+    if (precisaSaida) {
+      if (!c.saidaOk) {
+        stats.positivosFalhou++;
+        problemas.push(nome + ": missão com out/outre/erro sem pre.saida-ok (saída real para o teste positivo)");
+      } else {
+        const ok = await conferir(pg, i, c.saidaOk, c.solucao || null);
+        if (ok.erro) {
+          stats.positivosFalhou++;
+          problemas.push(nome + ": " + ok.erro);
+        } else if (ok.falhas || !/Missão cumprida/.test(ok.texto)) {
+          stats.positivosFalhou++;
+          problemas.push(nome + ": a saída real deveria cumprir a missão, viu: " + JSON.stringify(ok.texto).slice(0, 220));
+        } else {
+          stats.positivos++;
         }
       }
     }
@@ -289,7 +313,9 @@ async function testarPagina(nav, base, pagina) {
     "casos negativos (campo vazio, colar script, colar solução, com prompt C:\\Users\\ana>): " +
       stats.negativos + " conferidos, " + stats.falsoPositivo + " falso(s) positivo(s)",
     "positivo com “(sem saída)” nas missões só src/semerro: " +
-      stats.quaseLa + " “Quase lá!”, " + stats.quaseLaFalhou + " falha(s)"
+      stats.quaseLa + " “Quase lá!”, " + stats.quaseLaFalhou + " falha(s)",
+    "positivo com a saída real (pre.saida-ok): " +
+      stats.positivos + " “Missão cumprida!”, " + stats.positivosFalhou + " falha(s)"
   ];
   console.log("\n" + linhas.join("\n"));
   process.exitCode = ruins ? 1 : 0;

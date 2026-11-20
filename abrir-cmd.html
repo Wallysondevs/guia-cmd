@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrindo o Prompt de Comando — cmd.exe no Windows | Guia CMD</title>
+<meta name="description" content="Como abrir o Prompt de Comando (cmd.exe) no Windows, ler o prompt C:\Users\ana\guia-cmd-teste&gt; e perceber a diferença para o PowerShell. Aula só em texto, sem coleta de saída.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Abrindo o <span class="hl">Prompt de Comando</span></h1>
+
+
+<p class="intro">Antes de listar pastas ou copiar arquivos, você precisa <strong>abrir a janela</strong> e reconhecer a linha que espera o seu pedido. Esta aula é só de texto: não há comando para colher no laboratório. O que importa é chegar no <code>cmd</code> e saber ler o prompt.</p>
+
+<div class="note">
+<strong>Você vai aprender</strong>
+<ul>
+  <li>O que é o <code>cmd.exe</code>, o Prompt de Comando que já vem no Windows.</li>
+  <li>Quatro jeitos comuns de abrir essa janela.</li>
+  <li>A ler o prompt no formato <code>C:\Users\ana\guia-cmd-teste&gt;</code>.</li>
+  <li>A diferença, no olho, entre o prompt do <code>cmd</code> e o do PowerShell.</li>
+</ul>
+</div>
+
+<p>No restante do guia, a usuária fictícia é a <code>ana</code>, o computador é o <code>NOTEBOOK</code> e a pasta de teste é <code>C:\Users\ana\guia-cmd-teste</code>. No seu PC, o nome no meio do caminho será o seu, e está tudo bem.</p>
+
+<hr>
+
+<h2>A ideia: uma janela que espera um pedido</h2>
+<p>O Prompt de Comando é uma janela do Windows em que você conversa com o computador por escrito. Ela não faz nada sozinha: fica com o cursor piscando, no fim de uma linha que termina em <code>&gt;</code>, até você digitar um comando e apertar <kbd>Enter</kbd>.</p>
+
+<hr>
+
+<h2>1. Quatro jeitos de abrir o Prompt</h2>
+<p>Qualquer um destes abre o <code>cmd.exe</code>. Use o que for mais confortável no seu dia a dia.</p>
+<ol class="passo">
+  <li><strong>Pelo menu Iniciar.</strong> Clique em Iniciar, digite <code>cmd</code> ou “Prompt de Comando” e abra o aplicativo <strong>Prompt de Comando</strong>. Evite abrir o PowerShell por engano: o nome na lista é outro.</li>
+  <li><strong>Pelo Executar.</strong> Aperte <kbd>Win</kbd>+<kbd>R</kbd>, digite <code>cmd</code> e aperte <kbd>Enter</kbd>.</li>
+  <li><strong>Pelo Explorador de Arquivos.</strong> Na barra de endereço de uma pasta, digite <code>cmd</code> e aperte <kbd>Enter</kbd>. O Prompt já abre nessa pasta — útil quando você já está no lugar certo.</li>
+  <li><strong>Pelo Terminal do Windows.</strong> Se você usa o Terminal do Windows, abra uma aba nova e escolha <strong>Prompt de Comando</strong> (não “PowerShell”). O perfil aparece no menu de abas.</li>
+</ol>
+
+<div class="tip">
+<strong>Não precisa de administrador</strong>
+<p>Para as aulas deste nível, abra o Prompt como usuário comum. A opção “Executar como administrador” fica para o que realmente exigir permissão, mais adiante, e nunca é o padrão deste guia.</p>
+</div>
+
+<hr>
+
+<h2>2. Lendo o prompt</h2>
+<p>Quando a janela abre, a linha que espera você tem este formato (no padrão deste guia):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Isto não é a saída de um comando colhido no laboratório: é o <strong>formato</strong> do prompt, com a pasta de teste da Ana. Os pedaços são estes:</p>
+<dl class="anatomy">
+  <dt>C:</dt>
+  <dd>o disco em que você está. No Windows, o disco principal quase sempre se chama <code>C:</code>.</dd>
+  <dt>\Users\ana\guia-cmd-teste</dt>
+  <dd>a pasta atual. Neste guia, a pasta de teste da usuária fictícia <code>ana</code>.</dd>
+  <dt>&gt;</dt>
+  <dd>o sinal de que o <code>cmd</code> está esperando o próximo comando.</dd>
+</dl>
+<p>Depois do <code>&gt;</code> você digita o pedido e aperta <kbd>Enter</kbd>. A resposta aparece embaixo. Em seguida o prompt volta — no Prompt de Comando de verdade, com uma linha em branco entre a saída e essa nova linha que espera você.</p>
+
+<hr>
+
+<h2>Formas diferentes de abrir o Prompt</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><kbd>Win</kbd>+<kbd>R</kbd>, depois <code>cmd</code></td><td>O jeito mais rápido, de qualquer tela.</td></tr>
+<tr><td>Menu Iniciar</td><td>Quando você prefere procurar pelo nome “Prompt de Comando”.</td></tr>
+<tr><td>Barra de endereço do Explorador</td><td>Quando já está na pasta em que quer trabalhar.</td></tr>
+<tr><td>Terminal do Windows, perfil Prompt de Comando</td><td>Quando você já usa o Terminal e quer abas, mas ainda no <code>cmd</code>.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario">
+<strong>Abrir o PowerShell achando que é o cmd</strong>
+<p>Os dois são terminais, e o Windows às vezes oferece o PowerShell no mesmo canto. A diferença aparece no prompt: o do Prompt de Comando começa direto no caminho, como <code>C:\Users\ana\guia-cmd-teste&gt;</code>. O do PowerShell vem com <code>PS</code> na frente, como <code>PS C:\Users\ana&gt;</code>. Se você vir o <code>PS</code>, fechou no programa errado para este guia: abra de novo o Prompt de Comando.</p>
+</div>
+
+<hr>
+
+<h2>Referência rápida</h2>
+<div class="table-wrap">
+<table class="ref">
+<tr><th>Você faz</th><th>O que acontece</th></tr>
+<tr><td><kbd>Win</kbd>+<kbd>R</kbd> e <code>cmd</code></td><td>Abre o Prompt de Comando.</td></tr>
+<tr><td>A linha que termina em <code>&gt;</code>, sem <code>PS</code> na frente</td><td>É o prompt do <code>cmd</code>, esperando um comando. O meio dela é a pasta atual.</td></tr>
+<tr><td>A mesma linha, mas começando com <code>PS</code></td><td>É o PowerShell, não o Prompt de Comando.</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Exercícios</h2>
+
+<div class="exercise">
+<h3>1. Qual programa abrir?</h3>
+<p>Qual é o nome do programa deste guia, o terminal clássico do Windows?</p>
+<div class="ex-code"><input data-answer="cmd|cmd.exe|Prompt de Comando" aria-label="programa"></div>
+</div>
+
+<div class="exercise">
+<h3>2. O atalho do Executar</h3>
+<p>Qual atalho de teclado abre a caixa Executar, em que você digita <code>cmd</code>?</p>
+<div class="ex-code"><input data-answer="Win+R|Win + R|Windows+R" aria-label="atalho"></div>
+</div>
+
+<div class="exercise">
+<h3>3. Onde você está?</h3>
+<p>No prompt <code>C:\Users\ana\guia-cmd-teste&gt;</code>, qual é a pasta atual?</p>
+<div class="ex-code"><input data-answer="C:\Users\ana\guia-cmd-teste|C:\Users\ana\guia-cmd-teste\" aria-label="pasta"></div>
+</div>
+
+<div class="mc" data-answer="2">
+<p class="mc-q">4. Como você distingue o Prompt de Comando do PowerShell, só olhando a janela?</p>
+<label><input type="radio" name="q4"> O Prompt de Comando tem o prefixo <code>PS</code> no prompt</label>
+<label><input type="radio" name="q4"> O Prompt de Comando mostra o caminho e um <code>&gt;</code>, sem <code>PS</code> na frente; o PowerShell começa com <code>PS</code></label>
+<label><input type="radio" name="q4"> Não há diferença: os dois prompts são iguais</label>
+<label><input type="radio" name="q4"> O Prompt de Comando não mostra a pasta atual</label>
+</div>
+
+<div class="mc" data-answer="1">
+<p class="mc-q">5. Para as aulas deste nível, como você deve abrir o Prompt?</p>
+<label><input type="radio" name="q5"> Como usuário comum, sem “Executar como administrador”</label>
+<label><input type="radio" name="q5"> Sempre como administrador</label>
+<label><input type="radio" name="q5"> Só pelo Terminal do Windows, nunca pelo Executar</label>
+<label><input type="radio" name="q5"> Não precisa abrir: este guia roda os comandos no navegador</label>
+</div>
+
+<div class="mc" data-answer="3">
+<p class="mc-q">6. Se você digitar <code>cmd</code> na barra de endereço do Explorador, o que acontece?</p>
+<label><input type="radio" name="q6"> O Windows formata o disco</label>
+<label><input type="radio" name="q6"> Abre o PowerShell na pasta pessoal</label>
+<label><input type="radio" name="q6"> Abre o Prompt de Comando já naquela pasta</label>
+<label><input type="radio" name="q6"> Nada: a barra de endereço não aceita comandos</label>
+</div>
+
+<hr>
+
+<h2>Resumo</h2>
+<ul>
+  <li>O Prompt de Comando é o <code>cmd.exe</code>, o terminal clássico do Windows.</li>
+  <li>Você pode abri-lo pelo Iniciar, por <kbd>Win</kbd>+<kbd>R</kbd>, pela barra de endereço do Explorador ou pelo Terminal do Windows.</li>
+  <li>O prompt deste guia tem o formato <code>C:\Users\ana\guia-cmd-teste&gt;</code>: disco, pasta atual e o <code>&gt;</code> esperando você.</li>
+  <li>Se aparecer <code>PS</code> na frente, você está no PowerShell, não neste guia.</li>
+  <li>Esta aula não tem saída colhida no laboratório: o próximo passo é rodar o primeiro comando, o <code>dir</code>.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curingas (* e ?) — selecionar vários arquivos de uma vez no Prompt | Guia CMD</title>
+<meta name="description" content="Os curingas * e ? no Prompt de Comando: dir e copy com *.txt, o ? de um caractere, caminhos em subpastas, del /q com curinga e os erros reais quando nenhum arquivo combina.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Curingas (<span class="hl">*</span> e <span class="hl">?</span>)</h1>
+
+
+<p class="intro">Até agora cada comando apontava para um nome só. Os <strong>curingas</strong> deixam você falar de um grupo: “todos os <code>.txt</code>”, “os nomes com cinco letras”. O <code>*</code> substitui qualquer sequência de caracteres; o <code>?</code> substitui um caractere só. Nesta aula eles entram no <code>dir</code>, no <code>copy</code> e no <code>del</code>, sempre depois do <code>cd</code> guardado, dentro da pasta de teste.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>*</code>, que combina com qualquer sequência, como em <code>*.txt</code> e <code>notas.*</code>.</li>
+<li>O <code>?</code>, que combina com um caractere, como em <code>?????.txt</code>.</li>
+<li>A usar curingas numa subpasta, como <code>fotos\*.png</code>, e com <code>/s</code>.</li>
+<li>A copiar e a apagar em grupo, com <code>/y</code> e <code>/q</code>.</li>
+<li>Os erros reais quando nenhum arquivo combina com o padrão.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<hr>
+<h2>A ideia: um molde de papel</h2>
+<p>O curinga é um molde: o <code>*</code> é um buraco grande, que deixa passar qualquer pedaço; o <code>?</code> é um buraco do tamanho de uma letra. <code>*.txt</code> são todos os nomes que terminam em <code>.txt</code>. <code>?????.txt</code> são os <code>.txt</code> com exatamente cinco caracteres antes do ponto.</p>
+<hr>
+<h2>1. Listar com <code>*</code></h2>
+<p>O <code>dir /b *.txt</code> mostrou só os três textos da pasta de teste (sem o oculto, que o <code>dir</code> comum não lista):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b *.txt
+agenda.txt
+notas.txt
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com <code>/s /b</code> e <code>*.png</code>, o Prompt desceu até <code>fotos</code> e trouxe os dois caminhos completos:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /s /b *.png
+C:\Users\ana\guia-cmd-teste\fotos\ferias.png
+C:\Users\ana\guia-cmd-teste\fotos\praia.png
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O padrão <code>notas.*</code> pegou o <code>notas.txt</code>. O <code>*.*</code>, na prática, listou os nomes visíveis da pasta atual, inclusive as pastas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b notas.*
+notas.txt
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b *.*
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas.txt
+rascunho.tmp
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Um caractere: <code>?</code></h2>
+<p>O padrão <code>?????.txt</code> pede cinco caracteres e a extensão <code>.txt</code>. Na pasta de teste, só o <code>notas.txt</code> (cinco letras) serviu; <code>agenda.txt</code> tem seis, <code>relatorio.txt</code> tem nove:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b ?????.txt
+notas.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Copiar e apagar em grupo</h2>
+<p>O <code>copy /y *.txt docs\</code> listou os três arquivos e confirmou a cópia. O <code>dir /b docs</code> mostrou os mesmos nomes no destino:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy /y *.txt docs\
+agenda.txt
+notas.txt
+relatorio.txt
+        3 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b docs
+agenda.txt
+notas.txt
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>del /q *.tmp</code> apagou, em silêncio, os <code>.tmp</code> da pasta atual. O <code>dir /b</code> seguinte já não tinha o <code>rascunho.tmp</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;del /q *.tmp
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas.txt
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>del /q *.*</code> <strong>não</strong> rodou na raiz da pasta de teste. O laboratório entrou em <code>lixeira</code> (nome literal) e apagou só o que estava lá. O <code>dir /b</code> no fim da mesma linha não imprimiu nada: a pasta ficou vazia.</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;cd lixeira &amp;&amp; del /q *.* &amp;&amp; dir /b
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de usar curingas</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>dir /b *.txt</code></td><td>Para listar, só os nomes, todos os <code>.txt</code> da pasta atual.</td></tr>
+<tr><td><code>dir /s /b *.png</code></td><td>Para achar o padrão também nas subpastas, com o caminho completo.</td></tr>
+<tr><td><code>dir /b ?????.txt</code></td><td>Quando o tamanho do nome importa: um <code>?</code> por caractere.</td></tr>
+<tr><td><code>copy /y *.txt docs\</code></td><td>Para copiar o grupo para uma subpasta, sem pergunta de sobrescrita.</td></tr>
+<tr><td><code>del /q *.tmp</code></td><td>Para apagar o grupo, sem pergunta, só com curinga relativo dentro da pasta de teste.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Nenhum arquivo combina</strong>
+<p>O padrão <code>*.xyz</code> não existia na pasta de teste. Cada comando falou de um jeito. O <code>dir /b *.xyz</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b *.xyz
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>del /q *.xyz</code>, com o caminho completo:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;del /q *.xyz
+Não foi possível encontrar C:\Users\ana\guia-cmd-teste\*.xyz
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>E o <code>copy /y *.xyz docs\</code>, em três linhas (a primeira é o próprio padrão, com um espaço no fim):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy /y *.xyz docs\
+*.xyz 
+O sistema não pode encontrar o arquivo especificado.
+        0 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>*</code></td><td>Combina com qualquer sequência de caracteres (inclusive nenhuma).</td></tr>
+<tr><td><code>?</code></td><td>Combina com exatamente um caractere.</td></tr>
+<tr><td><code>dir /b *.txt</code></td><td>Lista os <code>.txt</code> da pasta atual.</td></tr>
+<tr><td><code>dir /b ?????.txt</code></td><td>Lista os <code>.txt</code> com cinco caracteres no nome.</td></tr>
+<tr><td><code>copy /y *.txt docs\</code></td><td>Copia o grupo para <code>docs</code>.</td></tr>
+<tr><td><code>del /q *.tmp</code></td><td>Apaga o grupo, sem pergunta, na pasta de teste.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Todos os txt</h3><p>Complete para listar só os nomes dos arquivos <code>.txt</code>:</p><div class="ex-code">dir /b <input data-answer="*.txt" aria-label="padrão"></div></div>
+<div class="exercise"><h3>2. Um caractere</h3><p>Qual curinga substitui exatamente um caractere?</p><div class="ex-code"><input data-answer="?" aria-label="curinga"></div></div>
+<div class="exercise"><h3>3. A mensagem do dir</h3><p>Qual foi a mensagem real de <code>dir /b *.xyz</code> no laboratório?</p><div class="ex-code"><input data-answer="Arquivo não encontrado" aria-label="mensagem"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, <code>dir /b ?????.txt</code> mostrou só <code>notas.txt</code>. Por quê?</p>
+<label><input type="radio" name="q4"> Porque o <code>?</code> significa “qualquer sequência”</label>
+<label><input type="radio" name="q4"> Porque só <code>notas.txt</code> tem exatamente cinco caracteres antes do <code>.txt</code></label>
+<label><input type="radio" name="q4"> Porque os outros arquivos estavam ocultos</label>
+<label><input type="radio" name="q4"> Porque o comando deu erro</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O <code>del /q *.*</code> desta aula rodou onde?</p>
+<label><input type="radio" name="q5"> Só dentro da pasta <code>lixeira</code>, depois de um <code>cd</code> para lá, com nome literal</label>
+<label><input type="radio" name="q5"> Na raiz do disco <code>C:</code></label>
+<label><input type="radio" name="q5"> Na pasta pessoal da Ana</label>
+<label><input type="radio" name="q5"> Em todas as subpastas, com <code>/s</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a primeira linha da saída real de <code>copy /y *.xyz docs\</code>?</p>
+<label><input type="radio" name="q6"> <code>Arquivo não encontrado</code></label>
+<label><input type="radio" name="q6"> <code>        3 arquivo(s) copiado(s).</code></label>
+<label><input type="radio" name="q6"> <code>*.xyz</code> (o padrão, com um espaço no fim), depois a mensagem de arquivo não encontrado e “0 arquivo(s) copiado(s).”</label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “nada a copiar”</label></div>
+<div class="trycmd" data-goal="src:\bdir\b;;src:\*\.txt;;out:agenda.txt;;out:notas.txt;;out:relatorio.txt">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, liste só os nomes dos arquivos <code>.txt</code> com <code>dir /b *.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /b *.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+notas.txt
+relatorio.txt
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\?\?\?\?\?\.txt;;outre:^notas\.txt$">
+<p class="try-task"><strong>Missão:</strong> liste os <code>.txt</code> com exatamente cinco caracteres no nome, usando <code>?????.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir /b ?????.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+notas.txt
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>*</code> combina com qualquer sequência; o <code>?</code> combina com um caractere.</li>
+<li><code>dir /b *.txt</code>, <code>dir /s /b *.png</code> e <code>?????.txt</code> são os padrões desta aula, com saída real na pasta de teste.</li>
+<li>Copiar e apagar em grupo usam <code>/y</code> e <code>/q</code>. O <code>*.*</code> da lixeira só rodou dentro dessa pasta, com nome literal.</li>
+<li>Quando nenhum arquivo combina, as mensagens reais não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 Objetivo: um guia estático em pt-BR do Prompt de Comando (`cmd.exe`) do Windows, no mesmo molde do Guia PowerShell: uma aula por comando, saídas reais anonimizadas, missões no modo “cole a saída do terminal”, sem simulador por enquanto.
 
-Esqueleto criado em 20/11/2026 (America/Sao_Paulo) por Tito, em paralelo com o `pssim.js` do PowerShell, por decisão da Nova depois da pergunta do Wallyson. Primeira entrega: 21:00 do mesmo dia (esqueleto + `NIVEIS` + lote 1 coletado). Sem push.
+Esqueleto criado em 20/11/2026 (America/Sao_Paulo) por Tito, em paralelo com o `pssim.js` do PowerShell, por decisão da Nova depois da pergunta do Wallyson. Esqueleto: `671edbe`, quadro com esse hash: `4121b7f`. Lote 1 escrito no mesmo dia, a partir de `_saidas-anon/cmd-lote1.txt` (Mira, checador OK). Sem push.
 
 ## Regras (as mesmas do Guia PowerShell)
 
@@ -39,42 +39,44 @@ Só leitura e demo, com `cmd /c`, numa pasta de teste com guarda e caminho absol
 | Revisão linha a linha e anonimização; mantém o `.proibido-cmd.txt` fora do repo | Mira |
 | Entra no CMD só depois do `pssim.js` do PowerShell | Zeca |
 
-Lote 1: Luna (listas e script de coleta) e Mira (revisão linha a linha e anonimização). O Tito não coleta neste esqueleto: neste Linux não há `cmd.exe`. A pasta `_saidas/` está pronta para a Luna colar o bruto.
+Lote 1: Luna (listas e script de coleta, 119 comandos em 9 aulas) e Mira (revisão linha a linha e anonimização em `_saidas-anon/cmd-lote1.txt`). O Tito não coleta: neste Linux não há `cmd.exe`. A escrita das aulas do lote 1 usou só o arquivo anonimizado. O bruto em `_saidas/` não entra no git.
 
-## Agrupamento das aulas (critério do Tito)
+## Agrupamento das aulas
+
+O lote 1 segue as listas da Luna (`/workspace/cmd-coleta/listas-lote1.md`); o `NIVEIS` está alinhado a elas.
 
 - **`md` e `rd` juntos** (`md-rd.html`): criar e apagar pasta são o par natural (um desfaz o outro). A aula cobre também os sinônimos `mkdir` e `rmdir`.
-- **`copy`, `move` e `del` em aulas separadas:** são operações diferentes, e o `del` merece aula só dele por causa do risco de apagar demais e do `del *.*`, que pede confirmação e trava a coleta se vier sem `/q`.
-- **`date /t` e `time /t` em aulas separadas:** uma aula por comando, como a Nova pediu.
-- **`find` e `findstr` em aulas separadas:** a sintaxe não é a mesma, e misturar os dois na primeira leitura atrapalha.
+- **`copy`, `move`, `del` e `ren` juntos** (`copy-move-del.html`), como a Luna coletou. O critério inicial do Tito (aulas separadas, com o `del` sozinho por causa do risco e do `del *.*` sem `/q`) ficou para um possível desdobramento futuro. No Nível 2 ainda existe um `ren.html` `{pronta:false}`, mas o `ren` já aparece nesta aula do lote 1.
+- **`date /t` e `time /t` em aulas separadas** (Nível 2): uma aula por comando, como a Nova pediu.
+- **`find` e `findstr` em aulas separadas** (Nível 2): a sintaxe não é a mesma.
 
 ## Nível 1
 
-Legenda do status: lista → coleta → escrita → revisão. O hash entra no commit em que a aula ficou pronta. Autor da escrita ainda não está dividido (Zeca entra depois do `pssim.js`).
+Legenda do status: lista → coleta → escrita → revisão. O hash entra no commit em que a aula ficou pronta. Escrita do lote 1: Tito, só a partir de `_saidas-anon/cmd-lote1.txt`.
+
+Notas da coleta (Luna) e da fidelidade (Mira): o lote 1 tem **119 comandos em 9 aulas**. `abrir-cmd` e `cls` ficam só no texto (sem saída coletada e sem missão rode-local). O `echo off` é explicado só em texto, sem saída. No `cmd` real há uma linha em branco entre a saída e o próximo prompt; essa linha entra nas sessões exibidas. O `echo texto > arquivo` grava o espaço que vier antes do `>`; o `type` mostra esse espaço no fim (dica nas aulas de `echo` e de redirecionamento). O exemplo `type notas.txt relatorio.txt` não entra nas aulas: a captura veio poluída pelo invólucro do PowerShell, e não se inventa uma saída limpa.
 
 | Aula | Slug | Dono (lista/coleta · revisão) | Status | Hash |
 |---|---|---|---|---|
 | Início | `index.html` | Tito (esqueleto) | escrita (capa; sem saída a coletar) | `671edbe` |
-| O que é o Prompt de Comando | `introducao.html` | Tito (página modelo) · Luna/Mira (saídas) | escrita (placeholders “a coletar”) | `671edbe` |
-| Abrindo o Prompt de Comando | `abrir-cmd.html` | Luna · Mira | lista |  |
-| Listando (`dir`) | `dir.html` | Luna · Mira | lista |  |
-| Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | lista |  |
-| Criando e Apagando Pastas (`md` e `rd`) | `md-rd.html` | Luna · Mira | lista |  |
-| Copiando (`copy`) | `copy.html` | Luna · Mira | lista |  |
-| Movendo (`move`) | `move.html` | Luna · Mira | lista |  |
-| Apagando Arquivos (`del`) | `del.html` | Luna · Mira | lista |  |
-| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | lista |  |
-| Escrevendo na Tela (`echo`) | `echo.html` | Luna · Mira | lista |  |
-| Limpando a Tela (`cls`) | `cls.html` | Luna · Mira | lista |  |
-| A Ajuda (`help` e `/?`) | `help.html` | Luna · Mira | lista |  |
-| Curingas (`*` e `?`) | `curingas.html` | Luna · Mira | lista |  |
-| Redirecionamento (`>` e `>>`) | `redirecionamento.html` | Luna · Mira | lista |  |
+| O que é o Prompt de Comando | `introducao.html` | Tito (página modelo) | escrita (esqueleto; um placeholder de missão) | `671edbe` |
+| Abrindo o Prompt de Comando | `abrir-cmd.html` | Luna · Mira | escrita (só texto; sem missão) | (lote 1, a seguir) |
+| Listando (`dir`) | `dir.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Mudando de Pasta (`cd`) | `cd.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Criando e Apagando Pastas (`md` e `rd`) | `md-rd.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Copiando, Movendo e Apagando (`copy`, `move`, `del` e `ren`) | `copy-move-del.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Lendo Arquivos (`type`) | `type.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Escrevendo na Tela (`echo`) | `echo.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Limpando a Tela (`cls`) | `cls.html` | Luna · Mira | escrita (só texto; sem missão) | (lote 1, a seguir) |
+| A Ajuda (`help` e `/?`) | `help.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Curingas (`*` e `?`) | `curingas.html` | Luna · Mira | escrita | (lote 1, a seguir) |
+| Redirecionamento (`>` e `>>`) | `redirecionamento.html` | Luna · Mira | escrita | (lote 1, a seguir) |
 
-O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou). A coleta em si fica com a Luna, no Windows do Wallyson, com as guardas acima. Este esqueleto deixa `_saidas/` e `_saidas-anon/` prontos; às 21:00 a coleta só entra no quadro se a Luna já tiver colado o bruto.
+O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas `pronta` no `NIVEIS` (sem `{pronta:false}`). A coleta foi da Luna, no Windows, com as guardas acima; a Mira anonimizou e o checador passou. Bruto em `_saidas/cmd-lote1-bruto.txt` (gitignorado, não apagar nem mover).
 
 ## Nível 2 (proposta)
 
-`ren`, `xcopy`, `robocopy`, `attrib`, `tree`, `find`, `findstr`, `more`, `sort`, pipe `|`, `&&` / `||`, variáveis `%VAR%` com `set NOME=` (só com filtro ou nome), `where`, `tasklist`, `ver`, `date /t`, `time /t`, `hostname`.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Também nesta proposta: `xcopy`, `robocopy`, `attrib`, `tree`, `find`, `findstr`, `more`, `sort`, pipe `|`, `&&` / `||`, variáveis `%VAR%` com `set NOME=` (só com filtro ou nome), `where`, `tasklist`, `ver`, `date /t`, `time /t`, `hostname`.
 
 ## Nível 3 (proposta) — notas de privacidade e admin
 
@@ -99,6 +101,8 @@ O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou). A col
 
 ## Entrega das 21:00 (20/11/2026, America/Sao_Paulo)
 
-- [x] Esqueleto em `/workspace/planos-trabalho/guia-cmd` (git local, sem push)
-- [x] `NIVEIS` em 3 níveis, uma aula por comando, slugs em kebab-case; só `index.html` e `introducao.html` com `pronta` implícita (as outras com `{pronta:false}`)
-- [ ] Lote 1 coletado — fica com a Luna, no Windows, depois da revisão da Mira nas listas; este esqueleto não inventa saída e não roda `cmd` daqui
+- [x] Esqueleto em `/workspace/planos-trabalho/guia-cmd` (git local, sem push) — `671edbe`; quadro com o hash — `4121b7f`
+- [x] `NIVEIS` em 3 níveis, slugs em kebab-case alinhados às listas da Luna; lote 1 (index, introdução e as 11 páginas do Nível 1) sem `{pronta:false}`; Níveis 2 e 3 continuam `{pronta:false}`
+- [x] Lote 1 coletado (bruto gitignorado) e anonimizado pela Mira em `_saidas-anon/cmd-lote1.txt`
+- [x] Lote 1 escrito (9 aulas com saída real + `abrir-cmd` e `cls` só em texto), missões rode-local, checador de privacidade OK, `testar-missoes.js` e `testar-navegador.js --todas` OK (18 “Missão cumprida!” com a saída real, 76 negativos sem falso positivo; `introducao` “Quase lá!” com `(sem saída)`). Hash do lote: a preencher no commit seguinte.
+- [x] Telas de duas aulas: `/workspace/telas/cmd-dir.png` e `/workspace/telas/cmd-echo.png` (fora do repo)

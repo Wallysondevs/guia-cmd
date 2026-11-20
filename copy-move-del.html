@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copiando, Movendo e Apagando (copy, move, del e ren) | Guia CMD</title>
+<meta name="description" content="Os comandos copy, move, del e ren no Prompt de Comando: copiar e mover com /y, apagar com /q, renomear e os erros reais de arquivo inexistente e de copiar um arquivo nele mesmo.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Copiando, Movendo e Apagando (<span class="hl">copy</span>, <span class="hl">move</span>, <span class="hl">del</span> e <span class="hl">ren</span>)</h1>
+
+
+<p class="intro">Com as pastas no lugar, falta mexer nos <strong>arquivos</strong>: copiar, mover, renomear e apagar. São operações diferentes, e o <code>del</code> merece respeito — um nome errado apaga o que não devia. Nesta aula do lote 1 os quatro comandos andam juntos, inclusive o <code>ren</code>. A sobrescrita vai com <code>/y</code> e a exclusão com <code>/q</code>, para não travar em pergunta S/N.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>copy</code>, que copia um arquivo, e o <code>/y</code>, que confirma a sobrescrita.</li>
+<li>O <code>move</code>, que tira o arquivo do lugar original.</li>
+<li>O <code>ren</code>, que troca o nome, sem mudar de pasta.</li>
+<li>O <code>del /q</code>, que apaga um arquivo sem perguntar.</li>
+<li>Os erros reais de arquivo inexistente e de copiar um arquivo nele mesmo.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code> e <code>rascunho.tmp</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<hr>
+<h2>A ideia: xerox, mudança e lixeira</h2>
+<p>O <code>copy</code> faz uma xerox: o original fica, e nasce uma cópia. O <code>move</code> é mudança de gaveta: o original sai do lugar. O <code>ren</code> troca a etiqueta, no mesmo lugar. O <code>del</code> manda o arquivo embora.</p>
+<hr>
+<h2>1. Copiar, na pasta e para uma subpasta</h2>
+<p>O <code>copy notas.txt notas-copia.txt</code> avisou quantos arquivos copiou. O <code>dir /b</code> em seguida mostrou o novo nome na lista:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy notas.txt notas-copia.txt
+        1 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas-copia.txt
+notas.txt
+rascunho.tmp
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>copy</dt><dd>o comando: “copie este arquivo”.</dd><dt>notas.txt</dt><dd>a origem.</dd><dt>notas-copia.txt</dt><dd>o destino, um arquivo novo na pasta atual.</dd></dl>
+<p>Com <code>/y</code>, uma segunda cópia para o mesmo destino sobrescreve sem perguntar. Também dá para copiar para uma subpasta, como <code>copy notas.txt fotos\</code> — o nome do arquivo se mantém, e a barra no fim deixa claro que o destino é uma pasta. Os dois, no laboratório, responderam a mesma confirmação:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy /y notas.txt notas-copia.txt
+        1 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;copy notas.txt fotos\
+        1 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Mover</h2>
+<p>O <code>move rascunho.tmp docs\</code> tirou o arquivo da pasta atual e o colocou em <code>docs</code>. A confirmação fala em “movido”, e o <code>dir /b docs</code> mostrou o arquivo no destino (ao lado de um <code>relatorio.txt</code> que já tinha sido copiado para lá):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;move rascunho.tmp docs\
+        1 arquivo(s) movido(s).
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b docs
+rascunho.tmp
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com <code>/y</code>, o laboratório moveu de novo, de <code>docs</code> para <code>backup</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;move /y docs\rascunho.tmp backup\
+        1 arquivo(s) movido(s).
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Renomear e apagar</h2>
+<p>O <code>ren</code> não imprime nada quando dá certo. Depois de <code>ren notas-copia.txt notas-backup.txt</code>, o <code>dir /b</code> mostrou o novo nome, e o nome antigo saiu da lista:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren notas-copia.txt notas-backup.txt
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas-backup.txt
+notas.txt
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Para apagar, o laboratório copiou <code>notas.txt</code> para um <code>rascunho2.tmp</code> e em seguida usou <code>del /q rascunho2.tmp</code>. O <code>/q</code> (de <em>quiet</em>, “quieto”) evita a pergunta S/N. O <code>del</code> em si ficou em silêncio; o <code>dir /b</code> seguinte já não listava o <code>.tmp</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy /y notas.txt rascunho2.tmp
+        1 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;del /q rascunho2.tmp
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lixeira
+notas-backup.txt
+notas.txt
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<div class="warning"><strong>Cuidado com o del</strong>
+<p>Só apague o que você acabou de criar, com nome literal, dentro da pasta de teste. O <code>del *.*</code> sem <code>/q</code> pede S/N e trava a coleta; com <code>/q</code>, apaga em silêncio. Não use <code>del</code> com variável. A aula de curingas volta a este ponto, apagando só o conteúdo da pasta <code>lixeira</code>.</p>
+</div>
+<hr>
+<h2>Formas diferentes de copiar, mover, renomear e apagar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>copy origem destino</code></td><td>Para fazer uma cópia. O original permanece.</td></tr>
+<tr><td><code>copy /y origem destino</code></td><td>Quando o destino já existe e você quer sobrescrever sem pergunta.</td></tr>
+<tr><td><code>copy arquivo pasta\</code></td><td>Para copiar para dentro de uma subpasta, com o mesmo nome.</td></tr>
+<tr><td><code>move arquivo pasta\</code></td><td>Para tirar o arquivo do lugar original.</td></tr>
+<tr><td><code>ren antigo.txt novo.txt</code></td><td>Para trocar o nome, na mesma pasta. Não imprime nada quando dá certo.</td></tr>
+<tr><td><code>del /q arquivo.tmp</code></td><td>Para apagar um arquivo, sem pergunta S/N, só com nome literal na pasta de teste.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Copiar, mover ou renomear um arquivo que não existe</strong>
+<p>O <code>copy arquivo-nao-existe.txt destino.txt</code> (e o <code>move</code> e o <code>ren</code> equivalentes) devolveu:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy arquivo-nao-existe.txt destino.txt
+O sistema não pode encontrar o arquivo especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>del /q arquivo-nao-existe.txt</code> usou outra frase, com o caminho completo:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;del /q arquivo-nao-existe.txt
+Não foi possível encontrar C:\Users\ana\guia-cmd-teste\arquivo-nao-existe.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<div class="cenario"><strong>Copiar um arquivo nele mesmo</strong>
+<p>O pedido <code>copy notas.txt notas.txt</code> foi recusado assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;copy notas.txt notas.txt
+Não se pode copiar um arquivo nele mesmo.
+        0 arquivo(s) copiado(s).
+
+C:\Users\ana\guia-cmd-teste&gt;</pre></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>copy a.txt b.txt</code></td><td>Cria <code>b.txt</code> como cópia de <code>a.txt</code>. Mostra “1 arquivo(s) copiado(s).”</td></tr>
+<tr><td><code>copy /y a.txt b.txt</code></td><td>O mesmo, sobrescrevendo sem perguntar.</td></tr>
+<tr><td><code>move a.txt docs\</code></td><td>Tira <code>a.txt</code> da pasta atual e o coloca em <code>docs</code>.</td></tr>
+<tr><td><code>ren a.txt b.txt</code></td><td>Troca o nome, no mesmo lugar. Silêncio quando dá certo.</td></tr>
+<tr><td><code>del /q a.tmp</code></td><td>Apaga o arquivo, sem pergunta. Só com nome literal, na pasta de teste.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Copiar</h3><p>Complete para copiar <code>notas.txt</code> para <code>notas-copia.txt</code>:</p><div class="ex-code"><input data-answer="copy" aria-label="comando"> notas.txt notas-copia.txt</div></div>
+<div class="exercise"><h3>2. Renomear</h3><p>Complete para trocar o nome de <code>notas-copia.txt</code> para <code>notas-backup.txt</code>:</p><div class="ex-code"><input data-answer="ren|rename" aria-label="comando"> notas-copia.txt notas-backup.txt</div></div>
+<div class="exercise"><h3>3. Apagar sem pergunta</h3><p>Complete para apagar <code>rascunho2.tmp</code> sem a pergunta S/N:</p><div class="ex-code">del <input data-answer="/q" aria-label="chave"> rascunho2.tmp</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Qual é a diferença entre <code>copy</code> e <code>move</code>?</p>
+<label><input type="radio" name="q4"> Não há diferença</label>
+<label><input type="radio" name="q4"> O <code>copy</code> deixa o original no lugar; o <code>move</code> tira o arquivo da origem</label>
+<label><input type="radio" name="q4"> O <code>move</code> só funciona em pastas, nunca em arquivos</label>
+<label><input type="radio" name="q4"> O <code>copy</code> sempre apaga o original</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. No laboratório, o <code>copy notas.txt notas-copia.txt</code> mostrou qual confirmação?</p>
+<label><input type="radio" name="q5"> <code>        1 arquivo(s) copiado(s).</code></label>
+<label><input type="radio" name="q5"> <code>        1 arquivo(s) movido(s).</code></label>
+<label><input type="radio" name="q5"> <code>A pasta não está vazia.</code></label>
+<label><input type="radio" name="q5"> Nada: o <code>copy</code> é sempre silencioso</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a mensagem real de <code>copy notas.txt notas.txt</code>?</p>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q6"> <code>Não se pode copiar um arquivo nele mesmo.</code> e, na linha seguinte, <code>0 arquivo(s) copiado(s).</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “destino igual à origem”</label></div>
+<div class="trycmd" data-goal="src:\bcopy\b;;out:1 arquivo(s) copiado(s).">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, copie <code>notas.txt</code> para <code>notas-copia.txt</code> com <code>copy</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+copy notas.txt notas-copia.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+        1 arquivo(s) copiado(s).
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bmove\b;;out:1 arquivo(s) movido(s).">
+<p class="try-task"><strong>Missão:</strong> mova <code>rascunho.tmp</code> para a pasta <code>docs</code> com <code>move</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+move rascunho.tmp docs\
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+        1 arquivo(s) movido(s).
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>copy</code> faz uma cópia e deixa o original; com <code>/y</code>, sobrescreve sem perguntar. A confirmação real foi “1 arquivo(s) copiado(s).”</li>
+<li><code>move</code> tira o arquivo do lugar. A confirmação fala em “movido(s)”.</li>
+<li><code>ren</code> troca o nome, no mesmo lugar, e fica em silêncio quando dá certo.</li>
+<li><code>del /q</code> apaga sem pergunta. Só com nome literal, dentro da pasta de teste.</li>
+<li>Arquivo inexistente e “copiar nele mesmo” devolvem mensagens reais, que não se traduzem.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
