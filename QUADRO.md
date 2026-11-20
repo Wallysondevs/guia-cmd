@@ -85,17 +85,17 @@ Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o únic
 
 | Aula | Slug | Status | Hash |
 |---|---|---|---|
-| Procurando Texto (`find`) | `find.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Procurando com `findstr` | `findstr.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Página a Página (`more`) | `more.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Ordenando (`sort`) | `sort.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| O Encadeamento (pipe) | `pipe.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Atributos (`attrib`) | `attrib.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Copiando Pastas (`xcopy`) | `xcopy.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Cópia Robusta (`robocopy`) | `robocopy.html` | esqueleto (saída a coletar; só na pasta de teste, sem `/MIR` nas missões) | (lote 2, a seguir) |
-| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
-| Onde Está o Comando (`where`) | `where.html` | esqueleto (saída a coletar; anonimizar caminho pessoal se aparecer) | (lote 2, a seguir) |
-| A Versão do Windows (`ver`) | `ver.html` | esqueleto (saída a coletar) | (lote 2, a seguir) |
+| Procurando Texto (`find`) | `find.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Procurando com `findstr` | `findstr.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Página a Página (`more`) | `more.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Ordenando (`sort`) | `sort.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| O Encadeamento (pipe) | `pipe.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Atributos (`attrib`) | `attrib.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Copiando Pastas (`xcopy`) | `xcopy.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Cópia Robusta (`robocopy`) | `robocopy.html` | esqueleto (saída a coletar; só na pasta de teste, sem `/MIR` nas missões) | `87eb3b7` |
+| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Onde Está o Comando (`where`) | `where.html` | esqueleto (saída a coletar; anonimizar caminho pessoal se aparecer) | `87eb3b7` |
+| A Versão do Windows (`ver`) | `ver.html` | esqueleto (saída a coletar) | `87eb3b7` |
 
 Ainda não há arquivo novo da Mira em `_saidas-anon/` para o lote 2. Quando chegar, o Tito substitui os placeholders só por essas saídas, finaliza as metas, roda o checador com `PROIBIDO` e o `testar-navegador`, e marca `pronta:true`.
 
