@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>O Encadeamento (|) — mandar a saída de um comando para outro | Guia CMD</title>
-<meta name="description" content="O encadeamento | no Prompt de Comando: passar a saída de um comando para find, findstr, sort ou more. Saídas ainda a coletar.">
+<meta name="description" content="O encadeamento | no Prompt de Comando: passar a saída de um comando para find, findstr, sort ou more, com as saídas reais da pasta de teste.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,46 +19,97 @@
 <h1>O Encadeamento (<span class="hl">|</span>)</h1>
 
 
-<p class="intro">Até agora cada comando trabalhava sozinho, ou gravava a saída num arquivo com <code>&gt;</code>. O <strong>pipe</strong> <code>|</code> (a barra vertical) liga dois comandos: o que o da esquerda escrever na tela vira a entrada do da direita. Os filtros clássicos desta aula são o <code>find</code>, o <code>findstr</code>, o <code>sort</code> e o <code>more</code> — cada um tem a sua aula; aqui eles entram encadeados. As saídas reais ainda estão a coletar.</p>
+<p class="intro">Até agora cada comando trabalhava sozinho, ou gravava a saída num arquivo com <code>&gt;</code>. O <strong>pipe</strong> <code>|</code> (a barra vertical) liga dois comandos: o que o da esquerda escrever na tela vira a entrada do da direita. Os filtros desta aula são o <code>find</code>, o <code>findstr</code>, o <code>sort</code> e o <code>more</code> — cada um tem a sua aula; aqui eles entram encadeados, com as saídas reais da coleta.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O símbolo <code>|</code>, que manda a saída padrão de um comando para o próximo.</li>
-<li>A filtrar uma lista com <code>find</code> ou <code>findstr</code>.</li>
-<li>A ordenar a saída com <code>sort</code> e a vê-la página a página com <code>more</code>.</li>
-<li>Que o pipe não é o mesmo que <code>&gt;</code> (arquivo) nem que <code>&amp;&amp;</code> (só roda o próximo se o anterior deu certo — isso fica na aula de script do Zeca).</li>
+<li>A filtrar uma lista com <code>find</code> ou <code>findstr</code>, e a contar linhas com <code>find /c</code>.</li>
+<li>A ordenar a saída com <code>sort</code> (também <code>/r</code>) e a vê-la com o <code>more</code>.</li>
+<li>Que o pipe não é o mesmo que <code>&gt;</code> (arquivo) nem que <code>&amp;&amp;</code> (isso fica na aula de script).</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
 <hr>
 <h2>A ideia: uma calha entre duas mesas</h2>
 <p>O comando da esquerda trabalha e empurra o resultado por uma calha. O da direita recebe esse resultado como se você tivesse digitado aquele texto para ele. Nada disso grava um arquivo, a menos que no fim você ainda use um <code>&gt;</code>.</p>
 <hr>
 <h2>1. Filtrar uma lista com find ou findstr</h2>
-<p>O <code>dir /b</code> lista os nomes. Encadeado com o <code>find</code> ou o <code>findstr</code>, só passam os nomes que têm um certo texto — por exemplo, os <code>.txt</code>:</p>
+<p>O <code>dir /b | find ".txt"</code> deixou passar só os nomes que têm <code>.txt</code>. O <code>find /c</code> no mesmo encadeamento devolveu só a quantidade, <code>5</code>:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | find ".txt"
-
-« saída a coletar »
+agenda.txt
+log.txt
+nomes.txt
+notas.txt
+relatorio.txt
+C:\Users\ana\guia-cmd-teste&gt;dir /b | find /c ".txt"
+5
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | findstr ".txt"
-
-« saída a coletar »
+<p>Com o conteúdo de um arquivo: <code>type log.txt | find "ERRO"</code> e a versão com <code>/c</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type log.txt | find "ERRO"
+08:05 ERRO disco cheio
+08:15 ERRO arquivo travado
+C:\Users\ana\guia-cmd-teste&gt;type log.txt | find /c "ERRO"
+2
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<p>A saída de cada um desses pedidos ainda está a coletar. Não afirmamos aqui se os dois vêm iguais: isso só se confirma com a captura real.</p>
+<p>O <code>dir /s /b | findstr /i "png"</code> trouxe os caminhos completos dos dois <code>.png</code> de <code>fotos</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /s /b | findstr /i "png"
+C:\Users\ana\guia-cmd-teste\fotos\ferias.png
+C:\Users\ana\guia-cmd-teste\fotos\praia.png
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>2. Ordenar a lista</h2>
-<p>O <code>sort</code> na ponta direita arruma as linhas que vieram da esquerda:</p>
+<p>O <code>dir /b | sort</code> arrumou os nomes em ordem. Com <code>/r</code>, a ordem se inverteu:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /b | sort
+agenda.txt
+backup
+docs
+fotos
+lixeira
+log.txt
+nomes.txt
+notas.txt
+rascunho.tmp
+rascunho2.tmp
+relatorio.docx
+relatorio.txt
+C:\Users\ana\guia-cmd-teste&gt;dir /b | sort /r
+relatorio.txt
+relatorio.docx
+rascunho2.tmp
+rascunho.tmp
+notas.txt
+nomes.txt
+log.txt
+lixeira
+fotos
+docs
+backup
+agenda.txt
 
-« saída a coletar »
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Dá para encadear mais de um filtro. O <code>type log.txt | findstr "ERRO" | sort /r</code> ficou assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type log.txt | findstr "ERRO" | sort /r
+08:15 ERRO arquivo travado
+08:05 ERRO disco cheio
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
-<h2>3. Ver aos poucos</h2>
-<p>Quando a lista é longa, o <code>more</code> na ponta direita mostra página a página:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;dir /s /b | more
+<h2>3. Ver aos poucos e gravar o filtro</h2>
+<p>O <code>type nomes.txt | sort | more</code>, neste laboratório (texto curto), mostrou os nomes ordenados e encerrou:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type nomes.txt | sort | more
+Ana
+ana paula
+bruno
+Carla
+Diego
 
-« saída a coletar »
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>type log.txt | find "ERRO" &gt; erros.txt</code> não escreveu nada na tela: a saída foi para o arquivo. O <code>type erros.txt</code> mostrou as duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type log.txt | find "ERRO" &gt; erros.txt
+C:\Users\ana\guia-cmd-teste&gt;type erros.txt
+08:05 ERRO disco cheio
+08:15 ERRO arquivo travado
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -66,18 +117,25 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>dir /b | find ".txt"</code></td><td>Para ficar só com as linhas da lista que têm <code>.txt</code>.</td></tr>
-<tr><td><code>dir /b | findstr ".txt"</code></td><td>O mesmo papel, com o <code>findstr</code> (sintaxe diferente; saída a coletar).</td></tr>
-<tr><td><code>dir /b | sort</code></td><td>Para ver os nomes em ordem.</td></tr>
-<tr><td><code>dir /s /b | more</code></td><td>Para uma lista longa não escapar da tela.</td></tr>
-<tr><td><code>type notas.txt | find "leite"</code></td><td>Para filtrar o conteúdo de um arquivo, em vez de passar o arquivo direto ao <code>find</code>.</td></tr>
+<tr><td><code>dir /b | find /c ".txt"</code></td><td>Para só contar essas linhas.</td></tr>
+<tr><td><code>dir /b | sort</code> / <code>sort /r</code></td><td>Para ver os nomes em ordem, ou na ordem inversa.</td></tr>
+<tr><td><code>dir /s /b | findstr /i "png"</code></td><td>Para filtrar caminhos, também nas subpastas, com o <code>findstr</code>.</td></tr>
+<tr><td><code>type log.txt | find "ERRO" &gt; erros.txt</code></td><td>Para gravar o resultado do filtro num arquivo.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
-<div class="cenario"><strong>Um comando da esquerda que falha</strong>
-<p>Se o comando da esquerda não existir, o Prompt responde com uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos. Também não afirmamos, sem captura, o que o comando da direita recebe nesse caso.</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;comandoinexistente | sort
+<div class="cenario"><strong>Um comando da direita que não existe</strong>
+<p>O <code>echo oi | comandoinexistente</code> devolveu as duas linhas reais do Prompt:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo oi | comandoinexistente
+'comandoinexistente' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
 
-« saída a coletar » — mensagem de erro real, nunca inventar
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>O da esquerda não acha o arquivo</strong>
+<p>O <code>type arquivo-nao-existe.txt | sort</code> mostrou a mensagem do <code>type</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;type arquivo-nao-existe.txt | sort
+O sistema não pode encontrar o arquivo especificado.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -100,18 +158,17 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <label><input type="radio" name="q4"> O <code>|</code> manda a saída para outro comando; o <code>&gt;</code> grava a saída num arquivo</label>
 <label><input type="radio" name="q4"> O <code>|</code> apaga o arquivo; o <code>&gt;</code> cria uma pasta</label>
 <label><input type="radio" name="q4"> O <code>|</code> só funciona no PowerShell</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. Nesta aula, quais comandos aparecem como filtros à direita do <code>|</code>?</p>
-<label><input type="radio" name="q5"> <code>find</code>, <code>findstr</code>, <code>sort</code> e <code>more</code></label>
-<label><input type="radio" name="q5"> Só o <code>del</code> e o <code>rd</code></label>
-<label><input type="radio" name="q5"> Só o <code>echo</code></label>
-<label><input type="radio" name="q5"> Só o <code>shutdown</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. No laboratório, <code>dir /b | find /c ".txt"</code> mostrou o quê?</p>
+<label><input type="radio" name="q5"> <code>5</code></label>
+<label><input type="radio" name="q5"> A lista completa dos <code>.txt</code></label>
+<label><input type="radio" name="q5"> Uma mensagem de erro</label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “cinco arquivos”</label></div>
 <div class="mc" data-answer="3"><p class="mc-q">6. O pipe <code>|</code> é o mesmo que <code>&amp;&amp;</code>?</p>
 <label><input type="radio" name="q6"> Sim, os dois filtram linhas</label>
 <label><input type="radio" name="q6"> Sim, os dois gravam arquivos</label>
 <label><input type="radio" name="q6"> Não: o <code>|</code> passa a saída adiante; o <code>&amp;&amp;</code> só roda o próximo comando se o anterior deu certo, e fica para a aula de script</label>
 <label><input type="radio" name="q6"> Não, porque o <code>&amp;&amp;</code> não existe no <code>cmd</code></label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdir\\b;;semerro -->
-<div class="trycmd" data-goal="src:\bdir\b;;semerro">
+<div class="trycmd" data-goal="src:\bdir\b;;src:\bsort\b;;out:agenda.txt;;out:relatorio.txt">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, liste só os nomes com <code>dir /b</code> e mande essa lista para o <code>sort</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -119,9 +176,22 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 dir /b | sort
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+backup
+docs
+fotos
+lixeira
+log.txt
+nomes.txt
+notas.txt
+rascunho.tmp
+rascunho2.tmp
+relatorio.docx
+relatorio.txt
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfind\\b;;semerro -->
-<div class="trycmd" data-goal="src:\bfind\b;;semerro">
+<div class="trycmd" data-goal="src:\bfind\b;;out:agenda.txt;;out:nomes.txt;;out:relatorio.txt">
 <p class="try-task"><strong>Missão:</strong> liste os nomes com <code>dir /b</code> e filtre, com o <code>find</code>, as linhas que têm <code>.txt</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -129,13 +199,20 @@ dir /b | sort
 <pre class="solucao" data-file="comandos.bat">
 dir /b | find ".txt"
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+log.txt
+nomes.txt
+notas.txt
+relatorio.txt
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li>O <code>|</code> liga a saída de um comando à entrada do próximo.</li>
-<li><code>find</code>, <code>findstr</code>, <code>sort</code> e <code>more</code> são os filtros desta aula; cada um também tem aula própria.</li>
-<li>Pipe não é redirecionamento para arquivo e não é o <code>&amp;&amp;</code>. As saídas reais ainda estão a coletar.</li>
+<li><code>find</code>, <code>findstr</code>, <code>sort</code> e <code>more</code> são os filtros desta aula, com saída real na pasta de teste.</li>
+<li>Pipe não é redirecionamento para arquivo e não é o <code>&amp;&amp;</code>.</li>
 </ul>
 
 

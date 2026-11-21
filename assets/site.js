@@ -33,24 +33,24 @@ var NIVEIS = [
   { id: "n2", nome: "Nível 2 · Intermediário", curto: "Intermediário", desc: "Mais comandos, filtros e variáveis", grupos: [
     { grupo: "Mais sobre Arquivos", itens: [
       ["ren.html", "Renomeando (ren)", {pronta: false}],
-      ["xcopy.html", "Copiando Pastas (xcopy)", {pronta: false}],
-      ["robocopy.html", "Cópia Robusta (robocopy)", {pronta: false}],
-      ["attrib.html", "Atributos (attrib)", {pronta: false}],
+      ["xcopy.html", "Copiando Pastas (xcopy)"],
+      ["robocopy.html", "Cópia Robusta (robocopy)"],
+      ["attrib.html", "Atributos (attrib)"],
       ["tree.html", "Árvore de Pastas (tree)", {pronta: false}]
     ]},
     { grupo: "Filtros e Encadeamento", itens: [
-      ["find.html", "Procurando Texto (find)", {pronta: false}],
-      ["findstr.html", "Procurando com findstr", {pronta: false}],
-      ["more.html", "Página a Página (more)", {pronta: false}],
-      ["sort.html", "Ordenando (sort)", {pronta: false}],
-      ["pipe.html", "O Encadeamento (|)", {pronta: false}],
+      ["find.html", "Procurando Texto (find)"],
+      ["findstr.html", "Procurando com findstr"],
+      ["more.html", "Página a Página (more)"],
+      ["sort.html", "Ordenando (sort)"],
+      ["pipe.html", "O Encadeamento (|)"],
       ["encadeamento.html", "Se der certo, se der errado (&& e ||)", {pronta: false}]
     ]},
     { grupo: "Sistema e Variáveis", itens: [
       ["variaveis.html", "Variáveis (%VAR% e set)", {pronta: false}],
-      ["where.html", "Onde Está o Comando (where)", {pronta: false}],
+      ["where.html", "Onde Está o Comando (where)"],
       ["tasklist.html", "Processos (tasklist)", {pronta: false}],
-      ["ver.html", "A Versão do Windows (ver)", {pronta: false}],
+      ["ver.html", "A Versão do Windows (ver)"],
       ["date.html", "A Data (date /t)", {pronta: false}],
       ["time.html", "A Hora (time /t)", {pronta: false}],
       ["hostname.html", "O Nome do Computador (hostname)", {pronta: false}]

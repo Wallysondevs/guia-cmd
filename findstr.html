@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Procurando com findstr — buscar texto com mais opções no Prompt | Guia CMD</title>
-<meta name="description" content="O comando findstr no Prompt de Comando: procurar texto em arquivos, as chaves /i, /n, /s e /r, e a diferença para o find. Saídas ainda a coletar.">
+<meta name="description" content="O comando findstr no Prompt de Comando: procurar texto em arquivos, as chaves /i, /n, /c, /r, /b e /m, e a mensagem real quando o arquivo não existe.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,56 +19,78 @@
 <h1>Procurando com <span class="hl">findstr</span></h1>
 
 
-<p class="intro">O <code>findstr</code> também procura texto, mas com <strong>mais opções</strong> do que o <code>find</code>: várias frases de uma vez, busca em subpastas e, se você pedir, um padrão mais flexível. A sintaxe não é a mesma do <code>find</code>; por isso esta aula é só dele. As saídas reais ainda estão a coletar.</p>
+<p class="intro">O <code>findstr</code> também procura texto, mas com <strong>mais opções</strong> do que o <code>find</code>: a frase com espaço, um padrão, o começo da linha e o nome do arquivo que combinou. A sintaxe não é a mesma do <code>find</code>; por isso esta aula é só dele. As saídas são as da coleta do lote 2.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>findstr "texto" arquivo</code>, o jeito mais direto.</li>
-<li>As chaves <code>/i</code> (sem diferenciar maiúsculas), <code>/n</code> (número da linha) e <code>/s</code> (também nas subpastas).</li>
-<li>Que o <code>/r</code> liga a busca por expressão regular — só o essencial nesta aula, sem inventar exemplos de saída.</li>
-<li>A diferença de sintaxe em relação ao <code>find</code>.</li>
+<li>O <code>findstr "texto" arquivo</code>, o jeito mais direto — sem o cabeçalho <code>----------</code> do <code>find</code>.</li>
+<li>As chaves <code>/i</code>, <code>/n</code>, <code>/c:"frase"</code>, <code>/r</code> (padrão), <code>/b</code> (começo da linha) e <code>/m</code> (só o nome do arquivo).</li>
+<li>A mensagem real quando o arquivo não existe.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
 <hr>
 <h2>A ideia: um detector mais fino</h2>
-<p>Se o <code>find</code> é um carimbo de uma palavra só, o <code>findstr</code> é um detector que você regula: pode olhar várias pastas, várias palavras e, se quiser, um padrão. Continua só lendo; não altera o arquivo.</p>
+<p>Se o <code>find</code> é um carimbo de uma palavra só, o <code>findstr</code> é um detector que você regula. Continua só lendo; não altera o arquivo. E, no laboratório, ele não escreveu o cabeçalho <code>---------- ARQUIVO</code>: veio direto a linha que combinou.</p>
 <hr>
 <h2>1. Procurar uma frase</h2>
-<p>O pedido clássico na pasta de teste:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr "leite" notas.txt
-
-« saída a coletar »
+<p>No <code>log.txt</code>, o <code>findstr "ERRO" log.txt</code> mostrou as duas linhas, sem cabeçalho:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr "ERRO" log.txt
+08:05 ERRO disco cheio
+08:15 ERRO arquivo travado
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<dl class="anatomy"><dt>findstr</dt><dd>o comando: “procure este texto”.</dd><dt>"leite"</dt><dd>o texto. As aspas evitam que o Prompt se confunda se houver espaço.</dd><dt>notas.txt</dt><dd>o arquivo.</dd></dl>
 <hr>
-<h2>2. Subpastas e número da linha</h2>
-<p>O <code>/s</code> desce nas subpastas. O <code>/n</code> mostra o número da linha. O <code>/i</code> ignora maiúsculas, como no <code>find</code>.</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr /i /n "leite" notas.txt
-
-« saída a coletar »
+<h2>2. Maiúsculas, número da linha e frase com espaço</h2>
+<p>O <code>/i</code> em <code>nomes.txt</code> trouxe <code>Ana</code> e <code>ana paula</code>. O <code>/n</code> no log numerou as linhas com <code>2:</code> e <code>4:</code> (um jeito diferente do <code>[2]</code> do <code>find /n</code>):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr /i "ana" nomes.txt
+Ana
+ana paula
+C:\Users\ana\guia-cmd-teste&gt;findstr /n "ERRO" log.txt
+2:08:05 ERRO disco cheio
+4:08:15 ERRO arquivo travado
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr /s /i "ferias" *.*
+<p>Com aspas, <code>findstr "ana paula" nomes.txt</code> e <code>findstr /c:"ana paula" nomes.txt</code> devolveram a mesma linha neste laboratório:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr "ana paula" nomes.txt
+ana paula
+C:\Users\ana\guia-cmd-teste&gt;findstr /c:"ana paula" nomes.txt
+ana paula
 
-« saída a coletar » — só na pasta de teste, com curinga relativo
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Padrão, começo da linha e só o nome do arquivo</h2>
+<p>O <code>/r "^[A-D]" nomes.txt</code> pediu um padrão (linhas que começam com A, B, C ou D). A saída real foi esta, nesta ordem:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr /r "^[A-D]" nomes.txt
+Carla
+bruno
+Ana
+Diego
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>/b "08:1" log.txt</code> pediu linhas que começam com esse texto. O <code>/m "ERRO" *.txt</code> mostrou só o nome do arquivo que combinou:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr /b "08:1" log.txt
+08:10 OK nova tentativa
+08:15 ERRO arquivo travado
+C:\Users\ana\guia-cmd-teste&gt;findstr /m "ERRO" *.txt
+log.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Formas diferentes de usar o findstr</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>findstr "leite" notas.txt</code></td><td>O jeito deste guia: procurar no arquivo.</td></tr>
-<tr><td><code>findstr /i /n "leite" notas.txt</code></td><td>Sem diferenciar maiúsculas, com o número da linha.</td></tr>
-<tr><td><code>findstr /s "texto" *.*</code></td><td>Para procurar também nas subpastas, só dentro da pasta de teste.</td></tr>
-<tr><td><code>findstr /r "padrao" arquivo</code></td><td>Quando você quer um padrão (expressão regular). A saída real está a coletar.</td></tr>
+<tr><td><code>findstr "ERRO" log.txt</code></td><td>O jeito deste guia: procurar no arquivo, sem cabeçalho.</td></tr>
+<tr><td><code>findstr /i "ana" nomes.txt</code></td><td>Sem diferenciar maiúsculas.</td></tr>
+<tr><td><code>findstr /n "ERRO" log.txt</code></td><td>Com o número da linha no começo da resposta.</td></tr>
+<tr><td><code>findstr /c:"ana paula" nomes.txt</code></td><td>Para tratar a frase com espaço como um bloco só.</td></tr>
+<tr><td><code>findstr /r "padrão" arquivo</code></td><td>Quando você quer um padrão (expressão regular).</td></tr>
+<tr><td><code>findstr /b "texto" arquivo</code></td><td>Quando a frase deve estar no começo da linha.</td></tr>
+<tr><td><code>findstr /m "texto" *.txt</code></td><td>Para ver só o nome dos arquivos que combinam.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Um arquivo que não existe</strong>
-<p>O <code>findstr "leite" arquivo-nao-existe.txt</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos.</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr "leite" arquivo-nao-existe.txt
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+<p>O <code>findstr "x" arquivo-nao-existe.txt</code> devolveu esta mensagem, exatamente assim (não é a mesma frase do <code>find</code>):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;findstr "x" arquivo-nao-existe.txt
+FINDSTR: não foi possível abrir arquivo-nao-existe.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -76,56 +98,63 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Referência rápida</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
-<tr><td><code>findstr "texto" arquivo</code></td><td>Mostra as linhas que têm o texto.</td></tr>
+<tr><td><code>findstr "texto" arquivo</code></td><td>Mostra as linhas que têm o texto, sem o cabeçalho do <code>find</code>.</td></tr>
 <tr><td><code>findstr /i /n "texto" arquivo</code></td><td>Ignora maiúsculas e mostra o número da linha.</td></tr>
-<tr><td><code>findstr /s "texto" *.*</code></td><td>Procura também nas subpastas (só na pasta de teste).</td></tr>
+<tr><td><code>findstr /c:"frase completa" arquivo</code></td><td>Procura a frase com espaço como um bloco.</td></tr>
+<tr><td><code>findstr /r /b /m</code></td><td>Padrão, começo da linha, só o nome do arquivo.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
-<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para procurar <code>leite</code> em <code>notas.txt</code> com o <code>findstr</code>:</p><div class="ex-code"><input data-answer="findstr" aria-label="comando"> "leite" notas.txt</div></div>
-<div class="exercise"><h3>2. Subpastas</h3><p>Qual chave pede para procurar também nas subpastas?</p><div class="ex-code">findstr <input data-answer="/s" aria-label="chave"> "ferias" *.*</div></div>
-<div class="exercise"><h3>3. Número da linha</h3><p>Qual chave mostra o número da linha?</p><div class="ex-code">findstr <input data-answer="/n" aria-label="chave"> "leite" notas.txt</div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. Por que o <code>findstr</code> tem uma aula só dele, e não se mistura com o <code>find</code>?</p>
-<label><input type="radio" name="q4"> Porque o <code>findstr</code> apaga arquivos</label>
-<label><input type="radio" name="q4"> Porque a sintaxe não é a mesma, e misturar os dois na primeira leitura atrapalha</label>
-<label><input type="radio" name="q4"> Porque um só existe no Linux</label>
-<label><input type="radio" name="q4"> Porque o <code>find</code> já faz tudo igual</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. A chave <code>/s</code> do <code>findstr</code> serve para quê?</p>
-<label><input type="radio" name="q5"> Procurar também nas subpastas</label>
-<label><input type="radio" name="q5"> Ordenar o resultado</label>
-<label><input type="radio" name="q5"> Traduzir a saída</label>
-<label><input type="radio" name="q5"> Apagar os arquivos que combinam</label></div>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para procurar <code>ERRO</code> em <code>log.txt</code> com o <code>findstr</code>:</p><div class="ex-code"><input data-answer="findstr" aria-label="comando"> "ERRO" log.txt</div></div>
+<div class="exercise"><h3>2. Número da linha</h3><p>Qual chave mostra o número da linha?</p><div class="ex-code">findstr <input data-answer="/n" aria-label="chave"> "ERRO" log.txt</div></div>
+<div class="exercise"><h3>3. Só o nome do arquivo</h3><p>Qual chave pede só o nome do arquivo que combinou?</p><div class="ex-code">findstr <input data-answer="/m" aria-label="chave"> "ERRO" *.txt</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, qual foi a diferença visível entre <code>find "ERRO" log.txt</code> e <code>findstr "ERRO" log.txt</code>?</p>
+<label><input type="radio" name="q4"> O <code>findstr</code> apagou o arquivo</label>
+<label><input type="radio" name="q4"> O <code>find</code> veio com o cabeçalho <code>---------- LOG.TXT</code>; o <code>findstr</code> mostrou só as linhas</label>
+<label><input type="radio" name="q4"> Foram a mesma saída, palavra por palavra</label>
+<label><input type="radio" name="q4"> O <code>findstr</code> só existe no PowerShell</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a mensagem real de <code>findstr "x" arquivo-nao-existe.txt</code>?</p>
+<label><input type="radio" name="q5"> <code>FINDSTR: não foi possível abrir arquivo-nao-existe.txt</code></label>
+<label><input type="radio" name="q5"> <code>Arquivo não encontrado  - ARQUIVO-NAO-EXISTE.TXT</code></label>
+<label><input type="radio" name="q5"> <code>FIND: formato de parâmetro incorreto</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “não achei o arquivo”</label></div>
 <div class="mc" data-answer="3"><p class="mc-q">6. O <code>findstr</code> altera o arquivo em que procura?</p>
 <label><input type="radio" name="q6"> Sim, ele apaga as linhas que não combinam</label>
 <label><input type="radio" name="q6"> Sim, ele grava a frase no fim do arquivo</label>
 <label><input type="radio" name="q6"> Não: ele só lê e mostra o que combinou na tela</label>
 <label><input type="radio" name="q6"> Só altera se você usar <code>/s</code></label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfindstr\\b;;semerro -->
-<div class="trycmd" data-goal="src:\bfindstr\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> na pasta de teste, procure <code>leite</code> em <code>notas.txt</code> com o <code>findstr</code>.</p>
+<div class="trycmd" data-goal="src:\bfindstr\b;;out:08:05 ERRO disco cheio;;out:08:15 ERRO arquivo travado">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, procure <code>ERRO</code> em <code>log.txt</code> com o <code>findstr</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
-findstr "leite" notas.txt
+findstr "ERRO" log.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+08:05 ERRO disco cheio
+08:15 ERRO arquivo travado
 </pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfindstr\\b;;semerro -->
-<div class="trycmd" data-goal="src:\bfindstr\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> repita a busca com <code>/i</code> e <code>/n</code> juntos.</p>
+<div class="trycmd" data-goal="src:\bfindstr\b;;src:/n;;out:2:08:05 ERRO disco cheio;;out:4:08:15 ERRO arquivo travado">
+<p class="try-task"><strong>Missão:</strong> repita a busca no log com <code>findstr /n</code>, para ver o número da linha.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
-findstr /i /n "leite" notas.txt
+findstr /n "ERRO" log.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+2:08:05 ERRO disco cheio
+4:08:15 ERRO arquivo travado
 </pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li><code>findstr "texto" arquivo</code> procura o texto e mostra as linhas que combinam, sem alterar o arquivo.</li>
-<li><code>/i</code>, <code>/n</code> e <code>/s</code> são as chaves desta aula; o <code>/r</code> liga padrões mais flexíveis.</li>
-<li>Não é o mesmo comando que o <code>find</code>. As saídas reais ainda estão a coletar.</li>
+<li><code>findstr "texto" arquivo</code> procura o texto e mostra as linhas, sem o cabeçalho do <code>find</code>.</li>
+<li><code>/i</code>, <code>/n</code>, <code>/c:"frase"</code>, <code>/r</code>, <code>/b</code> e <code>/m</code> são as chaves desta aula, com saída real na pasta de teste.</li>
+<li>A mensagem de arquivo inexistente não é a mesma do <code>find</code>: entra exatamente como o Prompt escreveu.</li>
 </ul>
 
 

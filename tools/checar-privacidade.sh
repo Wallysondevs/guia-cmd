@@ -18,9 +18,10 @@ padroes+=("re:S-1-5-21-\\d+-\\d+-\\d+(-\\d+)?")
 padroes+=("re:\\b(?!02[:-])([0-9a-f]{2}[:-]){5}[0-9a-f]{2}\\b")
 padroes+=("re:\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b")
 padroes+=("re:(?<![\\d.])(?!192\\.168\\.0\\.|127\\.|255\\.)(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d)\\.(\\d{1,3}\\.){2}\\d{1,3}(?![\\d.])")
-# Número de Série do Volume do dir (quatro hex, hífen, quatro hex).
-# O placeholder anonimizado usa XXXX-XXXX (X não é hex, então não casa).
-padroes+=("re:(Número de Série do Volume|Volume Serial Number).{0,8}[0-9A-F]{4}-[0-9A-F]{4}")
+# Número de Série do Volume do dir (quatro hex, hífen ou dois-pontos, quatro hex).
+# Aparece como XXXX-XXXX ou XXXX:XXXX. O placeholder usa X literais (não são hex, então não casa).
+# A janela depois do rótulo é larga: em algumas saídas vem um prefixo hex antes do serial.
+padroes+=("re:(N[uú]mero de S[eé]rie do Volume|Volume Serial Number).{0,40}[0-9A-F]{4}[-:][0-9A-F]{4}")
 # C:\Users\<nome> que não seja ana / Public / Default
 padroes+=("re:C:\\\\Users\\\\(?!ana\\b|Public\\b|Default\\b)[^\\\\s\\\\/<>\"]+")
 # Endereço Físico do ipconfig /all (o padrão de MAC acima também pega)

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atributos (attrib) — ver e mudar atributos de arquivo no Prompt | Guia CMD</title>
-<meta name="description" content="O comando attrib no Prompt de Comando: ver atributos, marcar ou desmarcar oculto e somente leitura, na pasta de teste. Saídas ainda a coletar.">
+<meta name="description" content="O comando attrib no Prompt de Comando: ver atributos, marcar ou desmarcar oculto e somente leitura, na pasta de teste, com saídas reais da coleta.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,47 +19,74 @@
 <h1>Atributos (<span class="hl">attrib</span>)</h1>
 
 
-<p class="intro">Além do nome, um arquivo pode ter <strong>atributos</strong>: oculto, somente leitura, arquivo e, em alguns casos, de sistema. O <code>attrib</code> mostra esses atributos e permite ligá-los ou desligá-los. Na pasta de teste do guia já existe um arquivo oculto de semente, o <code>um-oculto.txt</code>. As saídas reais ainda estão a coletar.</p>
+<p class="intro">Além do nome, um arquivo pode ter <strong>atributos</strong>: oculto, somente leitura, arquivo e, em alguns casos, de sistema. O <code>attrib</code> mostra esses atributos e permite ligá-los ou desligá-los. Na pasta de teste já existe o oculto <code>um-oculto.txt</code>. As saídas desta aula são as da coleta do lote 2. No laboratório as chaves foram escritas em minúsculas (<code>+r</code>, <code>-h</code>); no <code>cmd</code> isso não diferencia de <code>+R</code> ou <code>-H</code>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>attrib</code> sozinho, que lista os atributos dos arquivos da pasta atual.</li>
 <li>O <code>attrib nome</code>, que mostra os atributos de um arquivo só.</li>
-<li>O <code>+</code> e o <code>-</code> para ligar ou desligar um atributo, como <code>+H</code> (oculto) e <code>+R</code> (somente leitura).</li>
+<li>O <code>+</code> e o <code>-</code> para ligar ou desligar um atributo, como <code>+h</code> (oculto) e <code>+r</code> (somente leitura).</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
-<p>Trabalhe só na pasta de teste. Não marque de sistema (<code>+S</code>) arquivos aleatórios no disco, e não desmarque atributos de arquivos do Windows.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<p>Trabalhe só na pasta de teste. Não marque de sistema (<code>+s</code>) arquivos aleatórios no disco, e não desmarque atributos de arquivos do Windows.</p>
 <hr>
 <h2>A ideia: etiquetas na gaveta</h2>
-<p>Cada arquivo pode levar etiquetas: “não aparece na lista comum”, “não me grave por cima”, “já foi arquivado”. O <code>attrib</code> lê essas etiquetas e, se você pedir, cola ou tira uma. O conteúdo do arquivo não muda; muda só a etiqueta.</p>
+<p>Cada arquivo pode levar etiquetas: “não aparece na lista comum”, “não me grave por cima”. O <code>attrib</code> lê essas etiquetas e, se você pedir, cola ou tira uma. O conteúdo do arquivo não muda; muda só a etiqueta.</p>
 <hr>
 <h2>1. Ver os atributos</h2>
-<p>Sem nome, o <code>attrib</code> lista o que está na pasta atual. Com um nome, mostra só aquele arquivo. O <code>um-oculto.txt</code> da semente é o candidato natural para ver o atributo oculto.</p>
+<p>Sem nome, o <code>attrib</code> listou os arquivos da pasta atual. O <code>um-oculto.txt</code> veio com a letra <code>H</code> (oculto). O <code>attrib notas.txt</code> mostrou só aquele arquivo, com a letra <code>A</code>:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib
-
-« saída a coletar »
-
-C:\Users\ana\guia-cmd-teste&gt;</pre>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib um-oculto.txt
-
-« saída a coletar »
+A                    C:\Users\ana\guia-cmd-teste\agenda.txt
+A                    C:\Users\ana\guia-cmd-teste\log.txt
+A                    C:\Users\ana\guia-cmd-teste\nomes.txt
+A                    C:\Users\ana\guia-cmd-teste\notas.txt
+A                    C:\Users\ana\guia-cmd-teste\rascunho.tmp
+A                    C:\Users\ana\guia-cmd-teste\rascunho2.tmp
+A                    C:\Users\ana\guia-cmd-teste\relatorio.docx
+A                    C:\Users\ana\guia-cmd-teste\relatorio.txt
+A   H                C:\Users\ana\guia-cmd-teste\um-oculto.txt
+C:\Users\ana\guia-cmd-teste&gt;attrib notas.txt
+A                    C:\Users\ana\guia-cmd-teste\notas.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
-<h2>2. Ligar e desligar</h2>
-<p>O <code>+</code> liga; o <code>-</code> desliga. As letras mais comuns nesta aula são <code>H</code> (oculto) e <code>R</code> (somente leitura). Qualquer experiência de ligar e desligar deve ser feita num arquivo da pasta de teste — por exemplo, criando uma cópia de trabalho, não no meio do Windows.</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib +R notas.txt
-
-« saída a coletar »
+<h2>2. Ligar e desligar o somente leitura</h2>
+<p>O <code>attrib +r notas.txt</code> não escreveu nada na tela. O <code>attrib notas.txt</code> seguinte já mostrava a letra <code>R</code>. Com o arquivo assim, o <code>del /q notas.txt</code> respondeu <code>Acesso negado.</code> Depois o <code>attrib -r notas.txt</code> tirou o atributo, de novo em silêncio:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib +r notas.txt
+C:\Users\ana\guia-cmd-teste&gt;attrib notas.txt
+A    R               C:\Users\ana\guia-cmd-teste\notas.txt
+C:\Users\ana\guia-cmd-teste&gt;del /q notas.txt
+C:\Users\ana\guia-cmd-teste\notas.txt
+Acesso negado.
+C:\Users\ana\guia-cmd-teste&gt;attrib -r notas.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib notas.txt
-
-« saída a coletar »
+<hr>
+<h2>3. Ocultar e um grupo de arquivos</h2>
+<p>O <code>attrib +h agenda.txt</code> também foi silencioso. O <code>dir /b</code> seguinte já não listava o <code>agenda.txt</code>; o <code>dir /b /a:h</code> mostrou <code>agenda.txt</code> e <code>um-oculto.txt</code>. O <code>attrib -h agenda.txt</code> desfez o oculto:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib +h agenda.txt
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+backup
+docs
+fotos
+lixeira
+log.txt
+nomes.txt
+notas.txt
+rascunho.tmp
+rascunho2.tmp
+relatorio.docx
+relatorio.txt
+C:\Users\ana\guia-cmd-teste&gt;dir /b /a:h
+agenda.txt
+um-oculto.txt
+C:\Users\ana\guia-cmd-teste&gt;attrib -h agenda.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib -R notas.txt
-
-« saída a coletar »
+<p>O <code>attrib +r fotos\*.png /s</code> não escreveu nada. O <code>attrib fotos\*.*</code> mostrou os dois <code>.png</code> com <code>R</code> e o <code>legenda.txt</code> sem:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib +r fotos\*.png /s
+C:\Users\ana\guia-cmd-teste&gt;attrib fotos\*.*
+A    R               C:\Users\ana\guia-cmd-teste\fotos\ferias.png
+A                    C:\Users\ana\guia-cmd-teste\fotos\legenda.txt
+A    R               C:\Users\ana\guia-cmd-teste\fotos\praia.png
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -67,17 +94,16 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>attrib</code></td><td>Para ver os atributos dos arquivos da pasta atual.</td></tr>
-<tr><td><code>attrib um-oculto.txt</code></td><td>Para ver os atributos de um arquivo só.</td></tr>
-<tr><td><code>attrib +H arquivo</code> / <code>attrib -H arquivo</code></td><td>Para marcar ou desmarcar como oculto, só na pasta de teste.</td></tr>
-<tr><td><code>attrib +R arquivo</code> / <code>attrib -R arquivo</code></td><td>Para ligar ou desligar o somente leitura, só na pasta de teste.</td></tr>
+<tr><td><code>attrib notas.txt</code></td><td>Para ver os atributos de um arquivo só.</td></tr>
+<tr><td><code>attrib +h arquivo</code> / <code>attrib -h arquivo</code></td><td>Para marcar ou desmarcar como oculto, só na pasta de teste.</td></tr>
+<tr><td><code>attrib +r arquivo</code> / <code>attrib -r arquivo</code></td><td>Para ligar ou desligar o somente leitura, só na pasta de teste.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Um arquivo que não existe</strong>
-<p>O <code>attrib arquivo-nao-existe.txt</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos.</p>
+<p>O <code>attrib arquivo-nao-existe.txt</code> devolveu esta mensagem, exatamente assim (dois espaços antes do traço):</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;attrib arquivo-nao-existe.txt
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+Arquivo não encontrado  - arquivo-nao-existe.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -87,46 +113,58 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <tr><th>Você digita</th><th>O que faz</th></tr>
 <tr><td><code>attrib</code></td><td>Lista os atributos da pasta atual.</td></tr>
 <tr><td><code>attrib arquivo</code></td><td>Mostra os atributos daquele arquivo.</td></tr>
-<tr><td><code>attrib +H</code> / <code>-H</code> / <code>+R</code> / <code>-R</code></td><td>Liga ou desliga oculto ou somente leitura.</td></tr>
+<tr><td><code>attrib +h</code> / <code>-h</code> / <code>+r</code> / <code>-r</code></td><td>Liga ou desliga oculto ou somente leitura.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
-<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver os atributos de <code>um-oculto.txt</code>:</p><div class="ex-code"><input data-answer="attrib" aria-label="comando"> um-oculto.txt</div></div>
-<div class="exercise"><h3>2. Somente leitura</h3><p>Complete para ligar o atributo de somente leitura em <code>notas.txt</code> (só na pasta de teste):</p><div class="ex-code">attrib <input data-answer="+R" aria-label="atributo"> notas.txt</div></div>
-<div class="exercise"><h3>3. Tirar o atributo</h3><p>Qual sinal desliga um atributo?</p><div class="ex-code">attrib <input data-answer="-" aria-label="sinal">R notas.txt</div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>attrib +H arquivo</code> faz, em resumo?</p>
-<label><input type="radio" name="q4"> Apaga o arquivo</label>
-<label><input type="radio" name="q4"> Marca o arquivo como oculto (o conteúdo não muda)</label>
-<label><input type="radio" name="q4"> Copia o arquivo para outra pasta</label>
-<label><input type="radio" name="q4"> Traduz o nome do arquivo</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. Onde esta aula pede para ligar e desligar atributos?</p>
-<label><input type="radio" name="q5"> Só na pasta de teste do guia, nunca no meio do Windows</label>
-<label><input type="radio" name="q5"> Na pasta <code>C:\Windows</code></label>
-<label><input type="radio" name="q5"> Na raiz do disco <code>C:</code></label>
-<label><input type="radio" name="q5"> Em qualquer arquivo do computador, sem cuidado</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. O <code>attrib</code> sozinho, sem nome de arquivo, serve para quê?</p>
-<label><input type="radio" name="q6"> Para apagar todos os atributos do disco</label>
-<label><input type="radio" name="q6"> Para criar um arquivo oculto</label>
-<label><input type="radio" name="q6"> Para listar os atributos dos arquivos da pasta atual</label>
-<label><input type="radio" name="q6"> Para formatar a pasta</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\battrib\\b;;semerro -->
-<div class="trycmd" data-goal="src:\battrib\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre os atributos de <code>um-oculto.txt</code> com o <code>attrib</code>.</p>
-<pre class="script" data-file="comandos.bat">
-
-</pre>
-<pre class="solucao" data-file="comandos.bat">
-attrib um-oculto.txt
-</pre>
-</div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\battrib\\b;;semerro -->
-<div class="trycmd" data-goal="src:\battrib\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> liste os atributos dos arquivos da pasta atual, com o <code>attrib</code> sozinho.</p>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver os atributos de <code>notas.txt</code>:</p><div class="ex-code"><input data-answer="attrib" aria-label="comando"> notas.txt</div></div>
+<div class="exercise"><h3>2. Somente leitura</h3><p>Complete para ligar o atributo de somente leitura em <code>notas.txt</code> (só na pasta de teste):</p><div class="ex-code">attrib <input data-answer="+r|+R" aria-label="atributo"> notas.txt</div></div>
+<div class="exercise"><h3>3. Tirar o atributo</h3><p>Qual sinal desliga um atributo?</p><div class="ex-code">attrib <input data-answer="-" aria-label="sinal">r notas.txt</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, o <code>um-oculto.txt</code> apareceu no <code>attrib</code> sozinho com qual letra?</p>
+<label><input type="radio" name="q4"> Só a letra <code>A</code></label>
+<label><input type="radio" name="q4"> A letra <code>H</code> (oculto), além da <code>A</code></label>
+<label><input type="radio" name="q4"> A letra <code>R</code></label>
+<label><input type="radio" name="q4"> Não apareceu na lista</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Depois de <code>attrib +r notas.txt</code>, o <code>del /q notas.txt</code> respondeu o quê?</p>
+<label><input type="radio" name="q5"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q5"> O arquivo foi apagado, em silêncio</label>
+<label><input type="radio" name="q5"> <code>Arquivo não encontrado</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “protegido”</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a mensagem real de <code>attrib arquivo-nao-existe.txt</code>?</p>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q6"> <code>Arquivo não encontrado  - arquivo-nao-existe.txt</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa</label></div>
+<div class="trycmd" data-goal="src:\battrib\b;;out:um-oculto.txt;;out:notas.txt">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, liste os atributos da pasta atual com o <code>attrib</code> sozinho.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
 attrib
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+A                    C:\Users\ana\guia-cmd-teste\agenda.txt
+A                    C:\Users\ana\guia-cmd-teste\log.txt
+A                    C:\Users\ana\guia-cmd-teste\nomes.txt
+A                    C:\Users\ana\guia-cmd-teste\notas.txt
+A                    C:\Users\ana\guia-cmd-teste\rascunho.tmp
+A                    C:\Users\ana\guia-cmd-teste\rascunho2.tmp
+A                    C:\Users\ana\guia-cmd-teste\relatorio.docx
+A                    C:\Users\ana\guia-cmd-teste\relatorio.txt
+A   H                C:\Users\ana\guia-cmd-teste\um-oculto.txt
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\battrib\b;;out:C:\Users\ana\guia-cmd-teste\notas.txt">
+<p class="try-task"><strong>Missão:</strong> mostre os atributos só de <code>notas.txt</code> com <code>attrib notas.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+attrib notas.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+A                    C:\Users\ana\guia-cmd-teste\notas.txt
 </pre>
 </div>
 <hr>
@@ -134,7 +172,7 @@ attrib
 <ul>
 <li>O <code>attrib</code> mostra e altera etiquetas do arquivo (oculto, somente leitura), não o conteúdo.</li>
 <li><code>+</code> liga e <code>-</code> desliga. Use isso só na pasta de teste.</li>
-<li>As saídas reais — inclusive o jeito como o <code>cmd</code> imprime as letras dos atributos — ainda estão a coletar.</li>
+<li>Com o somente leitura ligado, o <code>del /q</code> no laboratório devolveu <code>Acesso negado.</code></li>
 </ul>
 
 

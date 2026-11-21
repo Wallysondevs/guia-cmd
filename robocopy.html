@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cópia Robusta (robocopy) — copiar pastas com o robocopy no Prompt | Guia CMD</title>
-<meta name="description" content="O comando robocopy no Prompt de Comando: copiar pastas só dentro da pasta de teste, com /e, e o cuidado de não usar /MIR nesta aula. Saídas ainda a coletar.">
+<meta name="description" content="O comando robocopy no Prompt de Comando: copiar pastas só dentro da pasta de teste, o relatório real, as chaves /njh /njs /e /l, e o erro real de origem inexistente.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,43 +19,121 @@
 <h1>Cópia Robusta (<span class="hl">robocopy</span>)</h1>
 
 
-<p class="intro">O <code>robocopy</code> (“robust copy”) também copia pastas, com um relatório mais detalhado e opções para retomar uma cópia. Nesta aula ele roda <strong>somente dentro da pasta de teste</strong>, com origem e destino literais nessa pasta. As saídas reais — o <code>robocopy</code> costuma escrever um relatório comprido — ainda estão a coletar: não inventamos uma linha sequer desse relatório.</p>
+<p class="intro">O <code>robocopy</code> (“robust copy”) também copia pastas, com um relatório mais detalhado. Nesta aula ele roda <strong>somente dentro da pasta de teste</strong>. As saídas — inclusive o relatório comprido e os horários da coleta — são as da captura do lote 2, palavra por palavra. A chave <code>/MIR</code> (espelhar, apagando no destino) <strong>não entra nas missões</strong>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>robocopy origem destino</code>, com caminhos dentro da pasta de teste.</li>
-<li>A chave <code>/e</code>, para incluir subpastas (também as vazias).</li>
-<li>Que a chave <code>/MIR</code> (espelhar, apagando no destino o que não está na origem) <strong>não entra nas missões desta aula</strong>: o risco de apagar demais é alto se o caminho sair da pasta de teste.</li>
+<li>O <code>robocopy origem destino</code>, com caminhos dentro da pasta de teste, e o relatório que ele escreve.</li>
+<li>As chaves <code>/njh</code> e <code>/njs</code> (menos cabeçalho e menos resumo), <code>/e</code> (subpastas) e <code>/l</code> (só listar).</li>
+<li>A mensagem real quando a origem não existe.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
 <div class="tip"><strong>Guarda</strong>
 <p>A coleta deste comando começa com <code>cd /d C:\Users\ana\guia-cmd-teste || exit /b 1</code>. No seu computador, faça o mesmo na sua pasta de teste. Não aponte o <code>robocopy</code> para a raiz do disco, para a pasta pessoal inteira nem para pastas do sistema.</p>
 </div>
 <hr>
 <h2>A ideia: um carregador que anota tudo</h2>
-<p>Se o <code>xcopy</code> é a fotocópia da gaveta, o <code>robocopy</code> é um carregador que ainda escreve um relatório: o que copiou, o que pulou, o que falhou. O relatório verdadeiro só entra depois da coleta. Até lá, a caixa abaixo fica com o placeholder.</p>
+<p>Se o <code>xcopy</code> é a fotocópia da gaveta, o <code>robocopy</code> é um carregador que ainda escreve um relatório: o que copiou, o que pulou, o que falhou. O relatório abaixo é o da coleta, com a data e a hora em que o comando rodou no laboratório.</p>
 <hr>
 <h2>1. Copiar uma subpasta</h2>
-<p>Um pedido típico, só na pasta de teste: copiar <code>fotos</code> para um destino novo, com subpastas:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy fotos fotos-robo /e
+<p>O pedido <code>robocopy fotos backup\fotos</code>, na pasta de teste, devolveu este relatório:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy fotos backup\fotos
 
-« saída a coletar »
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy para Windows                              
+-------------------------------------------------------------------------------
+
+  Iniciado: sexta-feira, 20 de novembro de 2026 21:12:38
+   Origem : C:\Users\ana\guia-cmd-teste\fotos\
+     Dest : C:\Users\ana\guia-cmd-teste\backup\fotos\
+
+    Arquivos: *.*
+	    
+  Opções: *.* /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
+
+------------------------------------------------------------------------------
+
+	    Novo Dir       3	C:\Users\ana\guia-cmd-teste\fotos\
+	  Novo Arquivo		      16	ferias.png
+100%  
+	  Novo Arquivo		      42	legenda.txt
+100%  
+	  Novo Arquivo		      16	praia.png
+100%  
+
+------------------------------------------------------------------------------
+
+               Total   Copiada  IgnoradaIncompatibilidade     FALHA    Extras
+Diretórios:         1         1         0         0         0         0
+ Arquivos:         3         3         0         0         0         0
+    Bytes:        74        74         0         0         0         0
+N.º de Vezes:   0:00:00   0:00:00                       0:00:00   0:00:00
+
+
+Velocidade:                4933 Bytes/s.
+Velocidade:               0.282 MegaBytes/min.
+   Finalizado em: sexta-feira, 20 de novembro de 2026 21:12:38
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<dl class="anatomy"><dt>robocopy</dt><dd>o comando.</dd><dt>fotos</dt><dd>a origem, relativa, dentro da pasta de teste.</dd><dt>fotos-robo</dt><dd>o destino, também relativo, dentro da pasta de teste.</dd><dt>/e</dt><dd>inclui subpastas, inclusive as vazias.</dd></dl>
+<p>Com <code>/njh /njs</code>, o mesmo tipo de cópia veio bem mais curto (sem o cabeçalho e sem o resumo). Outros pedidos desta coleta, ainda dentro da pasta de teste, copiaram os <code>.txt</code> da pasta atual, a pasta <code>lixeira</code> com <code>/e</code>, e só os <code>.png</code> de <code>fotos</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy fotos backup\fotos /njh /njs
+
+	                   3	C:\Users\ana\guia-cmd-teste\fotos\
+C:\Users\ana\guia-cmd-teste&gt;robocopy . backup\textos *.txt /njh /njs /ndl
+
+	  Novo Arquivo		      22	C:\Users\ana\guia-cmd-teste\agenda.txt
+100%  
+	  Novo Arquivo		     130	C:\Users\ana\guia-cmd-teste\log.txt
+100%  
+	  Novo Arquivo		      37	C:\Users\ana\guia-cmd-teste\nomes.txt
+100%  
+	  Novo Arquivo		      44	C:\Users\ana\guia-cmd-teste\notas.txt
+100%  
+	  Novo Arquivo		      61	C:\Users\ana\guia-cmd-teste\relatorio.txt
+100%  
+	  Novo Arquivo		      27	C:\Users\ana\guia-cmd-teste\um-oculto.txt
+100%  
+C:\Users\ana\guia-cmd-teste&gt;robocopy lixeira backup\lixo /e /njh /njs
+
+	    Novo Dir       3	C:\Users\ana\guia-cmd-teste\lixeira\
+	  Novo Arquivo		       6	dois.txt
+100%  
+	  Novo Arquivo		       4	um.txt
+100%  
+	  Novo Arquivo		       5	velho.tmp
+100%  
+C:\Users\ana\guia-cmd-teste&gt;robocopy fotos backup\png *.png /njh /njs /ndl
+
+	  Novo Arquivo		      16	C:\Users\ana\guia-cmd-teste\fotos\ferias.png
+100%  
+	  Novo Arquivo		      16	C:\Users\ana\guia-cmd-teste\fotos\praia.png
+100%  
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>/l</code> só listou, sem a linha <code>100%</code> da cópia de fato:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy fotos backup\teste /l /njh /njs
+
+	    Novo Dir       3	C:\Users\ana\guia-cmd-teste\fotos\
+	  Novo Arquivo		      16	ferias.png
+	  Novo Arquivo		      42	legenda.txt
+	  Novo Arquivo		      16	praia.png
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Formas diferentes de usar o robocopy nesta aula</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>robocopy fotos fotos-robo /e</code></td><td>O jeito desta aula: copiar a pasta, com subpastas, para um destino dentro da pasta de teste.</td></tr>
-<tr><td><code>robocopy /?</code></td><td>Para ler a ajuda oficial do comando (saída longa, a coletar se entrar na captura).</td></tr>
+<tr><td><code>robocopy fotos backup\fotos</code></td><td>O jeito completo: copia e escreve o relatório longo.</td></tr>
+<tr><td><code>robocopy fotos backup\fotos /njh /njs</code></td><td>O mesmo, com menos cabeçalho e menos resumo na tela.</td></tr>
+<tr><td><code>robocopy lixeira backup\lixo /e /njh /njs</code></td><td>Para incluir subpastas (também as vazias), ainda na pasta de teste.</td></tr>
+<tr><td><code>robocopy fotos backup\teste /l /njh /njs</code></td><td>Para só listar o que seria copiado.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Uma origem que não existe</strong>
-<p>O <code>robocopy pasta-nao-existe destino-robo /e</code>, ainda dentro da pasta de teste, devolve alguma resposta (código de saída e, em geral, um relatório ou uma mensagem). O texto real ainda está a coletar — não inventamos nem traduzimos.</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy pasta-nao-existe destino-robo /e
+<p>O <code>robocopy pasta-nao-existe backup\x /r:0 /w:0 /njh /njs</code> (sem esperar novas tentativas) devolveu estas linhas, exatamente assim, com a data e a hora da coleta:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;robocopy pasta-nao-existe backup\x /r:0 /w:0 /njh /njs
 
-« saída a coletar » — saída real, nunca inventar
+2026/11/20 21:12:38 ERRO 2 (0x00000002) Acessando o Diretório de Origem C:\Users\ana\guia-cmd-teste\pasta-nao-existe\
+O sistema não pode encontrar o arquivo especificado.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -63,45 +141,100 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Referência rápida</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
-<tr><td><code>robocopy origem destino /e</code></td><td>Copia a pasta, com subpastas, para o destino. Só na pasta de teste.</td></tr>
-<tr><td><code>/MIR</code></td><td>Espelha e pode apagar no destino. <strong>Não usamos</strong> nesta aula.</td></tr>
+<tr><td><code>robocopy origem destino</code></td><td>Copia a pasta e escreve um relatório. Só na pasta de teste.</td></tr>
+<tr><td><code>/njh /njs</code></td><td>Reduz o cabeçalho e o resumo na tela.</td></tr>
+<tr><td><code>/e</code></td><td>Inclui subpastas, também as vazias.</td></tr>
+<tr><td><code>/l</code></td><td>Só lista, sem copiar.</td></tr>
+<tr><td><code>/MIR</code></td><td>Espelha e pode apagar no destino. <strong>Não usamos</strong> nas missões.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
-<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para copiar <code>fotos</code> para <code>fotos-robo</code> com subpastas:</p><div class="ex-code"><input data-answer="robocopy" aria-label="comando"> fotos fotos-robo /e</div></div>
-<div class="exercise"><h3>2. Subpastas</h3><p>Qual chave inclui as subpastas, também as vazias?</p><div class="ex-code">robocopy fotos fotos-robo <input data-answer="/e" aria-label="chave"></div></div>
-<div class="exercise"><h3>3. O que não usar</h3><p>Qual chave esta aula pede para <strong>não</strong> usar nas missões, por apagar demais no destino? (escreva <code>/MIR</code>)</p><div class="ex-code"><input data-answer="/MIR|/mir" aria-label="chave"></div></div>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para copiar <code>fotos</code> para <code>backup\fotos</code>:</p><div class="ex-code"><input data-answer="robocopy" aria-label="comando"> fotos backup\fotos</div></div>
+<div class="exercise"><h3>2. Menos texto na tela</h3><p>Quais duas chaves, nesta aula, tiram o cabeçalho e o resumo? (escreva <code>/njh /njs</code>)</p><div class="ex-code"><input data-answer="/njh /njs|/njs /njh" aria-label="chaves"></div></div>
+<div class="exercise"><h3>3. O que não usar</h3><p>Qual chave esta aula pede para <strong>não</strong> usar nas missões? (escreva <code>/MIR</code>)</p><div class="ex-code"><input data-answer="/MIR|/mir" aria-label="chave"></div></div>
 <div class="mc" data-answer="2"><p class="mc-q">4. Onde o <code>robocopy</code> desta aula pode rodar?</p>
 <label><input type="radio" name="q4"> Na raiz do disco <code>C:</code></label>
-<label><input type="radio" name="q4"> Só dentro da pasta de teste, com origem e destino literais nessa pasta</label>
+<label><input type="radio" name="q4"> Só dentro da pasta de teste, com origem e destino nessa pasta</label>
 <label><input type="radio" name="q4"> Em <code>C:\Windows\System32</code></label>
 <label><input type="radio" name="q4"> Em qualquer caminho, inclusive o da pasta pessoal inteira</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não usa <code>/MIR</code> nas missões?</p>
-<label><input type="radio" name="q5"> Porque espelhar pode apagar no destino o que não está na origem, e o risco é alto fora da pasta de teste</label>
-<label><input type="radio" name="q5"> Porque a chave não existe</label>
-<label><input type="radio" name="q5"> Porque o <code>/MIR</code> só funciona no PowerShell</label>
-<label><input type="radio" name="q5"> Porque o <code>/e</code> já apaga a origem</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. O que fazemos com o relatório longo que o <code>robocopy</code> costuma escrever?</p>
-<label><input type="radio" name="q6"> Inventamos um relatório de memória, para a aula não ficar vazia</label>
-<label><input type="radio" name="q6"> Traduzimos um relatório em inglês encontrado na internet</label>
-<label><input type="radio" name="q6"> Deixamos a caixa como « saída a coletar » até a captura anonimizada chegar</label>
-<label><input type="radio" name="q6"> Apagamos a aula, porque relatório não se ensina</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\brobocopy\\b;;semerro -->
-<div class="trycmd" data-goal="src:\brobocopy\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> ainda na pasta de teste, copie <code>fotos</code> para <code>fotos-robo</code> com <code>robocopy</code> e a chave <code>/e</code>. Não use <code>/MIR</code>.</p>
+<div class="mc" data-answer="1"><p class="mc-q">5. No relatório do laboratório, a linha do título do <code>robocopy</code> foi:</p>
+<label><input type="radio" name="q5"> <code>ROBOCOPY     ::     Robust File Copy para Windows</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “cópia robusta”</label>
+<label><input type="radio" name="q5"> <code>1 arquivo(s) copiado(s)</code></label>
+<label><input type="radio" name="q5"> Nenhuma saída</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Qual é a segunda linha da mensagem real de origem inexistente?</p>
+<label><input type="radio" name="q6"> <code>Arquivo não encontrado  - pasta-nao-existe</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa</label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label></div>
+<div class="trycmd" data-goal="src:\brobocopy\b;;out:Robust File Copy para Windows;;out:ferias.png">
+<p class="try-task"><strong>Missão:</strong> ainda na pasta de teste, copie <code>fotos</code> para <code>backup\\fotos</code> com o <code>robocopy</code> (sem <code>/MIR</code>).</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
-robocopy fotos fotos-robo /e
+robocopy fotos backup\fotos
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy para Windows                              
+-------------------------------------------------------------------------------
+
+  Iniciado: sexta-feira, 20 de novembro de 2026 21:12:38
+   Origem : C:\Users\ana\guia-cmd-teste\fotos\
+     Dest : C:\Users\ana\guia-cmd-teste\backup\fotos\
+
+    Arquivos: *.*
+	    
+  Opções: *.* /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
+
+------------------------------------------------------------------------------
+
+	    Novo Dir       3	C:\Users\ana\guia-cmd-teste\fotos\
+	  Novo Arquivo		      16	ferias.png
+100%  
+	  Novo Arquivo		      42	legenda.txt
+100%  
+	  Novo Arquivo		      16	praia.png
+100%  
+
+------------------------------------------------------------------------------
+
+               Total   Copiada  IgnoradaIncompatibilidade     FALHA    Extras
+Diretórios:         1         1         0         0         0         0
+ Arquivos:         3         3         0         0         0         0
+    Bytes:        74        74         0         0         0         0
+N.º de Vezes:   0:00:00   0:00:00                       0:00:00   0:00:00
+
+
+Velocidade:                4933 Bytes/s.
+Velocidade:               0.282 MegaBytes/min.
+   Finalizado em: sexta-feira, 20 de novembro de 2026 21:12:38
+
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\brobocopy\b;;out:ERRO 2 (0x00000002);;out:O sistema não pode encontrar o arquivo especificado.">
+<p class="try-task"><strong>Missão:</strong> tente copiar uma pasta que não existe, com <code>robocopy pasta-nao-existe backup\\x /r:0 /w:0 /njh /njs</code>, e observe a mensagem real.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+robocopy pasta-nao-existe backup\x /r:0 /w:0 /njh /njs
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+2026/11/20 21:12:38 ERRO 2 (0x00000002) Acessando o Diretório de Origem C:\Users\ana\guia-cmd-teste\pasta-nao-existe\
+O sistema não pode encontrar o arquivo especificado.
+
 </pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li>O <code>robocopy</code> copia pastas e escreve um relatório. Nesta aula, só dentro da pasta de teste, com guarda no início da coleta.</li>
-<li>Usamos <code>/e</code>. Não usamos <code>/MIR</code> nas missões.</li>
-<li>Nenhuma linha do relatório foi inventada: a saída real ainda está a coletar.</li>
+<li><code>/njh /njs</code>, <code>/e</code> e <code>/l</code> aparecem nesta aula. Não usamos <code>/MIR</code> nas missões.</li>
+<li>O relatório e o erro de origem inexistente entram exatamente como o Prompt os escreveu, inclusive data e hora da coleta.</li>
 </ul>
 
 

@@ -77,27 +77,27 @@ O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas
 
 ## Nível 2
 
-O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). O PC do Wallyson estava offline: os esqueletos do Tito entram com placeholder visível « saída a coletar », sem inventar resposta do `cmd`. As páginas continuam `{pronta:false}` no `NIVEIS` até a coleta anonimizada da Mira. Metas `data-goal` das missões estão provisórias (`src` + `semerro`) e marcadas com `TODO`; `out`/`outre` só depois da saída real.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu as 10 aulas de arquivo/texto com essas saídas, finalizou as metas e marcou `pronta` no `NIVEIS`. O `tree.html` permanece `{pronta:false}`, com placeholder: as linhas gráficas da captura do lote 2 se perderam, e a aula espera recoleta. Hash a preencher no commit seguinte.
 
 Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o único que edita o `NIVEIS` em `assets/site.js`.
 
-### Aulas do Tito (arquivo/texto) — esqueleto, aguardando coleta
+### Aulas do Tito (arquivo/texto)
 
 | Aula | Slug | Status | Hash |
 |---|---|---|---|
-| Procurando Texto (`find`) | `find.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Procurando com `findstr` | `findstr.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Página a Página (`more`) | `more.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Ordenando (`sort`) | `sort.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| O Encadeamento (pipe) | `pipe.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Atributos (`attrib`) | `attrib.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Copiando Pastas (`xcopy`) | `xcopy.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Cópia Robusta (`robocopy`) | `robocopy.html` | esqueleto (saída a coletar; só na pasta de teste, sem `/MIR` nas missões) | `87eb3b7` |
-| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (saída a coletar) | `87eb3b7` |
-| Onde Está o Comando (`where`) | `where.html` | esqueleto (saída a coletar; anonimizar caminho pessoal se aparecer) | `87eb3b7` |
-| A Versão do Windows (`ver`) | `ver.html` | esqueleto (saída a coletar) | `87eb3b7` |
+| Procurando Texto (`find`) | `find.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Procurando com `findstr` | `findstr.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Página a Página (`more`) | `more.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Ordenando (`sort`) | `sort.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| O Encadeamento (pipe) | `pipe.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Atributos (`attrib`) | `attrib.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Copiando Pastas (`xcopy`) | `xcopy.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Cópia Robusta (`robocopy`) | `robocopy.html` | escrita (lote 2, saídas reais; só na pasta de teste, sem `/MIR` nas missões) | (lote 2, a seguir) |
+| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (placeholder; linhas gráficas do lote 2 se perderam, aguarda recoleta) | `87eb3b7` |
+| Onde Está o Comando (`where`) | `where.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| A Versão do Windows (`ver`) | `ver.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
 
-Ainda não há arquivo novo da Mira em `_saidas-anon/` para o lote 2. Quando chegar, o Tito substitui os placeholders só por essas saídas, finaliza as metas, roda o checador com `PROIBIDO` e o `testar-navegador`, e marca `pronta:true`.
+Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt`. Dez aulas do Tito estão escritas e `pronta`. O `tree.html` aguarda recoleta (linhas gráficas perdidas). As aulas de script do Zeca continuam `{pronta:false}` até ele avisar. O checador embutido agora cobre o serial do volume também no formato com dois-pontos (`XXXX:XXXX`), com janela maior depois do rótulo.
 
 ### Aulas do Zeca (script) — ele escreve; o Tito não mexe nesses arquivos
 
