@@ -77,7 +77,7 @@ O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas
 
 ## Nível 2
 
-O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu as 10 aulas de arquivo/texto com essas saídas, finalizou as metas e marcou `pronta` no `NIVEIS`. O `tree.html` permanece `{pronta:false}`, com placeholder: as linhas gráficas da captura do lote 2 se perderam, e a aula espera recoleta. Hash das aulas preenchidas: `c68c500`.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu 10 aulas de arquivo/texto com essas saídas (hash `c68c500`). A captura do `tree` naquele arquivo veio com as linhas gráficas perdidas e foi descartada. A Mira anonimizou a recoleta em `_saidas-anon/cmd-lote2c.txt` (acentos e `├───` `│` `└───` inteiros; `/a` com `+---`, `|` e `\---`; serial `XXXX-XXXX`). O Tito preencheu o `tree.html` só com essa recoleta (`tree`, `tree /f` e `tree /f /a`), finalizou as metas, tirou a nota de recoleta e marcou a página `pronta` no `NIVEIS`. Hash da aula `tree`: `91b90cf`. O `tree pasta-nao-existe` não entrou nessa recoleta e permanece como placeholder.
 
 Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o único que edita o `NIVEIS` em `assets/site.js`.
 
@@ -93,11 +93,11 @@ Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o únic
 | Atributos (`attrib`) | `attrib.html` | escrita (lote 2, saídas reais) | `c68c500` |
 | Copiando Pastas (`xcopy`) | `xcopy.html` | escrita (lote 2, saídas reais) | `c68c500` |
 | Cópia Robusta (`robocopy`) | `robocopy.html` | escrita (lote 2, saídas reais; só na pasta de teste, sem `/MIR` nas missões) | `c68c500` |
-| Árvore de Pastas (`tree`) | `tree.html` | esqueleto (placeholder; linhas gráficas do lote 2 se perderam, aguarda recoleta) | `87eb3b7` |
+| Árvore de Pastas (`tree`) | `tree.html` | escrita (recoleta lote 2c, saídas reais de `tree`, `tree /f` e `tree /f /a`) | `91b90cf` |
 | Onde Está o Comando (`where`) | `where.html` | escrita (lote 2, saídas reais) | `c68c500` |
 | A Versão do Windows (`ver`) | `ver.html` | escrita (lote 2, saídas reais) | `c68c500` |
 
-Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt`. Dez aulas do Tito estão escritas e `pronta`. O `tree.html` aguarda recoleta (linhas gráficas perdidas). As aulas de script do Zeca continuam `{pronta:false}` até ele avisar. O checador embutido agora cobre o serial do volume também no formato com dois-pontos (`XXXX:XXXX`), com janela maior depois do rótulo.
+Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt` e recoleta do `tree` em `_saidas-anon/cmd-lote2c.txt`. As 11 aulas do Tito estão escritas e `pronta`. As aulas de script do Zeca continuam `{pronta:false}` até ele avisar. O checador embutido cobre o serial do volume nos formatos `XXXX-XXXX` e `XXXX:XXXX`, com janela maior depois do rótulo.
 
 ### Aulas do Zeca (script) — ele escreve; o Tito não mexe nesses arquivos
 
@@ -134,3 +134,8 @@ Demais itens do Nível 2 ainda na proposta, fora deste lote: `tasklist`, `date /
 - [x] Lote 1 coletado (bruto gitignorado) e anonimizado pela Mira em `_saidas-anon/cmd-lote1.txt`
 - [x] Lote 1 escrito (9 aulas com saída real + `abrir-cmd` e `cls` só em texto), missões rode-local, checador de privacidade OK, `testar-missoes.js` e `testar-navegador.js --todas` OK (18 “Missão cumprida!” com a saída real, 76 negativos sem falso positivo; `introducao` “Quase lá!” com `(sem saída)`). Hash do lote: `553e122`.
 - [x] Telas de duas aulas: `/workspace/telas/cmd-dir.png` e `/workspace/telas/cmd-echo.png` (fora do repo)
+
+## Entrega das 22:30 (20/11/2026, America/Sao_Paulo)
+
+- [x] Recoleta do `tree` em `_saidas-anon/cmd-lote2c.txt` (Mira). Aula `tree.html` preenchida com `tree`, `tree /f` e `tree /f /a`; nota de recoleta removida; `pronta` no `NIVEIS`. Hash: `91b90cf`.
+- [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (41 missões, 0 problema); `testar-navegador.js --todas` OK: 31 páginas, 0 com problema; 60 caixas; 240 negativos, 0 falso positivo; 15 “Quase lá!”; 45 “Missão cumprida!” com a saída real. Sem push. As 7 páginas do Zeca não foram tocadas.
