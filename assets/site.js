@@ -73,10 +73,10 @@ var NIVEIS = [
       ["sc-query.html", "Consultando Serviços (sc query)"]
     ]},
     { grupo: "Rede e Sistema", itens: [
-      ["ipconfig.html", "Rede (ipconfig)", {pronta: false}],
-      ["ping.html", "ping", {pronta: false}],
-      ["systeminfo.html", "Informações do Sistema (systeminfo)", {pronta: false}],
-      ["whoami.html", "Quem Sou Eu (whoami)", {pronta: false}],
+      ["ipconfig.html", "Rede (ipconfig)"],
+      ["ping.html", "ping"],
+      ["systeminfo.html", "Informações do Sistema (systeminfo)"],
+      ["whoami.html", "Quem Sou Eu (whoami)"],
       ["shutdown.html", "Desligar e Reiniciar (shutdown)"]
     ]}
   ]}
