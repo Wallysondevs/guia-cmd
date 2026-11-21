@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rede (ipconfig) — ver os endereços da rede no Prompt | Guia CMD</title>
+<meta name="description" content="O comando ipconfig no Prompt de Comando: só a forma simples, sem /all (sem MAC, DNS ou nome do host). Saída ainda a coletar; quando chegar, IPs e nomes de adaptador terão sido trocados por valores de exemplo.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Rede (<span class="hl">ipconfig</span>)</h1>
+
+
+<p class="intro">O <code>ipconfig</code> mostra os <strong>endereços de rede</strong> desta máquina. Nesta aula a coleta usa só a forma simples, sem a chave <code>/all</code>: não entram MAC, DNS nem o nome do host. Mesmo assim a saída traz IPs e nomes de adaptador, que a Mira troca por valores de exemplo na anonimização. A saída real ainda está a coletar. Não inventamos endereço nem nome de placa.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>ipconfig</code> simples, sem <code>/all</code>.</li>
+<li>O <code>ipconfig /opcao-invalida</code>, e a mensagem real quando a chave não existe (ainda a coletar).</li>
+<li>Por que esta aula não pede o <code>/all</code>: essa forma mostra MAC, DNS e o nome do host.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, com IPs e nomes de adaptador já trocados por valores de exemplo. No seu computador, o comando mostra os endereços da <em>sua</em> máquina. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<hr>
+<h2>A ideia: olhar o número da casa, sem pedir o documento</h2>
+<p>O <code>ipconfig</code> simples é o número na fachada: os endereços da máquina. O <code>/all</code> seria o documento completo (MAC, DNS, nome do host), e por isso fica de fora desta aula.</p>
+<hr>
+<h2>1. A forma simples</h2>
+<p>O pedido desta coleta é só o <code>ipconfig</code>, sem chave. A saída real ainda está a coletar — IPs e nomes de adaptador entram depois, já anonimizados:</p>
+<!-- coleta: ipconfig -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="ipconfig">C:\Users\ana\guia-cmd-teste&gt;ipconfig
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Uma chave que não existe</strong>
+<p>O <code>ipconfig /opcao-invalida</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<!-- coleta: ipconfig /opcao-invalida -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="ipconfig /opcao-invalida">C:\Users\ana\guia-cmd-teste&gt;ipconfig /opcao-invalida
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>O que esta aula não pede para rodar</h2>
+<p>A chave <code>/all</code> mostra MAC, DNS e o nome do host. Ela aparece aqui só para você reconhecer o que fica de fora, <strong>sem caixa de execução</strong>:</p>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Por que não entra na prática desta aula</th></tr>
+<tr><td><code>ipconfig /all</code></td><td>Mostra MAC, DNS e o nome do host. Esta coleta usa só a forma simples.</td></tr>
+</table></div>
+<hr>
+<h2>Formas diferentes</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>ipconfig</code></td><td>Para ver os endereços da máquina, sem MAC, DNS ou nome do host.</td></tr>
+<tr><td><code>ipconfig /opcao-invalida</code></td><td>Para ver a mensagem real quando a chave não existe. A mensagem entra com a coleta.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>ipconfig</code></td><td>Mostra os endereços de rede da máquina, na forma simples.</td></tr>
+<tr><td><code>ipconfig /all</code></td><td>Mostra o relatório completo (MAC, DNS, nome do host). Sem caixa nesta aula.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver os endereços, na forma simples:</p><div class="ex-code"><input data-answer="ipconfig" aria-label="comando"></div></div>
+<div class="exercise"><h3>2. O que fica de fora</h3><p>Qual chave desta aula não é pedida, porque mostra MAC, DNS e o nome do host?</p><div class="ex-code">ipconfig <input data-answer="/all" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. Privacidade</h3><p>Os IPs reais da coleta entram no guia?</p><div class="ex-code"><input data-answer="nao|não" aria-label="resposta"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não pede o <code>ipconfig /all</code>?</p>
+<label><input type="radio" name="q4"> Porque o <code>ipconfig</code> não tem essa chave</label>
+<label><input type="radio" name="q4"> Porque o <code>/all</code> mostra MAC, DNS e o nome do host, e a coleta desta aula usa só a forma simples</label>
+<label><input type="radio" name="q4"> Porque o <code>/all</code> desliga a rede</label>
+<label><input type="radio" name="q4"> Porque o comando só funciona como administrador</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
+<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar IPs nem a mensagem de erro</label>
+<label><input type="radio" name="q5"> Inventa um endereço qualquer para preencher</label>
+<label><input type="radio" name="q5"> Copia a saída de outro guia e traduz</label>
+<label><input type="radio" name="q5"> Mostra os endereços deste Linux</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Quando a coleta chegar, IPs e nomes de adaptador entram como valores de exemplo porque:</p>
+<label><input type="radio" name="q6"> O Windows sempre usa os mesmos números</label>
+<label><input type="radio" name="q6"> Inventamos os valores para a aula ficar mais bonita</label>
+<label><input type="radio" name="q6"> A Mira anonimiza os dados reais da máquina</label>
+<label><input type="radio" name="q6"> O <code>ipconfig</code> não mostra endereço</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
+<div class="trycmd" data-goal="src:\bipconfig\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre os endereços de rede com o <code>ipconfig</code> simples, sem <code>/all</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ipconfig
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>ipconfig</code> desta aula é só a forma simples, sem <code>/all</code>.</li>
+<li>Também entra o erro com <code>ipconfig /opcao-invalida</code>. A mensagem real ainda está a coletar.</li>
+<li>IPs e nomes de adaptador, quando a coleta chegar, entram já anonimizados.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
