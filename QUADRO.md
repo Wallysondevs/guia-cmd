@@ -39,6 +39,8 @@ Só leitura e demo, com `cmd /c`, numa pasta de teste com guarda e caminho absol
 | Revisão linha a linha e anonimização; mantém o `.proibido-cmd.txt` fora do repo | Mira |
 | Lote 2, aulas de **arquivo/texto** (pipe com find/findstr/sort/more, attrib, xcopy, robocopy, tree, where, ver) | Tito |
 | Lote 2, aulas de **script** (`set`, `if`, `for`, `goto`/`call`, `%errorlevel%`, `&&`/`||`, `.bat`) | Zeca |
+| Lote 3, aulas de **taskkill**, **sc query** e **shutdown** | Tito |
+| Lote 3, aulas de **ipconfig**, **ping**, **systeminfo** e **whoami** | Zeca |
 
 Lote 1: Luna (listas e script de coleta, 119 comandos em 9 aulas) e Mira (revisão linha a linha e anonimização em `_saidas-anon/cmd-lote1.txt`). O Tito não coleta: neste Linux não há `cmd.exe`. A escrita das aulas do lote 1 usou só o arquivo anonimizado. O bruto em `_saidas/` não entra no git.
 
@@ -103,7 +105,7 @@ Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt` e recoleta do `tree` em `_saida
 
 `variaveis.html` (`set` / `%VAR%`, só com filtro ou nome), `if.html`, `for.html`, `goto.html` / `call.html`, `%errorlevel%`, `encadeamento.html` (`&&` / `||`), `arquivos-bat.html`. Conteúdo escrito pelo Zeca no `c7a06d0`; `pronta` no `NIVEIS` no `87709f0`. Também `setlocal.html` e `parametros.html` (conteúdo `07bf305`; `pronta` no `NIVEIS` no `92958ae`, ainda no Nível 3). O Zeca não edita o `NIVEIS`; se criar páginas novas, o Tito inclui o slug.
 
-A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; PID `12345`). O Tito preencheu `date.html`, `time.html`, `hostname.html` e `tasklist.html` só com essa saída, finalizou as metas e as marcou `pronta`. Cabeçalhos cortados do `tasklist` (`Identifi`, `Uso de memór`) entraram como vieram. O Zeca fechou `choice.html` e `timeout.html` no `2ce28c3`; o Tito as marcou `pronta` no `NIVEIS`, ainda no Nível 3, sem editar as páginas. Hash: `64233e9`. O Nível 2 ficou sem páginas “em breve”. No Nível 3 restam 7: `taskkill`, `sc-query`, `ipconfig`, `ping`, `systeminfo`, `whoami` e `shutdown`.
+A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; PID `12345`). O Tito preencheu `date.html`, `time.html`, `hostname.html` e `tasklist.html` só com essa saída, finalizou as metas e as marcou `pronta`. Cabeçalhos cortados do `tasklist` (`Identifi`, `Uso de memór`) entraram como vieram. O Zeca fechou `choice.html` e `timeout.html` no `2ce28c3`; o Tito as marcou `pronta` no `NIVEIS`, ainda no Nível 3, sem editar as páginas. Hash: `64233e9`. O Nível 2 ficou sem páginas “em breve”. No Nível 3, a Nova redividiu: o Tito escreve `taskkill.html`, `sc-query.html` e `shutdown.html`; o Zeca escreve `ipconfig.html`, `ping.html`, `systeminfo.html` e `whoami.html`.
 
 
 ## Nível 3 (proposta) — notas de privacidade e admin
@@ -125,7 +127,7 @@ A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; 
 | `ping` | `ping.html` | destino de exemplo (não vazar host interno real) |
 | `systeminfo` | `systeminfo.html` | **privacidade:** **não coletar**; a aula usa saída de exemplo, marcada como exemplo |
 | `whoami` | `whoami.html` | **privacidade:** nome do computador e do usuário (também em minúsculas); revisão da Mira |
-| `shutdown` | `shutdown.html` | cuidado / admin: não executar de verdade na coleta; ilustrativo |
+| `shutdown` | `shutdown.html` | cuidado: a coleta é só `/?` e `/a`; `/s` e `/r` desligam/reiniciam de verdade e não têm caixa de execução |
 
 ## Entrega das 21:00 (20/11/2026, America/Sao_Paulo)
 
@@ -153,3 +155,11 @@ A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; 
 
 - [x] Lote 2e preenchido (`date`, `time`, `hostname`, `tasklist`) a partir de `_saidas-anon/cmd-lote2e.txt`. `choice` e `timeout` (Zeca, `2ce28c3`) prontos no `NIVEIS`, no Nível 3. Hash: `64233e9`.
 - [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (81 missões, 0 problema); `testar-navegador.js --todas` OK: 40 páginas, 0 com problema; 81 caixas; 324 negativos, 0 falso positivo; 1 “Quase lá!”; 80 “Missão cumprida!”. Sem push. Nível 2: 0 “em breve”. Nível 3: 7 “em breve”.
+
+## Nível 3 — divisão da Nova (20/11/2026, America/Sao_Paulo)
+
+O Tito escreve `taskkill.html` (só um `ping -n 30 127.0.0.1` aberto pelo próprio script, encerrado pelo PID, e o erro com `nao-existe.exe`), `sc-query.html` (`sc query Spooler` e `sc query servico-que-nao-existe`) e `shutdown.html` (`shutdown /?` e `shutdown /a`; no texto, `/s` e `/r` desligam e reiniciam de verdade e não têm caixa de execução). O Zeca escreve `ipconfig.html`, `ping.html`, `systeminfo.html` e `whoami.html`; o Tito não cria nem edita essas páginas.
+
+Esqueletos das 3 aulas do Tito, `{pronta:false}`, com « saída a coletar ». Hash: `06adaf1`. A coleta anonimizada em `_saidas-anon/cmd-lote3*.txt` ainda não chegou.
+
+- [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (81 missões, 0 problema; as 3 novas continuam “em breve” e foram puladas neste teste); `testar-navegador.js --todas` OK: 43 páginas, 0 com problema; 84 caixas; 336 negativos, 0 falso positivo; 4 “Quase lá!”; 80 “Missão cumprida!”. Sem push.
