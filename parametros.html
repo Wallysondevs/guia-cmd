@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parâmetros (%1, %2…) — passar palavras para um .bat no Prompt | Guia CMD</title>
+<meta name="description" content="Parâmetros de um arquivo .bat no Prompt de Comando: %1, %2, %* e %~n0 no params.bat, com a saída real da coleta (Ana Recife e o nome entre aspas).">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Parâmetros (<span class="hl">%1</span>, %2…)</h1>
+
+<p class="intro">Quando você executa um arquivo <code>.bat</code>, pode escrever palavras <strong>depois do nome</strong>. O script lê a primeira em <code>%1</code>, a segunda em <code>%2</code>, todas juntas em <code>%*</code>, e o próprio nome do arquivo em <code>%~n0</code>. Nesta aula as saídas são as da coleta do lote 2, com o <code>params.bat</code> da pasta de teste.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>%1</code>, o <code>%2</code> e o <code>%*</code>, no <code>params.bat</code> da coleta.</li>
+<li>O <code>%~n0</code>, que nesta coleta mostrou só o nome do script: <code>params</code>, sem a extensão <code>.bat</code>.</li>
+<li>Que, com <code>params.bat "Ana Paula" Recife 2026</code>, o <code>%1</code> trouxe as aspas: a tela mostrou <code>Primeiro: "Ana Paula"</code>.</li>
+<li>O <code>%~1</code> (tira as aspas) e o <code>shift</code> (descarta o primeiro e empurra os outros) ficam só no texto: esta coleta não tem caixa desses pedidos.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. O arquivo <code>params.bat</code> já estava na pasta quando a coleta rodou. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. A aula de <a href="arquivos-bat.html">arquivos .bat</a> já mostrou este script de passagem; aqui o foco são os parâmetros.</p>
+<hr>
+<h2>A ideia: recados depois do nome</h2>
+<p>Imagine que o nome do arquivo é o título da receita, e o que vem depois são os ingredientes da vez. No Prompt, isso se escreve na mesma linha: <code>params.bat Ana Recife</code>. O script não precisa ser reescrito: ele lê <code>%1</code>, <code>%2</code> e companhia a cada execução.</p>
+<hr>
+<h2>1. O <code>params.bat</code> da coleta</h2>
+<p>O arquivo da pasta de teste é este. O <code>type</code> devolveu o conteúdo tal como está no disco:</p>
+<pre class="file">@echo off
+echo Primeiro: %1
+echo Segundo: %2
+echo Todos: %*
+echo Nome do script: %~n0</pre>
+<!-- coleta: type params.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type params.bat">C:\Users\ana\guia-cmd-teste&gt;type params.bat
+@echo off
+echo Primeiro: %1
+echo Segundo: %2
+echo Todos: %*
+echo Nome do script: %~n0
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>%1</dt><dd>a primeira palavra (ou o primeiro trecho entre aspas) depois do nome do arquivo.</dd><dt>%2</dt><dd>a segunda.</dd><dt>%*</dt><dd>tudo o que foi passado, na ordem.</dd><dt>%~n0</dt><dd>o nome do script, sem pasta e sem a extensão <code>.bat</code>.</dd></dl>
+<hr>
+<h2>2. Duas palavras: Ana e Recife</h2>
+<p>O pedido <code>params.bat Ana Recife</code> devolveu isto — a primeira palavra, a segunda, as duas juntas, e o nome <code>params</code>:</p>
+<!-- coleta: params.bat Ana Recife -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="params.bat Ana Recife">C:\Users\ana\guia-cmd-teste&gt;params.bat Ana Recife
+Primeiro: Ana
+Segundo: Recife
+Todos: Ana Recife
+Nome do script: params
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Um nome com espaço, entre aspas</h2>
+<p>Para passar um trecho com espaço como um só parâmetro, a coleta usou aspas: <code>params.bat "Ana Paula" Recife 2026</code>. A tela mostrou <code>Primeiro: "Ana Paula"</code> — as aspas <strong>entraram no valor</strong> do <code>%1</code>. O <code>%2</code> ficou <code>Recife</code>, e o <code>%*</code> trouxe os três pedaços, com as aspas no primeiro:</p>
+<!-- coleta: params.bat "Ana Paula" Recife 2026 -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="params.bat &quot;Ana Paula&quot; Recife 2026">C:\Users\ana\guia-cmd-teste&gt;params.bat "Ana Paula" Recife 2026
+Primeiro: "Ana Paula"
+Segundo: Recife
+Todos: "Ana Paula" Recife 2026
+Nome do script: params
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>4. O <code>%~1</code> e o <code>shift</code>, só em texto</h2>
+<p>O modificador <code>%~1</code> tira as aspas do primeiro parâmetro. Se a coleta tivesse usado <code>%~1</code> no lugar de <code>%1</code>, o “Ana Paula” provavelmente apareceria sem aspas — mas esse pedido <strong>não foi coletado</strong>, e esta aula não inventa a caixa.</p>
+<p>O <code>shift</code> descarta o <code>%1</code> atual e empurra os seguintes: o antigo <code>%2</code> vira <code>%1</code>, e assim por diante. Também não há caixa de <code>shift</code> neste lote. Fica só nesta explicação.</p>
+<hr>
+<h2>Formas diferentes de ler parâmetros</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>%1</code>, <code>%2</code>, <code>%3</code>…</td><td>Para ler o primeiro, o segundo, o terceiro parâmetro.</td></tr>
+<tr><td><code>%*</code></td><td>Para ler todos de uma vez, na ordem em que foram escritos.</td></tr>
+<tr><td><code>%~n0</code></td><td>Para obter só o nome do script, como o <code>params</code> da coleta.</td></tr>
+<tr><td><code>%~1</code></td><td>Para ler o primeiro parâmetro sem as aspas. Só no texto nesta aula.</td></tr>
+<tr><td><code>shift</code></td><td>Para descartar o primeiro e renumerar os outros. Só no texto nesta aula.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>params.bat Ana Recife</code></td><td>Passa duas palavras. Na coleta, <code>%1</code> foi <code>Ana</code> e <code>%2</code> foi <code>Recife</code>.</td></tr>
+<tr><td><code>params.bat "Ana Paula" Recife 2026</code></td><td>Passa um nome com espaço e mais dois valores. O <code>%1</code> veio com as aspas.</td></tr>
+<tr><td><code>type params.bat</code></td><td>Mostra o conteúdo do script, com <code>%1</code>, <code>%2</code>, <code>%*</code> e <code>%~n0</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>No <code>params.bat</code>, complete para mostrar a primeira palavra passada:</p><div class="ex-code">echo Primeiro: <input data-answer="%1" aria-label="parâmetro"></div></div>
+<div class="exercise"><h3>2. Todos de uma vez</h3><p>Qual código mostra todos os parâmetros, na ordem?</p><div class="ex-code"><input data-answer="%*" aria-label="código"></div></div>
+<div class="exercise"><h3>3. O nome do script</h3><p>Qual código, no <code>params.bat</code>, mostrou só o nome <code>params</code>, sem a extensão?</p><div class="ex-code"><input data-answer="%~n0" aria-label="código"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No pedido <code>params.bat "Ana Paula" Recife 2026</code>, o que a coleta mostrou em <code>%1</code>?</p>
+<label><input type="radio" name="q4"> Só <code>Ana</code>, porque o espaço quebra o parâmetro mesmo com aspas</label>
+<label><input type="radio" name="q4"> <code>"Ana Paula"</code>, com as aspas no valor</label>
+<label><input type="radio" name="q4"> <code>Ana Paula</code>, já sem as aspas</label>
+<label><input type="radio" name="q4"> Nada: o script recusou o espaço</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O que é o <code>%*</code>, neste guia?</p>
+<label><input type="radio" name="q5"> Todos os parâmetros passados, na ordem</label>
+<label><input type="radio" name="q5"> Só o nome do arquivo <code>.bat</code></label>
+<label><input type="radio" name="q5"> O código de saída do script</label>
+<label><input type="radio" name="q5"> A pasta atual do Prompt</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Por que esta aula não traz caixa de <code>shift</code> nem de <code>%~1</code>?</p>
+<label><input type="radio" name="q6"> Porque esses códigos não existem no Prompt</label>
+<label><input type="radio" name="q6"> Porque eles apagam o arquivo <code>.bat</code></label>
+<label><input type="radio" name="q6"> Porque esta coleta não rodou esses pedidos, e a aula não inventa a saída</label>
+<label><input type="radio" name="q6"> Porque eles listam o <code>%PATH%</code></label></div>
+<div class="trycmd" data-goal="src:\btype\b;;src:\bparams\b;;out:echo Primeiro: %1;;out:echo Todos: %*;;out:%~n0">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre o <code>params.bat</code> com o <code>type</code> e observe o <code>%1</code>, o <code>%*</code> e o <code>%~n0</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type params.bat
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+@echo off
+echo Primeiro: %1
+echo Segundo: %2
+echo Todos: %*
+echo Nome do script: %~n0
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bparams\b;;src:\bAna\b;;src:\bRecife\b;;out:Primeiro: Ana;;out:Segundo: Recife;;out:Todos: Ana Recife;;out:Nome do script: params">
+<p class="try-task"><strong>Missão:</strong> execute o <code>params.bat</code> passando as palavras <code>Ana</code> e <code>Recife</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+params.bat Ana Recife
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Primeiro: Ana
+Segundo: Recife
+Todos: Ana Recife
+Nome do script: params
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bparams\b;;out:Primeiro: &quot;Ana Paula&quot;;;out:Todos: &quot;Ana Paula&quot; Recife 2026">
+<p class="try-task"><strong>Missão:</strong> execute de novo o <code>params.bat</code>, desta vez passando <code>"Ana Paula"</code>, <code>Recife</code> e <code>2026</code>, e observe as aspas no primeiro parâmetro.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+params.bat "Ana Paula" Recife 2026
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Primeiro: "Ana Paula"
+Segundo: Recife
+Todos: "Ana Paula" Recife 2026
+Nome do script: params
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>%1</code> e <code>%2</code> são o primeiro e o segundo parâmetro; <code>%*</code> junta todos. No <code>params.bat Ana Recife</code>, a coleta mostrou <code>Ana</code>, <code>Recife</code> e <code>Todos: Ana Recife</code>.</li>
+<li><code>%~n0</code> mostrou o nome do script: <code>params</code>, sem a extensão.</li>
+<li>Com <code>"Ana Paula"</code>, o <code>%1</code> veio com as aspas. O <code>%~1</code> e o <code>shift</code> ficam só no texto: não foram coletados neste lote.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

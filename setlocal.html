@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>setlocal e endlocal — limitar variáveis a um .bat no Prompt | Guia CMD</title>
+<meta name="description" content="O setlocal e o endlocal no Prompt de Comando, com a saída real do soma.bat da coleta: soma de 1 a 5 igual a 15 e a lista dos arquivos .txt da pasta de teste.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1><span class="hl">setlocal</span> e endlocal</h1>
+
+<p class="intro">O <code>setlocal</code> abre um <strong>espaço local</strong> para as variáveis do script: o que o arquivo cria ou muda fica nessa bolha. O <code>endlocal</code> fecha o espaço. Nesta aula as saídas são as da coleta do lote 2, com o <code>soma.bat</code> da pasta de teste.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>setlocal</code> no começo do <code>soma.bat</code>, e o <code>endlocal</code> no fim.</li>
+<li>Que o script somou de 1 a 5 com <code>for /l</code> e <code>%%i</code>, e a tela mostrou <code>Soma de 1 a 5: 15</code>.</li>
+<li>Que, na mesma execução, ele listou os <code>*.txt</code> da pasta de teste com <code>%%f</code>.</li>
+<li>Que, depois do <code>endlocal</code>, a variável <code>total</code> deixa de valer neste Prompt — essa conferência <strong>não foi coletada</strong>, e por isso fica só no texto, sem caixa de saída.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. O arquivo <code>soma.bat</code> já estava na pasta quando a coleta rodou. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. A aula de <a href="goto.html">goto e rótulos</a> já mostrou este script como exemplo de <code>%%i</code> dentro de um <code>.bat</code>; aqui o foco é o <code>setlocal</code>.</p>
+<hr>
+<h2>A ideia: uma bolha em volta das variáveis</h2>
+<p>Sem um espaço local, um <code>set</code> feito pelo script pode deixar o valor no Prompt depois que o arquivo termina. Com <code>setlocal</code>, as mudanças ficam presas ao script. O <code>endlocal</code> desfaz essa bolha. A coleta não rodou um <code>echo</code> da variável depois do script: o que ela mostra é o <code>soma.bat</code> executando <em>dentro</em> dessa bolha.</p>
+<hr>
+<h2>1. O <code>soma.bat</code> da coleta</h2>
+<p>O arquivo começa com <code>setlocal</code>, zera a variável <code>total</code>, soma de 1 a 5, escreve o resultado, lista os <code>*.txt</code> e fecha com <code>endlocal</code>. O <code>type</code> devolveu isto:</p>
+<pre class="file">@echo off
+setlocal
+set /a total=0
+for /l %%i in (1,1,5) do set /a total+=%%i
+echo Soma de 1 a 5: %total%
+for %%f in (*.txt) do echo arquivo: %%f
+endlocal</pre>
+<!-- coleta: type soma.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type soma.bat">C:\Users\ana\guia-cmd-teste&gt;type soma.bat
+@echo off
+setlocal
+set /a total=0
+for /l %%i in (1,1,5) do set /a total+=%%i
+echo Soma de 1 a 5: %total%
+for %%f in (*.txt) do echo arquivo: %%f
+endlocal
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>setlocal</dt><dd>abre o espaço local das variáveis deste script.</dd><dt>set /a total=0</dt><dd>cria a variável da soma, já dentro da bolha.</dd><dt>for /l %%i</dt><dd>dentro de um <code>.bat</code>, a variável do <code>for</code> se escreve com dois percentuais.</dd><dt>endlocal</dt><dd>fecha o espaço local, no fim do arquivo.</dd></dl>
+<hr>
+<h2>2. A execução: soma 15 e a lista de arquivos</h2>
+<p>O pedido <code>soma.bat</code> devolveu a soma e, em seguida, um <code>arquivo:</code> para cada <code>.txt</code> da pasta de teste:</p>
+<!-- coleta: soma.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="soma.bat">C:\Users\ana\guia-cmd-teste&gt;soma.bat
+Soma de 1 a 5: 15
+arquivo: agenda.txt
+arquivo: log.txt
+arquivo: nomes.txt
+arquivo: notas.txt
+arquivo: relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A soma e a lista acontecem <em>antes</em> do <code>endlocal</code>, ainda dentro da bolha. Por isso a tela mostra <code>15</code> e os nomes dos arquivos.</p>
+<hr>
+<h2>3. O que o <code>endlocal</code> desfaz, só em texto</h2>
+<p>Quando o <code>endlocal</code> roda, as variáveis criadas depois do <code>setlocal</code> deixam de valer neste Prompt. Um <code>echo %total%</code> depois do <code>soma.bat</code> mostraria isso — mas essa conferência <strong>não foi coletada</strong>, e esta aula não inventa a caixa.</p>
+<p>Do mesmo jeito, se o <code>endlocal</code> viesse no meio do script, antes do <code>echo</code> da soma, a variável já teria sumido. Também não há caixa dessa inversão neste lote. Fica só nesta explicação.</p>
+<hr>
+<h2>Formas diferentes de usar o setlocal</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>setlocal</code></td><td>No começo do <code>.bat</code>, para prender as variáveis ao script, como no <code>soma.bat</code>.</td></tr>
+<tr><td><code>endlocal</code></td><td>Para fechar o espaço local, em geral no fim do arquivo.</td></tr>
+<tr><td><code>set /a total=…</code> depois do <code>setlocal</code></td><td>Para criar ou mudar uma variável que some, ainda dentro da bolha.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>type soma.bat</code></td><td>Mostra o script, com <code>setlocal</code> no começo e <code>endlocal</code> no fim.</td></tr>
+<tr><td><code>soma.bat</code></td><td>Executa o arquivo. Na coleta, a tela mostrou <code>Soma de 1 a 5: 15</code> e a lista dos <code>.txt</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Qual comando, no começo do <code>soma.bat</code>, abre o espaço local das variáveis?</p><div class="ex-code"><input data-answer="setlocal" aria-label="comando"></div></div>
+<div class="exercise"><h3>2. Fechar a bolha</h3><p>Qual comando, no fim do arquivo, fecha o espaço local?</p><div class="ex-code"><input data-answer="endlocal" aria-label="comando"></div></div>
+<div class="exercise"><h3>3. O resultado da soma</h3><p>Na coleta, o <code>soma.bat</code> escreveu a soma de 1 a 5. Qual foi o número?</p><div class="ex-code">Soma de 1 a 5: <input data-answer="15" aria-label="resultado"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>setlocal</code> faz neste guia?</p>
+<label><input type="radio" name="q4"> Apaga todos os arquivos <code>.txt</code> da pasta de teste</label>
+<label><input type="radio" name="q4"> Abre um espaço local, para as variáveis do script não ficarem no Prompt depois</label>
+<label><input type="radio" name="q4"> Liga o <code>shift</code> dos parâmetros</label>
+<label><input type="radio" name="q4"> Mostra a árvore de pastas</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não traz uma caixa com o <code>echo %total%</code> depois do <code>soma.bat</code>?</p>
+<label><input type="radio" name="q5"> Porque essa conferência não foi coletada, e a aula não inventa a saída</label>
+<label><input type="radio" name="q5"> Porque o comando <code>echo</code> não existe no Prompt</label>
+<label><input type="radio" name="q5"> Porque o <code>total</code> é uma variável de sistema, fora da aula</label>
+<label><input type="radio" name="q5"> Porque o <code>soma.bat</code> não tem <code>endlocal</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Por que o <code>soma.bat</code> escreve <code>%%i</code> e <code>%%f</code>, e não <code>%i</code>?</p>
+<label><input type="radio" name="q6"> Porque o <code>setlocal</code> exige dois percentuais em qualquer variável</label>
+<label><input type="radio" name="q6"> Porque <code>15</code> só aparece com dois percentuais</label>
+<label><input type="radio" name="q6"> Porque, dentro de um arquivo <code>.bat</code>, a variável do <code>for</code> se escreve com dois percentuais</label>
+<label><input type="radio" name="q6"> Porque o <code>type</code> acrescenta um percentual a mais</label></div>
+<div class="trycmd" data-goal="src:\btype\b;;src:\bsoma\b;;out:setlocal;;out:endlocal;;out:set /a total=0">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre o <code>soma.bat</code> com o <code>type</code> e observe o <code>setlocal</code> e o <code>endlocal</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type soma.bat
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+@echo off
+setlocal
+set /a total=0
+for /l %%i in (1,1,5) do set /a total+=%%i
+echo Soma de 1 a 5: %total%
+for %%f in (*.txt) do echo arquivo: %%f
+endlocal
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bsoma\b;;out:Soma de 1 a 5: 15;;out:arquivo: agenda.txt;;out:arquivo: relatorio.txt">
+<p class="try-task"><strong>Missão:</strong> execute o <code>soma.bat</code> e observe a soma <code>15</code> e a lista dos arquivos <code>.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+soma.bat
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Soma de 1 a 5: 15
+arquivo: agenda.txt
+arquivo: log.txt
+arquivo: nomes.txt
+arquivo: notas.txt
+arquivo: relatorio.txt
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>setlocal</code> abre um espaço local para as variáveis do script; <code>endlocal</code> fecha esse espaço.</li>
+<li>No <code>soma.bat</code>, a coleta mostrou <code>Soma de 1 a 5: 15</code> e a lista <code>agenda.txt</code>, <code>log.txt</code>, <code>nomes.txt</code>, <code>notas.txt</code> e <code>relatorio.txt</code>.</li>
+<li>O sumiço da variável <code>total</code> depois do <code>endlocal</code> não foi coletado: fica só no texto, sem caixa de saída.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
