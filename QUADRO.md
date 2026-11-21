@@ -2,7 +2,7 @@
 
 Objetivo: um guia estático em pt-BR do Prompt de Comando (`cmd.exe`) do Windows, no mesmo molde do Guia PowerShell: uma aula por comando, saídas reais anonimizadas, missões no modo “cole a saída do terminal”, sem simulador por enquanto.
 
-Esqueleto criado em 20/11/2026 (America/Sao_Paulo) por Tito, em paralelo com o `pssim.js` do PowerShell, por decisão da Nova depois da pergunta do Wallyson. Esqueleto: `671edbe`, quadro com esse hash: `4121b7f`. Lote 1 escrito no mesmo dia, a partir de `_saidas-anon/cmd-lote1.txt` (Mira, checador OK). Sem push.
+Esqueleto criado em 20/11/2026 (America/Sao_Paulo) por Tito, em paralelo com o `pssim.js` do PowerShell, por decisão da Nova depois da pergunta do autor. Esqueleto: `671edbe`, quadro com esse hash: `4121b7f`. Lote 1 escrito no mesmo dia, a partir de `_saidas-anon/cmd-lote1.txt` (Mira, checador OK). Sem push.
 
 ## Regras (as mesmas do Guia PowerShell)
 
@@ -11,7 +11,7 @@ Esqueleto criado em 20/11/2026 (America/Sao_Paulo) por Tito, em paralelo com o `
 - **Nunca traduzir mensagens de erro.** Elas entram exatamente como o `cmd` escreveu (pt-BR ou en-US). A explicação, em português, vem ao lado.
 - **Aulas só a partir de `_saidas-anon/`.** A escrita usa a versão já anonimizada e revisada. O bruto fica em `_saidas/` e não entra no git.
 - **`tools/checar-privacidade.sh` OK antes de todo commit.** O script tem padrões embutidos e, se existir, lê a lista real fora do repo (`../.proibido-cmd.txt`, ou `PROIBIDO=caminho`). A Mira mantém esse arquivo, com os valores reais, fora do repositório.
-- **Nada vai para o GitHub sem o OK do Wallyson.** Só commit local, `git add` explícito (nunca `-a`), autor `wallyson` / `wallyson@localhost`. Sem push.
+- **Nada vai para o GitHub sem o OK do dono do repositório.** Só commit local, `git add` explícito (nunca `-a`), autor `Wallysondevs` / `wallysondevs@users.noreply.github.com`. Sem push.
 
 ## Regras de coleta do CMD (definidas pela Mira)
 
@@ -131,7 +131,7 @@ A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; 
 
 ## Entrega das 21:00 (20/11/2026, America/Sao_Paulo)
 
-- [x] Esqueleto em `/workspace/planos-trabalho/guia-cmd` (git local, sem push) — `671edbe`; quadro com o hash — `4121b7f`
+- [x] Esqueleto do `guia-cmd` (git local, sem push) — `671edbe`; quadro com o hash — `4121b7f`
 - [x] `NIVEIS` em 3 níveis, slugs em kebab-case alinhados às listas da Luna; lote 1 (index, introdução e as 11 páginas do Nível 1) sem `{pronta:false}`; Níveis 2 e 3 continuam `{pronta:false}`
 - [x] Lote 1 coletado (bruto gitignorado) e anonimizado pela Mira em `_saidas-anon/cmd-lote1.txt`
 - [x] Lote 1 escrito (9 aulas com saída real + `abrir-cmd` e `cls` só em texto), missões rode-local, checador de privacidade OK, `testar-missoes.js` e `testar-navegador.js --todas` OK (18 “Missão cumprida!” com a saída real, 76 negativos sem falso positivo; `introducao` “Quase lá!” com `(sem saída)`). Hash do lote: `553e122`.
