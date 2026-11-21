@@ -47,7 +47,7 @@ Lote 1: Luna (listas e script de coleta, 119 comandos em 9 aulas) e Mira (revis�
 O lote 1 segue as listas da Luna (`/workspace/cmd-coleta/listas-lote1.md`); o `NIVEIS` está alinhado a elas.
 
 - **`md` e `rd` juntos** (`md-rd.html`): criar e apagar pasta são o par natural (um desfaz o outro). A aula cobre também os sinônimos `mkdir` e `rmdir`.
-- **`copy`, `move`, `del` e `ren` juntos** (`copy-move-del.html`), como a Luna coletou. O critério inicial do Tito (aulas separadas, com o `del` sozinho por causa do risco e do `del *.*` sem `/q`) ficou para um possível desdobramento futuro. No Nível 2 ainda existe um `ren.html` `{pronta:false}`, mas o `ren` já aparece nesta aula do lote 1.
+- **`copy`, `move`, `del` e `ren` juntos** (`copy-move-del.html`), como a Luna coletou. O critério inicial do Tito (aulas separadas, com o `del` sozinho por causa do risco e do `del *.*` sem `/q`) ficou para um possível desdobramento futuro. No Nível 2 o `ren.html` agora é uma aula própria, `pronta`, com as saídas do lote 2 (hash `92958ae`); o `ren` também já aparece em `copy-move-del.html` no lote 1.
 - **`date /t` e `time /t` em aulas separadas** (Nível 2): uma aula por comando, como a Nova pediu.
 - **`find` e `findstr` em aulas separadas** (Nível 2): a sintaxe não é a mesma.
 
@@ -77,7 +77,7 @@ O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas
 
 ## Nível 2
 
-O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu 10 aulas de arquivo/texto com essas saídas (hash `c68c500`). A captura do `tree` naquele arquivo veio com as linhas gráficas perdidas e foi descartada. A Mira anonimizou a recoleta em `_saidas-anon/cmd-lote2c.txt` (acentos e `├───` `│` `└───` inteiros; `/a` com `+---`, `|` e `\---`; serial `XXXX-XXXX`). O Tito preencheu o `tree.html` só com essa recoleta (`tree`, `tree /f` e `tree /f /a`), finalizou as metas, tirou a nota de recoleta e marcou a página `pronta` no `NIVEIS`. Hash da aula `tree`: `91b90cf`. A Mira anonimizou a recoleta do `tree pasta-nao-existe` em `_saidas-anon/cmd-lote2d.txt`. A seção “Quando dá errado” voltou ao `tree.html` com essa saída literal (serial `XXXXXXXX XXXX:XXXX`; mensagem `Caminho inválido`). Hash: `15d4448`.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1. Por decisão da Nova, o `ren` ganhou página própria: `ren.html` foi escrito só com as saídas do `ren` em `_saidas-anon/cmd-lote2.txt`, entrou como primeiro item de “Mais sobre Arquivos” e está `pronta` (hash `92958ae`). Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu 10 aulas de arquivo/texto com essas saídas (hash `c68c500`). A captura do `tree` naquele arquivo veio com as linhas gráficas perdidas e foi descartada. A Mira anonimizou a recoleta em `_saidas-anon/cmd-lote2c.txt` (acentos e `├───` `│` `└───` inteiros; `/a` com `+---`, `|` e `\---`; serial `XXXX-XXXX`). O Tito preencheu o `tree.html` só com essa recoleta (`tree`, `tree /f` e `tree /f /a`), finalizou as metas, tirou a nota de recoleta e marcou a página `pronta` no `NIVEIS`. Hash da aula `tree`: `91b90cf`. A Mira anonimizou a recoleta do `tree pasta-nao-existe` em `_saidas-anon/cmd-lote2d.txt`. A seção “Quando dá errado” voltou ao `tree.html` com essa saída literal (serial `XXXXXXXX XXXX:XXXX`; mensagem `Caminho inválido`). Hash: `15d4448`.
 
 Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o único que edita o `NIVEIS` em `assets/site.js`.
 
@@ -101,9 +101,9 @@ Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt` e recoleta do `tree` em `_saida
 
 ### Aulas do Zeca (script) — ele escreve; o Tito não mexe nesses arquivos
 
-`variaveis.html` (`set` / `%VAR%`, só com filtro ou nome), `if.html`, `for.html`, `goto.html` / `call.html`, `%errorlevel%`, `encadeamento.html` (`&&` / `||`), `arquivos-bat.html`. Conteúdo escrito pelo Zeca no `c7a06d0`; `pronta` no `NIVEIS` no `87709f0`. O Zeca não edita o `NIVEIS`; se criar páginas novas, o Tito inclui o slug.
+`variaveis.html` (`set` / `%VAR%`, só com filtro ou nome), `if.html`, `for.html`, `goto.html` / `call.html`, `%errorlevel%`, `encadeamento.html` (`&&` / `||`), `arquivos-bat.html`. Conteúdo escrito pelo Zeca no `c7a06d0`; `pronta` no `NIVEIS` no `87709f0`. Também `setlocal.html` e `parametros.html` (conteúdo `07bf305`; `pronta` no `NIVEIS` no `92958ae`, ainda no Nível 3). O Zeca não edita o `NIVEIS`; se criar páginas novas, o Tito inclui o slug.
 
-Demais itens do Nível 2 ainda na proposta, fora deste lote: `tasklist`, `date /t`, `time /t`, `hostname`, e o `ren.html` separado.
+Os esqueletos de `tasklist.html`, `date.html`, `time.html` e `hostname.html` estão no repo, ainda `{pronta:false}`, com « saída a coletar » (hash `8a3924a`). A Luna coleta o lote 2e (`date /t`, `time /t`, `hostname`, `tasklist /fi` com `cmd.exe` e `nao-existe.exe`); a Mira anonimiza em `_saidas-anon/cmd-lote2e.txt` (`NOTEBOOK`, PID fixo). O arquivo ainda não chegou. No Nível 3, `setlocal.html` e `parametros.html` foram fechados pelo Zeca no `07bf305` e marcados `pronta` no `NIVEIS` no `92958ae`, no mesmo lugar do menu; o Tito não editou essas páginas.
 
 
 ## Nível 3 (proposta) — notas de privacidade e admin
@@ -143,4 +143,8 @@ Demais itens do Nível 2 ainda na proposta, fora deste lote: `tasklist`, `date /
 - [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (60 missões, 0 problema, inclusive as do Zeca); `testar-navegador.js --todas` OK: 31 páginas, 0 com problema; 60 caixas; 240 negativos, 0 falso positivo; 1 “Quase lá!”; 59 “Missão cumprida!” com a saída real. Sem push.
 - [x] Recoleta do `tree pasta-nao-existe` em `_saidas-anon/cmd-lote2d.txt` (Mira). Seção “Quando dá errado” recolocada com a saída literal e missão `outre:Caminho inválido`. Hash: `15d4448`. Checador OK; `testar-missoes.js`: 61 missões, 0 problema; `testar-navegador.js --todas`: 31 páginas, 0 com problema; 61 caixas; 244 negativos, 0 falso positivo; 1 “Quase lá!”; 60 “Missão cumprida!”. Sem push. `cmd-lote2b.txt` não foi adicionado.
 
+## Entrega das 23:30 (20/11/2026, America/Sao_Paulo)
 
+- [x] `ren.html` escrito só com as saídas do lote 2, missões com metas que não batem com o comando colado, link para `copy-move-del.html`. `NIVEIS`: `ren` como primeiro item de “Mais sobre Arquivos”, `pronta`. No mesmo commit, `setlocal.html` e `parametros.html` (Zeca, `07bf305`) saíram de `{pronta:false}` e permaneceram no Nível 3, no mesmo lugar. Hash: `92958ae`.
+- [x] Esqueletos de `tasklist.html`, `date.html`, `time.html` e `hostname.html`, `{pronta:false}`, com « saída a coletar ». `_saidas-anon/cmd-lote2e.txt` ainda não chegou. Hash: `8a3924a`.
+- [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (69 missões, 0 problema, inclusive `ren`, `setlocal` e `parametros`); `testar-navegador.js --todas` OK: 38 páginas, 0 com problema; 74 caixas; 296 negativos, 0 falso positivo; 6 “Quase lá!”; 68 “Missão cumprida!”. Sem push. Páginas do Zeca não foram editadas.
