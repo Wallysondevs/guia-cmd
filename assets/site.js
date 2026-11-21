@@ -69,15 +69,15 @@ var NIVEIS = [
       ["timeout.html", "Esperando (timeout)"]
     ]},
     { grupo: "Processos e Serviços", itens: [
-      ["taskkill.html", "Encerrando Processos (taskkill)", {pronta: false}],
-      ["sc-query.html", "Consultando Serviços (sc query)", {pronta: false}]
+      ["taskkill.html", "Encerrando Processos (taskkill)"],
+      ["sc-query.html", "Consultando Serviços (sc query)"]
     ]},
     { grupo: "Rede e Sistema", itens: [
       ["ipconfig.html", "Rede (ipconfig)", {pronta: false}],
       ["ping.html", "ping", {pronta: false}],
       ["systeminfo.html", "Informações do Sistema (systeminfo)", {pronta: false}],
       ["whoami.html", "Quem Sou Eu (whoami)", {pronta: false}],
-      ["shutdown.html", "Desligar e Reiniciar (shutdown)", {pronta: false}]
+      ["shutdown.html", "Desligar e Reiniciar (shutdown)"]
     ]}
   ]}
 ];

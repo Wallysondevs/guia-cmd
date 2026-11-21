@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Desligar e Reiniciar (shutdown) — a ajuda e o cancelamento no Prompt | Guia CMD</title>
-<meta name="description" content="O comando shutdown no Prompt de Comando: só a ajuda (/?) e o cancelamento (/a) quando não há desligamento em andamento. /s e /r desligam e reiniciam de verdade e não têm caixa de execução nesta aula. Saída ainda a coletar.">
+<title>Desligar e Reiniciar (shutdown) — a ajuda, o cancelamento e a opção inválida no Prompt | Guia CMD</title>
+<meta name="description" content="O comando shutdown no Prompt de Comando: a ajuda (/?), o /a com o erro 1116 quando não há desligamento em andamento, e uma opção inválida que só mostra a ajuda de novo. /s e /r desligam e reiniciam de verdade e não têm caixa de execução.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,41 +19,209 @@
 <h1>Desligar e Reiniciar (<span class="hl">shutdown</span>)</h1>
 
 
-<p class="intro">O <code>shutdown</code> pode <strong>desligar</strong> ou <strong>reiniciar</strong> o computador de verdade. Por isso esta aula não pede o <code>/s</code> nem o <code>/r</code> para você testar, e não há caixa de execução para eles. A coleta prevista é só o <code>shutdown /?</code> (a ajuda) e o <code>shutdown /a</code> (tentar cancelar quando não há desligamento em andamento). A saída real ainda está a coletar.</p>
+<p class="intro">O <code>shutdown</code> pode <strong>desligar</strong> ou <strong>reiniciar</strong> o computador de verdade. Por isso esta aula não pede o <code>/s</code> nem o <code>/r</code> para você testar, e não há caixa de execução para eles. A coleta é o <code>shutdown /?</code> (a ajuda), o <code>shutdown /a</code> (tentar cancelar quando não há desligamento em andamento, erro <code>1116</code>) e uma opção inválida, que só mostra a ajuda de novo.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>shutdown /?</code>, que mostra a ajuda do comando.</li>
-<li>O <code>shutdown /a</code>, que tenta cancelar um desligamento. Nesta coleta, não há nenhum em andamento: a mensagem real de erro entra com a captura.</li>
-<li>Por que <code>/s</code> (desligar) e <code>/r</code> (reiniciar) não devem ser testados à toa — e por que esta aula não traz caixa para rodá-los.</li>
+<li>O <code>shutdown /?</code>, que mostra a ajuda do comando — o texto entra inteiro, como o Prompt o escreveu.</li>
+<li>O <code>shutdown /a</code>, que tenta cancelar um desligamento. Nesta coleta não havia nenhum em andamento: a mensagem veio com o código <code>1116</code>.</li>
+<li>Que uma opção inválida, nesta captura, não deu uma frase de “opção inexistente”: só repetiu a ajuda.</li>
+<li>Por que <code>/s</code> e <code>/r</code> não devem ser testados à toa — e por que esta aula não traz caixa para rodá-los.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
 <div class="warning"><strong>Não teste /s nem /r à toa.</strong>
-<p>O <code>shutdown /s</code> desliga o computador de verdade. O <code>shutdown /r</code> reinicia de verdade. Não rode esses pedidos “para ver o que acontece”: a sessão acaba, e o que estiver aberto pode ser perdido. Esta aula não tem caixa de execução para <code>/s</code> nem para <code>/r</code>. O que se pratica aqui é só a ajuda e o cancelamento.</p>
+<p>O <code>shutdown /s</code> desliga o computador de verdade. O <code>shutdown /r</code> reinicia de verdade. Não rode esses pedidos “para ver o que acontece”: a sessão acaba, e o que estiver aberto pode ser perdido. Esta aula não tem caixa de execução para <code>/s</code> nem para <code>/r</code>. O que se pratica aqui é a ajuda, o cancelamento e o pedido inválido.</p>
 </div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, sem desligar a máquina. No seu computador, pratique só o <code>/?</code> e, se quiser, o <code>/a</code> — nunca o <code>/s</code> ou o <code>/r</code> só para treinar. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, sem desligar a máquina. No seu computador, pratique só o <code>/?</code>, o <code>/a</code> e, se quiser, um pedido inválido — nunca o <code>/s</code> ou o <code>/r</code> só para treinar.</p>
 <hr>
 <h2>A ideia: ler a placa, sem apertar o botão vermelho</h2>
 <p>A ajuda é a placa na parede. O <code>/a</code> é o “cancelar”, útil só quando já há um desligamento marcado. O botão vermelho (<code>/s</code>, <code>/r</code>) não se aperta de brincadeira, e nesta aula ele nem aparece na mesa de teste.</p>
 <hr>
 <h2>1. A ajuda</h2>
-<p>O <code>shutdown /?</code> mostra o texto de ajuda do comando. A saída real ainda está a coletar:</p>
+<p>O <code>shutdown /?</code> mostrou o texto abaixo, inteiro, inclusive a lista de razões no fim. Não cortamos e não traduzimos:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;shutdown /?
+Uso: shutdown [/i | /l | /s | /sg | /r | /g | /a | /p | /h | /e | /o] [/hybrid] [/soft] [/fw] [/f]
+    [/m \\computador][/t xxx][/d [p:]xx:yy [/c "comentário"]]
 
-« saída a coletar »
+    Sem args       Exibir ajuda. É o mesmo que digitar /?.
+    /?             Exibir ajuda. É o mesmo que não digitar nenhuma opção.
+    /i             Exibir a interface gráfica do usuário (GUI).
+                   Esta deve ser a primeira opção.
+    /l             Fazer logoff. Não deve ser usada com a opção /m ou /d
+    /s             Desligar o computador.
+    /sg        Desligar o computador. Na próxima inicialização, se o Logon de Reinício Automático
+               estiver habilitado, entre e bloqueie automaticamente o último usuário interativo.
+               Após entrar, reinicie todos os aplicativos registrados.
+    /r         Desligamento completo e reinicialização do computador.
+    /g         Desligamento completo e reinicialização do computador. Depois que o sistema for reinicializado,
+               se o Logon de Reinício Automático estiver habilitado, entre automaticamente e
+               bloqueie o último usuário interativo.
+               Depois de entrar, reinicie todos os aplicativos registrados.
+    /a         Anular um desligamento do sistema.
+               Só pode ser usado durante o período de tempo limite.
+               Combine com /fw para limpar quaisquer inicializações pendentes para o firmware.
+    /p         Desligar o computador local sem nenhum tempo limite ou aviso.
+               Pode ser usado com as opções /d e /f.
+    /h         Hibernar o computador local.
+               Pode ser usado com a opção /f.
+    /hybrid    Executa um desligamento do computador e o prepara para inicialização rápida.
+               Deve ser usado com a opção /s.
+    /fw        Combinar com uma opção de desligamento para fazer com que a próxima inicialização vá para a
+               interface de usuário de firmware.
+    /e         Documentar o motivo de um desligamento inesperado de um computador.
+    /o         Acesse o menu de opções de inicialização avançada e reinicialize o computador.
+               Deve ser usado com a opção /r.
+    /m \\computer Especificar o computador de destino.
+    /t xxx     Definir o tempo limite antes do desligamento como xxx segundos.
+               O intervalo válido é 0-315360000 (10 anos), com um padrão de 30.
+               Se o tempo limite for maior que 0, o parâmetro/f será
+               implícito.
+    /c "comment" Comentário sobre o motivo da reinicialização ou desligamento.
+               Máximo de 512 caracteres permitidos.
+    /f         Forçar o fechamento de aplicativos em execução sem avisar os usuários.
+               O parâmetro/f está implícito quando um valor maior do que 0 é
+               especificado para o parâmetro /t.
+    /d [p|u:]xx:yy  Forneça o motivo do reinício ou desligamento.
+               p indica que a reinicialização ou o desligamento é planejado.
+               u indica que o motivo é definido pelo usuário.
+               Se nem p nem u forem especificados, a reinicialização ou o desligamento será
+               não planejado.
+               xx é o número do motivo primário (inteiro positivo menor que 256).
+               yy é o número do motivo secundário (inteiro positivo menor que 65536).
 
+Razões neste computador:
+(E = Esperado U = Inesperado P = planejado, C = definido pelo cliente)
+Tipo	Primária	Secundária	Título
+
+ U  	0	0	Outro (não planejada)
+E   	0	0	Outro (não planejada)
+E P 	0	0	Outro (planejado)
+ U  	0	5	Outra falha: o sistema não está respondendo
+E   	1	1	Hardware: manutenção (não planejada)
+E P 	1	1	Hardware: manutenção (planejada)
+E   	1	2	Hardware: instalação (não planejada)
+E P 	1	2	Hardware: instalação (planejada)
+E   	2	2	Sistema Operacional: Recuperação (não planejado)
+E P 	2	2	Sistema Operacional: Recuperação (planejada)
+  P 	2	3	Sistema operacional: atualização (planejada)
+E   	2	4	Sistema operacional: reconfig. (não planejada)
+E P 	2	4	Sistema operacional: reconfig. (planejada)
+  P 	2	16	Sistema operacional: service pack (planejado)
+    	2	17	Sistema operacional: hotfix (não planejado)
+  P 	2	17	Sistema operacional: hotfix (planejado)
+    	2	18	Sistema operacional: correção de segurança (não planej)
+  P 	2	18	Sistema operacional: correção de segurança (planejada)
+E   	4	1	Aplicativo: manutenção (não planejada)
+E P 	4	1	Aplicativo: manutenção (planejada)
+E P 	4	2	Aplicativo: instalação (planejada)
+E   	4	5	Aplicativo: sem resposta
+E   	4	6	Aplicativo: instável
+ U  	5	15	Falha do sistema: erro de parada
+ U  	5	19	Problema de segurança (Não planejado)
+E   	5	19	Problema de segurança (Não planejado)
+E P 	5	19	Problema de segurança (Planejado)
+E   	5	20	Perda de conectividade de rede (não planejada)
+ U  	6	11	Falha de energia: fio desconectado
+ U  	6	12	Falha de energia: ambiente
+  P 	7	0	Desligamento de API legacy
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando não há desligamento em andamento</h2>
 <div class="cenario"><strong>Cancelar sem nada para cancelar</strong>
-<p>O <code>shutdown /a</code> tenta abortar um desligamento já pedido. Nesta coleta não há desligamento em andamento, então o Prompt deve devolver uma mensagem de erro (o sentido é o de que não há nada para cancelar). A mensagem <em>exata</em> ainda está a coletar — não inventamos nem traduzimos o texto:</p>
+<p>O <code>shutdown /a</code> desta coleta devolveu esta linha, com o código <code>1116</code> colado no fim, exatamente assim:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;shutdown /a
-
-« saída a coletar »
-
+Não foi possível anular o desligamento do sistema porque o sistema não estava sendo desligado.(1116)
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <hr>
+<h2>2. Uma opção inválida</h2>
+<p>O <code>shutdown /opcao-invalida</code> não trouxe uma mensagem à parte de “opção inexistente”. O Prompt só mostrou de novo a mesma ajuda do <code>/?</code>, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;shutdown /opcao-invalida
+Uso: shutdown [/i | /l | /s | /sg | /r | /g | /a | /p | /h | /e | /o] [/hybrid] [/soft] [/fw] [/f]
+    [/m \\computador][/t xxx][/d [p:]xx:yy [/c "comentário"]]
+
+    Sem args       Exibir ajuda. É o mesmo que digitar /?.
+    /?             Exibir ajuda. É o mesmo que não digitar nenhuma opção.
+    /i             Exibir a interface gráfica do usuário (GUI).
+                   Esta deve ser a primeira opção.
+    /l             Fazer logoff. Não deve ser usada com a opção /m ou /d
+    /s             Desligar o computador.
+    /sg        Desligar o computador. Na próxima inicialização, se o Logon de Reinício Automático
+               estiver habilitado, entre e bloqueie automaticamente o último usuário interativo.
+               Após entrar, reinicie todos os aplicativos registrados.
+    /r         Desligamento completo e reinicialização do computador.
+    /g         Desligamento completo e reinicialização do computador. Depois que o sistema for reinicializado,
+               se o Logon de Reinício Automático estiver habilitado, entre automaticamente e
+               bloqueie o último usuário interativo.
+               Depois de entrar, reinicie todos os aplicativos registrados.
+    /a         Anular um desligamento do sistema.
+               Só pode ser usado durante o período de tempo limite.
+               Combine com /fw para limpar quaisquer inicializações pendentes para o firmware.
+    /p         Desligar o computador local sem nenhum tempo limite ou aviso.
+               Pode ser usado com as opções /d e /f.
+    /h         Hibernar o computador local.
+               Pode ser usado com a opção /f.
+    /hybrid    Executa um desligamento do computador e o prepara para inicialização rápida.
+               Deve ser usado com a opção /s.
+    /fw        Combinar com uma opção de desligamento para fazer com que a próxima inicialização vá para a
+               interface de usuário de firmware.
+    /e         Documentar o motivo de um desligamento inesperado de um computador.
+    /o         Acesse o menu de opções de inicialização avançada e reinicialize o computador.
+               Deve ser usado com a opção /r.
+    /m \\computer Especificar o computador de destino.
+    /t xxx     Definir o tempo limite antes do desligamento como xxx segundos.
+               O intervalo válido é 0-315360000 (10 anos), com um padrão de 30.
+               Se o tempo limite for maior que 0, o parâmetro/f será
+               implícito.
+    /c "comment" Comentário sobre o motivo da reinicialização ou desligamento.
+               Máximo de 512 caracteres permitidos.
+    /f         Forçar o fechamento de aplicativos em execução sem avisar os usuários.
+               O parâmetro/f está implícito quando um valor maior do que 0 é
+               especificado para o parâmetro /t.
+    /d [p|u:]xx:yy  Forneça o motivo do reinício ou desligamento.
+               p indica que a reinicialização ou o desligamento é planejado.
+               u indica que o motivo é definido pelo usuário.
+               Se nem p nem u forem especificados, a reinicialização ou o desligamento será
+               não planejado.
+               xx é o número do motivo primário (inteiro positivo menor que 256).
+               yy é o número do motivo secundário (inteiro positivo menor que 65536).
+
+Razões neste computador:
+(E = Esperado U = Inesperado P = planejado, C = definido pelo cliente)
+Tipo	Primária	Secundária	Título
+
+ U  	0	0	Outro (não planejada)
+E   	0	0	Outro (não planejada)
+E P 	0	0	Outro (planejado)
+ U  	0	5	Outra falha: o sistema não está respondendo
+E   	1	1	Hardware: manutenção (não planejada)
+E P 	1	1	Hardware: manutenção (planejada)
+E   	1	2	Hardware: instalação (não planejada)
+E P 	1	2	Hardware: instalação (planejada)
+E   	2	2	Sistema Operacional: Recuperação (não planejado)
+E P 	2	2	Sistema Operacional: Recuperação (planejada)
+  P 	2	3	Sistema operacional: atualização (planejada)
+E   	2	4	Sistema operacional: reconfig. (não planejada)
+E P 	2	4	Sistema operacional: reconfig. (planejada)
+  P 	2	16	Sistema operacional: service pack (planejado)
+    	2	17	Sistema operacional: hotfix (não planejado)
+  P 	2	17	Sistema operacional: hotfix (planejado)
+    	2	18	Sistema operacional: correção de segurança (não planej)
+  P 	2	18	Sistema operacional: correção de segurança (planejada)
+E   	4	1	Aplicativo: manutenção (não planejada)
+E P 	4	1	Aplicativo: manutenção (planejada)
+E P 	4	2	Aplicativo: instalação (planejada)
+E   	4	5	Aplicativo: sem resposta
+E   	4	6	Aplicativo: instável
+ U  	5	15	Falha do sistema: erro de parada
+ U  	5	19	Problema de segurança (Não planejado)
+E   	5	19	Problema de segurança (Não planejado)
+E P 	5	19	Problema de segurança (Planejado)
+E   	5	20	Perda de conectividade de rede (não planejada)
+ U  	6	11	Falha de energia: fio desconectado
+ U  	6	12	Falha de energia: ambiente
+  P 	7	0	Desligamento de API legacy
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
 <h2>O que esta aula não pede para rodar</h2>
-<p>As chaves <code>/s</code> e <code>/r</code> desligam e reiniciam o computador de verdade. Elas aparecem aqui só para você reconhecer o risco, <strong>sem caixa de execução</strong> e sem pedido para testá-las:</p>
+<p>As chaves <code>/s</code> e <code>/r</code> desligam e reiniciam o computador de verdade. Elas aparecem na ajuda acima para você reconhecer o risco, <strong>sem caixa de execução</strong> e sem pedido para testá-las:</p>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Por que não entra na prática desta aula</th></tr>
 <tr><td><code>shutdown /s</code></td><td>Desliga o computador de verdade. Não teste à toa.</td></tr>
@@ -64,7 +232,8 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>shutdown /?</code></td><td>Para ler a ajuda, sem desligar nada.</td></tr>
-<tr><td><code>shutdown /a</code></td><td>Para tentar cancelar um desligamento. Se não houver nenhum em andamento, o Prompt devolve um erro — a mensagem exata entra com a coleta.</td></tr>
+<tr><td><code>shutdown /a</code></td><td>Para tentar cancelar um desligamento. Se não houver nenhum em andamento, nesta coleta o Prompt respondeu com o erro <code>1116</code>.</td></tr>
+<tr><td><code>shutdown /opcao-invalida</code></td><td>Nesta captura, só repetiu a ajuda.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
@@ -78,24 +247,23 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver a ajuda, sem desligar nada:</p><div class="ex-code">shutdown <input data-answer="/?" aria-label="chave"></div></div>
 <div class="exercise"><h3>2. Cancelar</h3><p>Qual chave tenta cancelar um desligamento?</p><div class="ex-code">shutdown <input data-answer="/a" aria-label="chave"></div></div>
-<div class="exercise"><h3>3. O que não se testa à toa</h3><p>Qual chave desliga o computador de verdade?</p><div class="ex-code">shutdown <input data-answer="/s" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. O código desta coleta</h3><p>Qual código veio no fim da mensagem do <code>shutdown /a</code>?</p><div class="ex-code"><input data-answer="1116" aria-label="codigo"></div></div>
 <div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não tem caixa de execução para <code>shutdown /s</code> e <code>shutdown /r</code>?</p>
 <label><input type="radio" name="q4"> Porque esses pedidos não existem</label>
 <label><input type="radio" name="q4"> Porque eles desligam e reiniciam o computador de verdade, e não devem ser testados à toa</label>
 <label><input type="radio" name="q4"> Porque o <code>shutdown</code> só funciona com <code>/?</code></label>
 <label><input type="radio" name="q4"> Porque a ajuda já desliga a máquina</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída do <code>shutdown /a</code>, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar o texto do erro</label>
-<label><input type="radio" name="q5"> Inventa a frase “nenhum desligamento em andamento”</label>
-<label><input type="radio" name="q5"> Traduz a mensagem de um guia em inglês</label>
-<label><input type="radio" name="q5"> Desliga este computador para mostrar o efeito</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. O <code>shutdown /a</code> desta coleta entra para quê?</p>
-<label><input type="radio" name="q6"> Para desligar a máquina no fim da aula</label>
-<label><input type="radio" name="q6"> Para reiniciar depois da ajuda</label>
-<label><input type="radio" name="q6"> Para ver a mensagem real quando não há desligamento em andamento</label>
-<label><input type="radio" name="q6"> Para cancelar o <code>ping</code> de teste</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bshutdown\b;;src:/\?;;semerro">
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a mensagem real de <code>shutdown /a</code> nesta coleta?</p>
+<label><input type="radio" name="q5"> <code>Não foi possível anular o desligamento do sistema porque o sistema não estava sendo desligado.(1116)</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “nenhum desligamento em andamento”</label>
+<label><input type="radio" name="q5"> Nada: o comando cancelou em silêncio</label>
+<label><input type="radio" name="q5"> A máquina desligou mesmo assim</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>shutdown /opcao-invalida</code> desta coleta mostrou:</p>
+<label><input type="radio" name="q6"> Só a frase “opção inválida”, sem a ajuda</label>
+<label><input type="radio" name="q6"> Uma mensagem inventada</label>
+<label><input type="radio" name="q6"> A mesma ajuda do <code>shutdown /?</code>, de novo</label>
+<label><input type="radio" name="q6"> O erro <code>1116</code></label></div>
+<div class="trycmd" data-goal="src:\bshutdown\b;;src:/\?;;out:Anular um desligamento do sistema.">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre a ajuda do <code>shutdown</code> com <code>/?</code>, sem desligar nada.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -103,11 +271,110 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 shutdown /?
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Uso: shutdown [/i | /l | /s | /sg | /r | /g | /a | /p | /h | /e | /o] [/hybrid] [/soft] [/fw] [/f]
+    [/m \\computador][/t xxx][/d [p:]xx:yy [/c "comentário"]]
+
+    Sem args       Exibir ajuda. É o mesmo que digitar /?.
+    /?             Exibir ajuda. É o mesmo que não digitar nenhuma opção.
+    /i             Exibir a interface gráfica do usuário (GUI).
+                   Esta deve ser a primeira opção.
+    /l             Fazer logoff. Não deve ser usada com a opção /m ou /d
+    /s             Desligar o computador.
+    /sg        Desligar o computador. Na próxima inicialização, se o Logon de Reinício Automático
+               estiver habilitado, entre e bloqueie automaticamente o último usuário interativo.
+               Após entrar, reinicie todos os aplicativos registrados.
+    /r         Desligamento completo e reinicialização do computador.
+    /g         Desligamento completo e reinicialização do computador. Depois que o sistema for reinicializado,
+               se o Logon de Reinício Automático estiver habilitado, entre automaticamente e
+               bloqueie o último usuário interativo.
+               Depois de entrar, reinicie todos os aplicativos registrados.
+    /a         Anular um desligamento do sistema.
+               Só pode ser usado durante o período de tempo limite.
+               Combine com /fw para limpar quaisquer inicializações pendentes para o firmware.
+    /p         Desligar o computador local sem nenhum tempo limite ou aviso.
+               Pode ser usado com as opções /d e /f.
+    /h         Hibernar o computador local.
+               Pode ser usado com a opção /f.
+    /hybrid    Executa um desligamento do computador e o prepara para inicialização rápida.
+               Deve ser usado com a opção /s.
+    /fw        Combinar com uma opção de desligamento para fazer com que a próxima inicialização vá para a
+               interface de usuário de firmware.
+    /e         Documentar o motivo de um desligamento inesperado de um computador.
+    /o         Acesse o menu de opções de inicialização avançada e reinicialize o computador.
+               Deve ser usado com a opção /r.
+    /m \\computer Especificar o computador de destino.
+    /t xxx     Definir o tempo limite antes do desligamento como xxx segundos.
+               O intervalo válido é 0-315360000 (10 anos), com um padrão de 30.
+               Se o tempo limite for maior que 0, o parâmetro/f será
+               implícito.
+    /c "comment" Comentário sobre o motivo da reinicialização ou desligamento.
+               Máximo de 512 caracteres permitidos.
+    /f         Forçar o fechamento de aplicativos em execução sem avisar os usuários.
+               O parâmetro/f está implícito quando um valor maior do que 0 é
+               especificado para o parâmetro /t.
+    /d [p|u:]xx:yy  Forneça o motivo do reinício ou desligamento.
+               p indica que a reinicialização ou o desligamento é planejado.
+               u indica que o motivo é definido pelo usuário.
+               Se nem p nem u forem especificados, a reinicialização ou o desligamento será
+               não planejado.
+               xx é o número do motivo primário (inteiro positivo menor que 256).
+               yy é o número do motivo secundário (inteiro positivo menor que 65536).
+
+Razões neste computador:
+(E = Esperado U = Inesperado P = planejado, C = definido pelo cliente)
+Tipo	Primária	Secundária	Título
+
+ U  	0	0	Outro (não planejada)
+E   	0	0	Outro (não planejada)
+E P 	0	0	Outro (planejado)
+ U  	0	5	Outra falha: o sistema não está respondendo
+E   	1	1	Hardware: manutenção (não planejada)
+E P 	1	1	Hardware: manutenção (planejada)
+E   	1	2	Hardware: instalação (não planejada)
+E P 	1	2	Hardware: instalação (planejada)
+E   	2	2	Sistema Operacional: Recuperação (não planejado)
+E P 	2	2	Sistema Operacional: Recuperação (planejada)
+  P 	2	3	Sistema operacional: atualização (planejada)
+E   	2	4	Sistema operacional: reconfig. (não planejada)
+E P 	2	4	Sistema operacional: reconfig. (planejada)
+  P 	2	16	Sistema operacional: service pack (planejado)
+    	2	17	Sistema operacional: hotfix (não planejado)
+  P 	2	17	Sistema operacional: hotfix (planejado)
+    	2	18	Sistema operacional: correção de segurança (não planej)
+  P 	2	18	Sistema operacional: correção de segurança (planejada)
+E   	4	1	Aplicativo: manutenção (não planejada)
+E P 	4	1	Aplicativo: manutenção (planejada)
+E P 	4	2	Aplicativo: instalação (planejada)
+E   	4	5	Aplicativo: sem resposta
+E   	4	6	Aplicativo: instável
+ U  	5	15	Falha do sistema: erro de parada
+ U  	5	19	Problema de segurança (Não planejado)
+E   	5	19	Problema de segurança (Não planejado)
+E P 	5	19	Problema de segurança (Planejado)
+E   	5	20	Perda de conectividade de rede (não planejada)
+ U  	6	11	Falha de energia: fio desconectado
+ U  	6	12	Falha de energia: ambiente
+  P 	7	0	Desligamento de API legacy
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bshutdown\b;;src:/a;;out:1116">
+<p class="try-task"><strong>Missão:</strong> tente cancelar um desligamento com <code>shutdown /a</code>, sem ter nenhum em andamento.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+shutdown /a
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Não foi possível anular o desligamento do sistema porque o sistema não estava sendo desligado.(1116)
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li>Nesta aula se pratica o <code>shutdown /?</code> e o <code>shutdown /a</code>. A saída real ainda está a coletar.</li>
+<li>O <code>shutdown /?</code> mostra a ajuda. Uma opção inválida, nesta captura, só repetiu essa ajuda.</li>
+<li>O <code>shutdown /a</code> desta coleta devolveu o erro <code>1116</code>, porque não havia desligamento em andamento.</li>
 <li><code>/s</code> e <code>/r</code> desligam e reiniciam de verdade: não teste à toa, e não há caixa de execução para eles aqui.</li>
 </ul>
 

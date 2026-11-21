@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Consultando Serviços (sc query) — consultar um serviço no Prompt | Guia CMD</title>
-<meta name="description" content="O comando sc query no Prompt de Comando: consultar o serviço Spooler e a mensagem real quando o serviço não existe. Saída ainda a coletar. Só leitura.">
+<title>Consultando Serviços (sc query) — consultar o Spooler no Prompt | Guia CMD</title>
+<meta name="description" content="O comando sc query no Prompt de Comando: o serviço Spooler em RUNNING, o filtro por ESTADO e a FALHA 1060 quando o serviço não existe. Só leitura.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,32 +19,42 @@
 <h1>Consultando Serviços (<span class="hl">sc query</span>)</h1>
 
 
-<p class="intro">O <code>sc query</code> <strong>consulta</strong> um serviço do Windows: lê o estado, não altera nada. Nesta aula os pedidos da coleta são o <code>Spooler</code> (o serviço de impressão, que existe no Windows) e um nome que não existe, <code>servico-que-nao-existe</code>. A saída real ainda está a coletar. Se o nome do computador aparecer na captura, a Mira trata isso na anonimização — não inventamos essa linha.</p>
+<p class="intro">O <code>sc query</code> <strong>consulta</strong> um serviço do Windows: lê o estado, não altera nada. Nesta coleta, o <code>Spooler</code> (o serviço de impressão) veio com o estado <code>RUNNING</code>. Um nome que não existe, <code>servico-que-nao-existe</code>, devolveu a <code>FALHA 1060</code>. Não houve <code>sc qc</code> nesta captura, então essa forma não entra na aula. Esta aula é só consulta: não pede para parar, iniciar ou apagar serviço.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>sc query Spooler</code>, só para ler o estado do serviço.</li>
-<li>O <code>sc query servico-que-nao-existe</code>, e a mensagem real quando esse serviço não existe (ainda a coletar).</li>
-<li>Que esta aula é só consulta: não pede para parar, iniciar ou apagar serviço.</li>
+<li>O <code>sc query Spooler</code>, e o estado <code>RUNNING</code> desta coleta.</li>
+<li>O <code>find "ESTADO"</code> na mesma consulta, para ver só essa linha.</li>
+<li>A <code>FALHA 1060</code> quando o serviço não existe, com a mensagem real do Prompt.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, com revisão da Mira se o nome da máquina aparecer. No seu computador, pratique só com <code>sc query</code>, sem outros subcomandos do <code>sc</code>. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, o <code>Spooler</code> pode estar em outro estado. Pratique só com <code>sc query</code>, sem outros subcomandos do <code>sc</code>.</p>
 <hr>
 <h2>A ideia: perguntar na recepção se o elevador está funcionando</h2>
 <p>Você não desliga o elevador: só pergunta se ele está no ar. O <code>sc query</code> é essa pergunta. O nome <code>Spooler</code> é o do serviço de impressão, um alvo estável e de leitura.</p>
 <hr>
 <h2>1. Consultar o Spooler</h2>
-<p>O <code>sc query Spooler</code> deve devolver o estado desse serviço. A saída real ainda está a coletar:</p>
+<p>O <code>sc query Spooler</code> desta coleta mostrou o serviço em <code>RUNNING</code>. A linha do nome tem um espaço no fim, e a do estado também; entram como vieram:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sc query Spooler
 
-« saída a coletar »
-
+NOME_DO_SERVIÇO: Spooler 
+    TIPO                       : 110  WIN32_OWN_PROCESS  (interactive)
+    ESTADO                     : 4  RUNNING 
+                                (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+    CÓDIGO_DE_SAÍDA_DO_WIN32   : 0  (0x0)
+    CÓDIGO_DE_SAÍDA_DO_SERVIÇO : 0  (0x0)
+    PONTO_DE_VERIFICAÇÃO       : 0x0
+    AGUARDAR_DICA              : 0x0
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Encadeando com o <code>find "ESTADO"</code>, sobrou só esta linha (de novo com o espaço no fim):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sc query Spooler | find "ESTADO"
+    ESTADO                     : 4  RUNNING 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Um serviço que não existe</strong>
-<p>O <code>sc query servico-que-nao-existe</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<p>O <code>sc query servico-que-nao-existe</code> devolveu a <code>FALHA 1060</code> e, depois de uma linha em branco, a mensagem abaixo, exatamente assim:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;sc query servico-que-nao-existe
+[SC] EnumQueryServicesStatus:OpenService FALHA 1060:
 
-« saída a coletar »
+O serviço especificado não existe como serviço instalado.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -52,8 +62,9 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>sc query Spooler</code></td><td>Para ler o estado do serviço de impressão.</td></tr>
-<tr><td><code>sc query servico-que-nao-existe</code></td><td>Para ver a mensagem real quando esse nome não existe.</td></tr>
+<tr><td><code>sc query Spooler</code></td><td>Para ler o estado do serviço de impressão. Nesta coleta, <code>RUNNING</code>.</td></tr>
+<tr><td><code>sc query Spooler | find "ESTADO"</code></td><td>Para ver só a linha do estado.</td></tr>
+<tr><td><code>sc query servico-que-nao-existe</code></td><td>Para ver a <code>FALHA 1060</code> quando esse nome não existe.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
@@ -64,25 +75,24 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para consultar o serviço de impressão:</p><div class="ex-code">sc <input data-answer="query" aria-label="subcomando"> Spooler</div></div>
-<div class="exercise"><h3>2. O serviço desta aula</h3><p>Qual serviço a coleta consulta de verdade?</p><div class="ex-code"><input data-answer="Spooler" aria-label="servico"></div></div>
-<div class="exercise"><h3>3. Só leitura</h3><p>O <code>sc query</code> altera o serviço?</p><div class="ex-code"><input data-answer="nao|não" aria-label="resposta"></div></div>
+<div class="exercise"><h3>2. O estado desta coleta</h3><p>Qual era o estado do <code>Spooler</code> no laboratório?</p><div class="ex-code"><input data-answer="RUNNING" aria-label="estado"></div></div>
+<div class="exercise"><h3>3. A falha</h3><p>Qual número de falha o Prompt mostrou quando o serviço não existia?</p><div class="ex-code">FALHA <input data-answer="1060" aria-label="codigo"></div></div>
 <div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>sc query</code> desta aula faz com o serviço?</p>
 <label><input type="radio" name="q4"> Para e inicia o serviço</label>
 <label><input type="radio" name="q4"> Só consulta o estado, sem alterar nada</label>
 <label><input type="radio" name="q4"> Apaga o serviço do Windows</label>
 <label><input type="radio" name="q4"> Reinicia o computador</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar o estado nem a mensagem de erro</label>
-<label><input type="radio" name="q5"> Inventa um “RUNNING” de memória</label>
-<label><input type="radio" name="q5"> Copia a saída de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Consulta os serviços deste Linux</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. Se o nome do computador aparecer na captura do <code>sc query</code>, o que o guia faz?</p>
-<label><input type="radio" name="q6"> Publica o nome real</label>
-<label><input type="radio" name="q6"> Inventa um nome qualquer para preencher</label>
-<label><input type="radio" name="q6"> A Mira trata isso na anonimização; nesta aula a linha ainda não entra, porque a coleta não chegou</label>
-<label><input type="radio" name="q6"> Apaga a aula inteira</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bsc\b;;src:\bquery\b;;src:\bSpooler\b;;semerro">
+<div class="mc" data-answer="1"><p class="mc-q">5. A mensagem real de <code>sc query servico-que-nao-existe</code> começa com:</p>
+<label><input type="radio" name="q5"> <code>[SC] EnumQueryServicesStatus:OpenService FALHA 1060:</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “serviço não achado”</label>
+<label><input type="radio" name="q5"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q5"> Nada: o comando ficou em silêncio</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Depois da <code>FALHA 1060</code>, o Prompt escreveu qual frase?</p>
+<label><input type="radio" name="q6"> <code>Acesso negado.</code></label>
+<label><input type="radio" name="q6"> <code>A sintaxe do comando está incorreta.</code></label>
+<label><input type="radio" name="q6"> <code>O serviço especificado não existe como serviço instalado.</code></label>
+<label><input type="radio" name="q6"> Uma linha inventada para completar a caixa</label></div>
+<div class="trycmd" data-goal="src:\bsc\b;;src:\bquery\b;;src:\bSpooler\b;;out:RUNNING">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, consulte o serviço <code>Spooler</code> com <code>sc query</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -90,13 +100,39 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 sc query Spooler
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+NOME_DO_SERVIÇO: Spooler 
+    TIPO                       : 110  WIN32_OWN_PROCESS  (interactive)
+    ESTADO                     : 4  RUNNING 
+                                (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+    CÓDIGO_DE_SAÍDA_DO_WIN32   : 0  (0x0)
+    CÓDIGO_DE_SAÍDA_DO_SERVIÇO : 0  (0x0)
+    PONTO_DE_VERIFICAÇÃO       : 0x0
+    AGUARDAR_DICA              : 0x0
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bsc\b;;src:\bquery\b;;src:servico-que-nao-existe;;out:FALHA 1060">
+<p class="try-task"><strong>Missão:</strong> consulte um serviço que não existe, <code>servico-que-nao-existe</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+sc query servico-que-nao-existe
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+[SC] EnumQueryServicesStatus:OpenService FALHA 1060:
+
+O serviço especificado não existe como serviço instalado.
+
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li><code>sc query Spooler</code> só lê o estado do serviço de impressão.</li>
-<li><code>sc query servico-que-nao-existe</code> entra para a mensagem real de erro, ainda a coletar.</li>
-<li>Esta aula não pede para iniciar, parar ou apagar serviço.</li>
+<li><code>sc query Spooler</code> só lê o estado. Nesta coleta, o Spooler estava <code>RUNNING</code>.</li>
+<li><code>sc query servico-que-nao-existe</code> devolveu a <code>FALHA 1060</code> e a mensagem de que o serviço não existe como serviço instalado.</li>
+<li>Não houve <code>sc qc</code> nesta captura. Esta aula não pede para iniciar, parar ou apagar serviço.</li>
 </ul>
 
 

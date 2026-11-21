@@ -14,10 +14,15 @@ LISTA="${PROIBIDO:-../.proibido-cmd.txt}"
 
 padroes=()
 # --- padrões embutidos genéricos (sempre; sem valores da máquina) ---
+# SID de máquina/domínio (S-1-5-21-...). Os SIDs bem conhecidos S-1-5-32-544
+# (BUILTIN\Administradores) e S-1-5-114 (conta local + admin) NÃO são bloqueados por este padrão.
 padroes+=("re:S-1-5-21-\\d+-\\d+-\\d+(-\\d+)?")
 padroes+=("re:\\b(?!02[:-])([0-9a-f]{2}[:-]){5}[0-9a-f]{2}\\b")
 padroes+=("re:\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b")
-padroes+=("re:(?<![\\d.])(?!192\\.168\\.0\\.|127\\.|255\\.)(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d)\\.(\\d{1,3}\\.){2}\\d{1,3}(?![\\d.])")
+# IPv4: bloqueia endereços, mas libera 192.168.0.* (ilustrativo do guia),
+# 127.* e 255.*, o 192.168.56.1 exato (adaptador padrão do VirtualBox, igual em toda máquina)
+# e só os ilustrativos 169.254.10.20 e 169.254.10.21 — NÃO a faixa 169.254 inteira.
+padroes+=("re:(?<![\\d.])(?!192\\.168\\.0\\.|127\\.|255\\.|192\\.168\\.56\\.1(?![\\d.])|169\\.254\\.10\\.20(?![\\d.])|169\\.254\\.10\\.21(?![\\d.]))(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d)\\.(\\d{1,3}\\.){2}\\d{1,3}(?![\\d.])")
 # Número de Série do Volume do dir (quatro hex, hífen ou dois-pontos, quatro hex).
 # Aparece como XXXX-XXXX ou XXXX:XXXX. O placeholder usa X literais (não são hex, então não casa).
 # A janela depois do rótulo é larga: em algumas saídas vem um prefixo hex antes do serial.

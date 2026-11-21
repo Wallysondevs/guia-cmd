@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Encerrando Processos (taskkill) — encerrar um processo de teste no Prompt | Guia CMD</title>
-<meta name="description" content="O comando taskkill no Prompt de Comando: encerrar, pelo PID, um ping de teste que o próprio script abre, e a mensagem real quando o processo não existe. Saída ainda a coletar.">
+<title>Encerrando Processos (taskkill) — encerrar um ping de teste pelo PID no Prompt | Guia CMD</title>
+<meta name="description" content="O comando taskkill no Prompt de Comando: encerrar pelo PID, sem /f, o ping de teste (PID 12345, já anonimizado), o /f logo depois que não acha o processo, e os erros de PID 3 e de sintaxe.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,85 +19,120 @@
 <h1>Encerrando Processos (<span class="hl">taskkill</span>)</h1>
 
 
-<p class="intro">O <code>taskkill</code> encerra um processo em execução. Nesta aula ele não mira o que está aberto no computador: a coleta só abre um <code>ping -n 30 127.0.0.1</code> no próprio script e o encerra pelo PID. Também entra o erro com <code>nao-existe.exe</code>. A saída real ainda está a coletar. Não use este comando contra processos do sistema nem contra programas que você não abriu de propósito para o teste.</p>
+<p class="intro">O <code>taskkill</code> encerra um processo em execução. Nesta aula o alvo é só o <code>ping</code> de teste da coleta, já visível como <code>PING.EXE</code> com o PID anonimizado <code>12345</code>. O <code>taskkill /pid 12345</code>, <strong>sem</strong> <code>/f</code>, já enviou o sinal de encerramento. O <code>/f</code> no mesmo PID, logo depois, respondeu que o processo não foi encontrado. Não use este comando contra processos do sistema nem contra programas que você não abriu de propósito para o teste.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>taskkill /PID</code>, só para o <code>ping</code> de teste que o script da coleta abre.</li>
-<li>A mensagem real quando o processo não existe (<code>nao-existe.exe</code>), ainda a coletar.</li>
-<li>Por que esta aula não pede um <code>taskkill</code> por nome de programa qualquer.</li>
+<li>O <code>taskkill /pid</code>, que pede ao processo para fechar — nesta coleta, isso bastou para o <code>ping</code>.</li>
+<li>O <code>/f</code>, que força o encerramento: só faz falta em programa que ignora o pedido de fechar. Aqui, depois do primeiro <code>/pid</code>, ele não achou mais o processo.</li>
+<li>As mensagens reais quando o PID não existe (<code>/pid 3</code>) e quando falta <code>/FI</code>, <code>/PID</code> ou <code>/IM</code>.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique só com um <code>ping</code> de teste que você mesmo abrir, nunca encerrando o que não foi aberto para isso. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. O PID entra como <code>12345</code>, já anonimizado. No seu computador, o número será outro. Pratique só com um <code>ping</code> de teste que você mesmo abrir, nunca encerrando o que não foi aberto para isso.</p>
 <hr>
 <h2>A ideia: fechar só a porta que você acabou de abrir</h2>
-<p>Você abre uma porta de teste (o <code>ping</code> para <code>127.0.0.1</code>, 30 ecos) e pede para fechá-la pelo número (o PID). Não se sai fechando as outras portas do corredor.</p>
+<p>Você abre uma porta de teste (o <code>ping</code>) e pede para fechá-la pelo número (o PID). Não se sai fechando as outras portas do corredor.</p>
 <hr>
-<h2>1. Encerrar o ping de teste, pelo PID</h2>
-<p>A coleta abre um <code>ping -n 30 127.0.0.1</code> no próprio script e, em seguida, o encerra com o <code>taskkill /PID</code> daquele processo. A sequência e a resposta reais ainda estão a coletar:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill /PID
+<h2>1. Ver o ping de teste e encerrar pelo PID, sem /f</h2>
+<p>O <code>tasklist /fi "pid eq 12345"</code> mostrou o <code>PING.EXE</code> da coleta. Os cabeçalhos vieram cortados (<code>Identifi</code> e <code>Uso de memór</code>), como no próprio <code>tasklist</code> desta largura; mantemos como apareceram:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tasklist /fi "pid eq 12345"
 
-« saída a coletar »
-
+Nome da imagem            Identifi Nome da sessão       Sessão# Uso de memór
+========================= ======== ================ =========== ============
+PING.EXE                     12345 Console                    1      4.044 K
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<p>O pedido exato (como o script descobre o PID e como o <code>taskkill</code> é escrito) entra com a captura. Não inventamos a linha nem a mensagem de êxito.</p>
+<p>Em seguida, o <code>taskkill /pid 12345</code>, <strong>sem</strong> <code>/f</code>, já encerrou o ping. A mensagem de êxito foi esta, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill /pid 12345
+ÊXITO: sinal de encerramento enviado ao processo com PID 12345.
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>/f</code> no mesmo PID, logo depois, não precisou forçar nada: o processo já tinha saído, e o Prompt respondeu que não o encontrou:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill /pid 12345 /f
+ERRO: o processo "12345" não foi encontrado.
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<div class="tip"><strong>Quando o /f faz falta</strong>
+<p>O <code>/pid</code> sozinho envia um sinal de encerramento: pede para o programa fechar. O <code>ping</code> desta coleta obedeceu, então o <code>/f</code> logo depois não achou mais o processo. O <code>/f</code> força o encerramento e só faz falta em programa que ignora esse pedido de fechar. Não comece por ele, e não o use contra o que você não abriu para o teste.</p>
+</div>
+<p>Um novo <code>tasklist /fi "pid eq 12345"</code> confirmou que aquele PID não estava mais em execução. A mensagem veio em duas linhas (a primeira tem um espaço no fim, antes da quebra):</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tasklist /fi "pid eq 12345"
+INFORMAÇÕES: nenhuma tarefa em execução correspondente aos critérios 
+especificados.
+C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
-<div class="cenario"><strong>Um processo que não existe</strong>
-<p>O pedido com <code>nao-existe.exe</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill /im nao-existe.exe
-
-« saída a coletar »
-
+<div class="cenario"><strong>Um PID que não existe</strong>
+<p>O <code>taskkill /pid 3 /f</code> devolveu esta mensagem, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill /pid 3 /f
+ERRO: o processo "3" não foi encontrado.
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>Sem /PID, /IM nem /FI</strong>
+<p>O <code>taskkill</code> sozinho, sem dizer qual processo, devolveu estas duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;taskkill
+ERRO: Sintaxe inválida. Não foram especificados /FI, /PID nem /IM.
+Digite "TASKKILL /?" para obter detalhes sobre o uso.
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <hr>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>taskkill /PID número</code></td><td>Para encerrar o processo de teste pelo PID, nesta aula só o <code>ping</code> que o script abriu.</td></tr>
-<tr><td><code>taskkill</code> com <code>nao-existe.exe</code></td><td>Para ver a mensagem real quando esse processo não está em execução. A mensagem entra com a coleta.</td></tr>
+<tr><td><code>taskkill /pid número</code></td><td>Para pedir ao processo daquele PID que feche. Nesta coleta, isso bastou para o <code>ping</code>.</td></tr>
+<tr><td><code>taskkill /pid número /f</code></td><td>Para forçar o encerramento, se o programa ignorar o pedido. Aqui, no mesmo PID, logo depois do primeiro pedido, o processo já não existia.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
-<tr><td><code>taskkill /PID número</code></td><td>Encerra o processo com aquele PID. Nesta aula, só o <code>ping</code> de teste.</td></tr>
+<tr><td><code>taskkill /pid número</code></td><td>Envia o sinal de encerramento àquele PID.</td></tr>
+<tr><td><code>taskkill /pid número /f</code></td><td>Força o encerramento. Só faz falta se o programa ignora o pedido de fechar.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
-<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para encerrar pelo número do processo:</p><div class="ex-code">taskkill <input data-answer="/PID|/pid" aria-label="chave"></div></div>
-<div class="exercise"><h3>2. O alvo desta aula</h3><p>Qual programa de teste a coleta abre para ser encerrado?</p><div class="ex-code"><input data-answer="ping" aria-label="programa"></div></div>
-<div class="exercise"><h3>3. O destino do ping</h3><p>Para qual endereço vai o <code>ping</code> de teste?</p><div class="ex-code">ping -n 30 <input data-answer="127.0.0.1" aria-label="destino"></div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. Esta aula pede o <code>taskkill</code> contra qual processo?</p>
-<label><input type="radio" name="q4"> Qualquer programa que estiver aberto no computador</label>
-<label><input type="radio" name="q4"> Só um <code>ping -n 30 127.0.0.1</code> que o próprio script da coleta abre, encerrado pelo PID</label>
-<label><input type="radio" name="q4"> O Prompt de Comando inteiro</label>
-<label><input type="radio" name="q4"> O serviço Spooler</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar a mensagem</label>
-<label><input type="radio" name="q5"> Inventa um “processo encerrado com êxito”</label>
-<label><input type="radio" name="q5"> Copia a mensagem de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Mostra os processos deste Linux e os encerra</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. Por que o alvo é o <code>127.0.0.1</code>?</p>
-<label><input type="radio" name="q6"> Para derrubar a rede da casa</label>
-<label><input type="radio" name="q6"> Porque o <code>taskkill</code> só funciona com esse IP</label>
-<label><input type="radio" name="q6"> Porque é um ping de teste na própria máquina, sem mirar um host externo</label>
-<label><input type="radio" name="q6"> Para desligar o computador</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\btaskkill\b;;src:/pid;;semerro">
-<p class="try-task"><strong>Missão:</strong> na pasta de teste, encerre pelo PID o <code>ping -n 30 127.0.0.1</code> que o próprio script abrir (a sequência exata entra com a coleta).</p>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para pedir o encerramento pelo PID, sem forçar:</p><div class="ex-code">taskkill <input data-answer="/pid|/PID" aria-label="chave"> 12345</div></div>
+<div class="exercise"><h3>2. Forçar</h3><p>Qual chave força o encerramento, quando o programa ignora o pedido?</p><div class="ex-code">taskkill /pid 12345 <input data-answer="/f" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. O processo desta coleta</h3><p>Qual nome de imagem o <code>tasklist</code> mostrou no PID <code>12345</code>?</p><div class="ex-code"><input data-answer="PING.EXE" aria-label="imagem"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Nesta coleta, o <code>taskkill /pid 12345</code> (sem <code>/f</code>) fez o quê?</p>
+<label><input type="radio" name="q4"> Nada: precisou do <code>/f</code> para o ping sair</label>
+<label><input type="radio" name="q4"> Já encerrou o ping: a mensagem foi <code>ÊXITO: sinal de encerramento enviado ao processo com PID 12345.</code></label>
+<label><input type="radio" name="q4"> Encerrou o Prompt de Comando inteiro</label>
+<label><input type="radio" name="q4"> A captura não trouxe essa linha</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Logo depois, o <code>taskkill /pid 12345 /f</code> respondeu:</p>
+<label><input type="radio" name="q5"> <code>ERRO: o processo "12345" não foi encontrado.</code></label>
+<label><input type="radio" name="q5"> De novo o ÊXITO, porque o <code>/f</code> sempre é obrigatório</label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “já tinha fechado”</label>
+<label><input type="radio" name="q5"> Nada: o comando ficou em silêncio</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>taskkill /pid 3 /f</code> desta coleta devolveu:</p>
+<label><input type="radio" name="q6"> O ÊXITO, porque o PID 3 é especial</label>
+<label><input type="radio" name="q6"> Uma mensagem inventada</label>
+<label><input type="radio" name="q6"> <code>ERRO: o processo "3" não foi encontrado.</code></label>
+<label><input type="radio" name="q6"> A ajuda do <code>TASKKILL /?</code></label></div>
+<div class="trycmd" data-goal="src:\btaskkill\b;;src:/pid;;out:sinal de encerramento enviado">
+<p class="try-task"><strong>Missão:</strong> encerre pelo PID o <code>ping</code> de teste, com <code>taskkill /pid 12345</code>, sem <code>/f</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
-taskkill /PID
+taskkill /pid 12345
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ÊXITO: sinal de encerramento enviado ao processo com PID 12345.
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btaskkill\b;;src:/pid;;out:o processo &quot;3&quot; não foi encontrado.">
+<p class="try-task"><strong>Missão:</strong> tente encerrar o PID <code>3</code> com <code>taskkill /pid 3 /f</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+taskkill /pid 3 /f
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ERRO: o processo "3" não foi encontrado.
 </pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li>O <code>taskkill</code> desta aula só encerra, pelo PID, um <code>ping</code> de teste aberto pelo próprio script.</li>
-<li>Também entra o erro com <code>nao-existe.exe</code>. A mensagem real ainda está a coletar.</li>
-<li>Não encerre processos do sistema nem programas que você não abriu para o teste.</li>
+<li>O <code>taskkill /pid</code> desta coleta já encerrou o <code>ping</code> de teste (PID <code>12345</code>, anonimizado), sem <code>/f</code>.</li>
+<li>O <code>/f</code> só faz falta em programa que ignora o pedido de fechar. Logo depois, no mesmo PID, o processo já não existia.</li>
+<li>As mensagens de PID inexistente (<code>/pid 3</code>) e de sintaxe inválida entram como o Prompt as escreveu.</li>
 </ul>
 
 
