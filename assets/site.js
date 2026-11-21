@@ -32,7 +32,6 @@ var NIVEIS = [
   ]},
   { id: "n2", nome: "Nível 2 · Intermediário", curto: "Intermediário", desc: "Mais comandos, filtros e variáveis", grupos: [
     { grupo: "Mais sobre Arquivos", itens: [
-      ["ren.html", "Renomeando (ren)", {pronta: false}],
       ["xcopy.html", "Copiando Pastas (xcopy)"],
       ["robocopy.html", "Cópia Robusta (robocopy)"],
       ["attrib.html", "Atributos (attrib)"],
