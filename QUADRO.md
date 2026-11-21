@@ -77,7 +77,7 @@ O lote 1 é o Nível 1 inteiro (as aulas obrigatórias que a Nova fechou), todas
 
 ## Nível 2
 
-O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu as 10 aulas de arquivo/texto com essas saídas, finalizou as metas e marcou `pronta` no `NIVEIS`. O `tree.html` permanece `{pronta:false}`, com placeholder: as linhas gráficas da captura do lote 2 se perderam, e a aula espera recoleta. Hash a preencher no commit seguinte.
+O `ren` já foi apresentado em `copy-move-del.html` no lote 1; o `ren.html` desta lista permanece `{pronta:false}` até uma aula só dele, se houver. Cronograma da Nova: aulas do lote 2 escritas até 22:30 de 20/11/2026 (America/Sao_Paulo). A Mira liberou `_saidas-anon/cmd-lote2.txt` (checador OK). O Tito preencheu as 10 aulas de arquivo/texto com essas saídas, finalizou as metas e marcou `pronta` no `NIVEIS`. O `tree.html` permanece `{pronta:false}`, com placeholder: as linhas gráficas da captura do lote 2 se perderam, e a aula espera recoleta. Hash das aulas preenchidas: `c68c500`.
 
 Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o único que edita o `NIVEIS` em `assets/site.js`.
 
@@ -85,17 +85,17 @@ Donos do lote 2: **Tito** (arquivo/texto) e **Zeca** (script). O Tito é o únic
 
 | Aula | Slug | Status | Hash |
 |---|---|---|---|
-| Procurando Texto (`find`) | `find.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Procurando com `findstr` | `findstr.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Página a Página (`more`) | `more.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Ordenando (`sort`) | `sort.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| O Encadeamento (pipe) | `pipe.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Atributos (`attrib`) | `attrib.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Copiando Pastas (`xcopy`) | `xcopy.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| Cópia Robusta (`robocopy`) | `robocopy.html` | escrita (lote 2, saídas reais; só na pasta de teste, sem `/MIR` nas missões) | (lote 2, a seguir) |
+| Procurando Texto (`find`) | `find.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Procurando com `findstr` | `findstr.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Página a Página (`more`) | `more.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Ordenando (`sort`) | `sort.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| O Encadeamento (pipe) | `pipe.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Atributos (`attrib`) | `attrib.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Copiando Pastas (`xcopy`) | `xcopy.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| Cópia Robusta (`robocopy`) | `robocopy.html` | escrita (lote 2, saídas reais; só na pasta de teste, sem `/MIR` nas missões) | `c68c500` |
 | Árvore de Pastas (`tree`) | `tree.html` | esqueleto (placeholder; linhas gráficas do lote 2 se perderam, aguarda recoleta) | `87eb3b7` |
-| Onde Está o Comando (`where`) | `where.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
-| A Versão do Windows (`ver`) | `ver.html` | escrita (lote 2, saídas reais) | (lote 2, a seguir) |
+| Onde Está o Comando (`where`) | `where.html` | escrita (lote 2, saídas reais) | `c68c500` |
+| A Versão do Windows (`ver`) | `ver.html` | escrita (lote 2, saídas reais) | `c68c500` |
 
 Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt`. Dez aulas do Tito estão escritas e `pronta`. O `tree.html` aguarda recoleta (linhas gráficas perdidas). As aulas de script do Zeca continuam `{pronta:false}` até ele avisar. O checador embutido agora cobre o serial do volume também no formato com dois-pontos (`XXXX:XXXX`), com janela maior depois do rótulo.
 
