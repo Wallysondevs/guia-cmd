@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>if — decidir no Prompt com exist, ==, /i, else e errorlevel | Guia CMD</title>
+<meta name="description" content="O comando if no Prompt de Comando: if exist, igualdade com ==, if /i, else com parênteses e if errorlevel. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1><span class="hl">if</span></h1>
+
+
+<p class="intro">O <code>if</code> é uma <strong>bifurcação</strong>: o Prompt confere uma condição e, conforme o resultado, executa um pedido ou outro. Nesta aula você vê a igualdade com <code>==</code>, a chave <code>/i</code>, o <code>if exist</code>, o <code>if not</code>, o <code>if errorlevel</code> e o <code>else</code> com parênteses. As respostas reais ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>if "Ana"=="ana"</code> e o <code>if /i</code>, que ignora maiúsculas, com <code>else</code> entre parênteses.</li>
+<li>O <code>if exist</code> e o <code>if not exist</code>, para arquivo ou pasta na pasta de teste.</li>
+<li>O <code>if errorlevel 1</code> e o <code>if not errorlevel 1</code>, depois de um comando que falhou ou deu certo. E o <code>if %errorlevel% NEQ 0</code> na mesma linha: no lote 2b a frase <code>deu erro</code> não foi impressa, por causa da expansão antecipada.</li>
+</ul></div>
+<div class="note"><strong>Saídas desta aula.</strong> Parte das respostas do Prompt já veio do lote 2b, anonimizado em <code>_saidas-anon/cmd-lote2b.txt</code>. As demais caixas ainda mostram o placeholder <strong>« saída a coletar »</strong>, até o restante da coleta entrar. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>As saídas reais foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. O placeholder <strong>« saída a coletar »</strong> não é resposta do <code>cmd</code>; as caixas já preenchidas trazem a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt.</p>
+
+<hr>
+<h2>A ideia: uma bifurcação na estrada</h2>
+<p>O Prompt chega numa placa: “se isto for verdade, vá por aqui; senão, vá por ali”. O <code>if</code> é essa placa. Os parênteses agrupam o que deve rodar em cada lado, principalmente quando há um <code>else</code>.</p>
+<hr>
+<h2>1. O arquivo existe?</h2>
+<p>O <code>if exist</code> confere se o nome está na pasta. O <code>if not exist</code> inverte a pergunta. Com uma barra no fim, <code>fotos\</code> deixa claro que você está falando de uma pasta:</p>
+<!-- coleta: if exist notas.txt echo notas.txt existe -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if exist notas.txt echo notas.txt existe">C:\Users\ana\guia-cmd-teste&gt;if exist notas.txt echo notas.txt existe
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: if not exist nada.txt echo nada.txt não existe -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if not exist nada.txt echo nada.txt não existe">C:\Users\ana\guia-cmd-teste&gt;if not exist nada.txt echo nada.txt não existe
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: if exist fotos\ echo fotos é uma pasta -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if exist fotos\ echo fotos é uma pasta">C:\Users\ana\guia-cmd-teste&gt;if exist fotos\ echo fotos é uma pasta
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>if exist</dt><dd>a pergunta: “esse nome existe?”.</dd><dt>notas.txt</dt><dd>o arquivo, na pasta de teste.</dd><dt>echo notas.txt existe</dt><dd>o que roda só se a resposta for sim.</dd></dl>
+<hr>
+<h2>2. Igualdade, <code>/i</code> e <code>else</code></h2>
+<p>A comparação clássica usa <code>==</code>. Sem a chave <code>/i</code>, <code>"Ana"</code> e <code>"ana"</code> são diferentes. Com <code>/i</code>, maiúsculas e minúsculas não importam. O <code>else</code> vai entre parênteses, junto com o pedido de cada lado:</p>
+<!-- coleta: if "Ana"=="ana" (echo iguais) else (echo diferentes) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if &quot;Ana&quot;==&quot;ana&quot; (echo iguais) else (echo diferentes)">C:\Users\ana\guia-cmd-teste&gt;if "Ana"=="ana" (echo iguais) else (echo diferentes)
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: if /i "Ana"=="ana" (echo iguais) else (echo diferentes) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if /i &quot;Ana&quot;==&quot;ana&quot; (echo iguais) else (echo diferentes)">C:\Users\ana\guia-cmd-teste&gt;if /i "Ana"=="ana" (echo iguais) else (echo diferentes)
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Depois de um comando: <code>if errorlevel</code></h2>
+<p>O <code>if errorlevel 1</code> é verdadeiro quando o código de saída é 1 ou maior — em geral, quando o comando anterior falhou. O <code>if not errorlevel 1</code> é o outro lado: o código foi menor que 1, em geral zero, e o comando deu certo.</p>
+<!-- coleta: dir nada.txt >nul 2>&1 & if errorlevel 1 echo o dir deu erro -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nada.txt &gt;nul 2&gt;&amp;1 &amp; if errorlevel 1 echo o dir deu erro">C:\Users\ana\guia-cmd-teste&gt;dir nada.txt &gt;nul 2&gt;&amp;1 &amp; if errorlevel 1 echo o dir deu erro
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: dir notas.txt >nul & if not errorlevel 1 echo o dir deu certo -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir notas.txt &gt;nul &amp; if not errorlevel 1 echo o dir deu certo">C:\Users\ana\guia-cmd-teste&gt;dir notas.txt &gt;nul &amp; if not errorlevel 1 echo o dir deu certo
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A forma <code>if %errorlevel% NEQ 0</code> também existe, mas <strong>na mesma linha</strong> o Prompt expande o <code>%errorlevel%</code> <em>antes</em> de o <code>dir</code> rodar. O lote 2b coletou isso: a mensagem <code>Arquivo não encontrado</code> apareceu, e a frase <code>deu erro</code> <strong>não foi impressa</strong>, porque o teste ainda viu o código antigo (zero). A aula de encadeamento mostra o mesmo fenômeno com <code>echo %errorlevel%</code>, que saiu <code>0</code>.</p>
+<!-- coleta (lote 2b): dir nao-existe.txt & if %errorlevel% NEQ 0 echo deu erro -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro">C:\Users\ana\guia-cmd-teste&gt;dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O jeito clássico <code>if errorlevel 1</code>, nas caixas acima, não usa <code>%errorlevel%</code> na mesma linha e, por isso, não sofre essa expansão antecipada. As saídas dessas duas caixas ainda estão a coletar.</p>
+<hr>
+<h2>4. Outras conferências da coleta</h2>
+<p>O roteiro também coletou uma comparação numérica com <code>GTR</code> e <code>GEQ</code> (usando <code>!GUIA_N!</code> e <code>cmd /v:on</code>) e um <code>if defined</code>, que pergunta se o nome da variável existe:</p>
+<!-- coleta: set "GUIA_N=5" & if !GUIA_N! GTR 3 (echo maior que 3) else (echo até 3)  (Rodar-CmdV, cmd /v:on) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_N=5&quot; &amp; if !GUIA_N! GTR 3 (echo maior que 3) else (echo até 3)  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_N=5" &amp; if !GUIA_N! GTR 3 (echo maior que 3) else (echo até 3)
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: set "GUIA_N=2" & if !GUIA_N! GEQ 3 (echo 3 ou mais) else (echo menos de 3)  (Rodar-CmdV, cmd /v:on) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_N=2&quot; &amp; if !GUIA_N! GEQ 3 (echo 3 ou mais) else (echo menos de 3)  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_N=2" &amp; if !GUIA_N! GEQ 3 (echo 3 ou mais) else (echo menos de 3)
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: if defined GUIA_NAO_EXISTE (echo definida) else (echo não definida) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if defined GUIA_NAO_EXISTE (echo definida) else (echo não definida)">C:\Users\ana\guia-cmd-teste&gt;if defined GUIA_NAO_EXISTE (echo definida) else (echo não definida)
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de usar o if</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>if exist notas.txt echo …</code></td><td>Para agir só se o arquivo (ou a pasta) existir.</td></tr>
+<tr><td><code>if not exist nada.txt echo …</code></td><td>Para agir só se o nome não existir.</td></tr>
+<tr><td><code>if "Ana"=="ana" (… ) else (… )</code></td><td>Para comparar textos. Os parênteses agrupam cada lado do <code>else</code>.</td></tr>
+<tr><td><code>if /i "Ana"=="ana"</code></td><td>A mesma comparação, sem diferenciar maiúsculas.</td></tr>
+<tr><td><code>if errorlevel 1</code></td><td>Para agir quando o comando anterior falhou (código 1 ou maior).</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Sintaxe incompleta</strong>
+<p>O <code>if exist</code> sozinho, sem nome, e o <code>if "a"== echo x</code>, com a comparação pela metade, devolvem mensagem de erro. A frase real está a coletar — não inventamos nem traduzimos.</p>
+<!-- coleta: if exist -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if exist">C:\Users\ana\guia-cmd-teste&gt;if exist
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: if "a"== echo x -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="if &quot;a&quot;== echo x">C:\Users\ana\guia-cmd-teste&gt;if "a"== echo x
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>if exist arquivo comando</code></td><td>Roda o comando se o arquivo existir.</td></tr>
+<tr><td><code>if /i "A"=="a" (… ) else (… )</code></td><td>Compara sem diferenciar maiúsculas, com um plano B.</td></tr>
+<tr><td><code>if errorlevel 1</code> / <code>if not errorlevel 1</code></td><td>Age conforme o código de saída do comando anterior.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para mostrar a mensagem só se <code>notas.txt</code> existir:</p><div class="ex-code"><input data-answer="if exist" aria-label="comando"> notas.txt echo notas.txt existe</div></div>
+<div class="exercise"><h3>2. Sem diferenciar maiúsculas</h3><p>Qual chave faz o <code>if</code> ignorar maiúsculas e minúsculas?</p><div class="ex-code">if <input data-answer="/i" aria-label="chave"> "Ana"=="ana" (echo iguais) else (echo diferentes)</div></div>
+<div class="exercise"><h3>3. Depois de um erro</h3><p>Complete para agir quando o código de saída for 1 ou maior:</p><div class="ex-code">if <input data-answer="errorlevel" aria-label="teste"> 1 echo o dir deu erro</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>else</code> com parênteses faz neste guia?</p>
+<label><input type="radio" name="q4"> Apaga o arquivo se a condição for falsa</label>
+<label><input type="radio" name="q4"> Agrupa o pedido que roda quando a condição é falsa, e o de quando ela é verdadeira</label>
+<label><input type="radio" name="q4"> Liga a expansão atrasada</label>
+<label><input type="radio" name="q4"> Traduz a mensagem de erro</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a diferença entre <code>if "Ana"=="ana"</code> e <code>if /i "Ana"=="ana"</code>?</p>
+<label><input type="radio" name="q5"> Sem <code>/i</code>, maiúsculas importam; com <code>/i</code>, não importam</label>
+<label><input type="radio" name="q5"> São o mesmo pedido, sempre</label>
+<label><input type="radio" name="q5"> O <code>/i</code> procura um arquivo</label>
+<label><input type="radio" name="q5"> O <code>/i</code> inverte a condição, como o <code>not</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">6. Por que o <code>dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro</code> não imprimiu <code>deu erro</code>?</p>
+<label><input type="radio" name="q6"> Porque o <code>%errorlevel%</code> foi expandido antes do <code>dir</code> rodar, ainda valia zero, e o teste <code>NEQ 0</code> não passou</label>
+<label><input type="radio" name="q6"> Porque o arquivo existia na pasta de teste</label>
+<label><input type="radio" name="q6"> Porque o <code>NEQ</code> não existe no Prompt</label>
+<label><input type="radio" name="q6"> Porque o <code>dir</code> não escreveu <code>Arquivo não encontrado</code></label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bif\b;;semerro -->
+<div class="trycmd" data-goal="src:\bif\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, use <code>if exist</code> para escrever <code>notas.txt existe</code> se o arquivo estiver lá.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+if exist notas.txt echo notas.txt existe
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bif\b;;semerro -->
+<div class="trycmd" data-goal="src:\bif\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> compare <code>"Ana"</code> com <code>"ana"</code> usando <code>if /i</code> e um <code>else</code> com parênteses, como na aula.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+if /i "Ana"=="ana" (echo iguais) else (echo diferentes)
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bif\b;;src:NEQ;;erro:Arquivo não encontrado">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, rode <code>dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro</code> e observe a mensagem de erro — e que a frase <code>deu erro</code> não aparece.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>if exist</code> e <code>if not exist</code> conferem se o nome está na pasta de teste.</li>
+<li><code>==</code> compara textos; <code>/i</code> ignora maiúsculas; o <code>else</code> vai com parênteses.</li>
+<li><code>if errorlevel 1</code> age quando o comando anterior falhou. Já o <code>if %errorlevel% NEQ 0</code> na mesma linha sofre expansão antecipada: no lote 2b a frase <code>deu erro</code> não foi impressa.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

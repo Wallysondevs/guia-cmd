@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquivos .bat — guardar e executar uma lista de comandos no Prompt | Guia CMD</title>
+<meta name="description" content="Arquivos .bat no Prompt de Comando: @echo off, executar pelo nome, call, comentários rem e :: no conta.bat, e o pause só em texto.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Arquivos <span class="hl">.bat</span></h1>
+
+
+<p class="intro">Um arquivo <code>.bat</code> é uma <strong>lista de pedidos</strong> que o Prompt executa em sequência, como uma receita salva. Em vez de redigitar tudo, você chama o arquivo pelo nome. Nesta aula você vê o <code>@echo off</code>, a execução pelo nome, os comentários <code>rem</code> e <code>::</code> no <code>conta.bat</code> da coleta, e, só em texto, como criar o arquivo e o que faz o <code>pause</code>.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O que é um arquivo <code>.bat</code> e como criá-lo no Bloco de Notas ou com <code>echo &gt;</code> — só em texto, porque a coleta desta aula já deixou os arquivos prontos na pasta de teste e não colheu essa criação.</li>
+<li>A primeira linha <code>@echo off</code>, que esconde a repetição dos próprios comandos.</li>
+<li>Os comentários <code>rem</code> e <code>::</code>, no <code>conta.bat</code> da coleta (a execução do laço fica na aula de <code>goto</code>).</li>
+<li>A executar o arquivo pelo nome, e a diferença breve do <code>call</code> (a aula do <code>call</code> aprofunda).</li>
+<li>O <code>pause</code>, só em texto: ele espera uma tecla, e por isso não entra na coleta automática.</li>
+</ul></div>
+<div class="note"><strong>Saídas desta aula.</strong> Parte das respostas do Prompt já veio do lote 2b, anonimizado em <code>_saidas-anon/cmd-lote2b.txt</code>. As demais caixas ainda mostram o placeholder <strong>« saída a coletar »</strong>, até o restante da coleta entrar. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>As saídas reais foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. O placeholder <strong>« saída a coletar »</strong> não é resposta do <code>cmd</code>; as caixas já preenchidas trazem a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt.</p>
+
+<p>A coleta deixou na pasta de teste alguns arquivos prontos, entre eles <code>ola.bat</code> e <code>params.bat</code>. As linhas abaixo são o conteúdo que a coleta gravou — não são a saída do <code>type</code>. A caixa do <code>type</code> continua com o placeholder, até a Mira liberar o arquivo anonimizado.</p>
+<hr>
+<h2>A ideia: uma receita salva</h2>
+<p>Em vez de ditar cada passo na hora, você escreve os passos num arquivo e chama o arquivo pelo nome. O Prompt lê de cima para baixo. A pasta de trabalho continua sendo a pasta de teste.</p>
+<hr>
+<h2>1. Criar o arquivo, só em texto</h2>
+<p>No dia a dia, você pode criar o <code>.bat</code> no Bloco de Notas (Notepad) ou com um <code>echo linha &gt; ola.bat</code> e depois <code>echo outra &gt;&gt; ola.bat</code>, sempre dentro da pasta de teste. Este lote não coletou essa criação (quem gravou os exemplos foi o roteiro, fora da aula). Por isso não há caixa de terminal aqui — só a explicação.</p>
+<hr>
+<h2>2. O <code>ola.bat</code> e o <code>@echo off</code></h2>
+<p>O arquivo que a coleta deixou na pasta de teste tem estas linhas:</p>
+<pre class="file">@echo off
+echo Olá do arquivo .bat
+echo Pasta atual: %CD%</pre>
+<p>O <code>@echo off</code> pede para o Prompt não repetir cada linha antes de executá-la. O <code>@</code> na frente aplica isso já à própria linha. O <code>echo Pasta atual: %CD%</code> mostra a pasta corrente (na saída real, o caminho será anonimizado pela Mira; não adiantamos esse texto).</p>
+<p>O <code>type</code> mostra o arquivo. Rodar <code>ola.bat</code> pelo nome executa a receita. O <code>call ola.bat</code> também chama o arquivo, e é o jeito certo de chamá-lo de dentro de outro <code>.bat</code> se você quiser que a execução volte — isso fica para a aula do <code>call</code>.</p>
+<!-- coleta: type ola.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type ola.bat">C:\Users\ana\guia-cmd-teste&gt;type ola.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: ola.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="ola.bat">C:\Users\ana\guia-cmd-teste&gt;ola.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: call ola.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="call ola.bat">C:\Users\ana\guia-cmd-teste&gt;call ola.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Comentários <code>rem</code> e <code>::</code></h2>
+<p>O <code>rem</code> e o <code>::</code> servem para deixar um recado no script, que o Prompt não executa como pedido útil. Os dois aparecem no <code>conta.bat</code> da coleta do lote 2b. O laço com <code>goto</code> desse arquivo é o tema da aula de <code>goto</code>; aqui olhamos só os comentários, na saída real do <code>type</code>:</p>
+<!-- coleta (lote 2b): type conta.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type conta.bat">C:\Users\ana\guia-cmd-teste&gt;type conta.bat
+@echo off
+rem conta ate 3 com goto
+:: comentario com dois-pontos duplos
+set /a GUIA_C=0
+:volta
+set /a GUIA_C+=1
+echo Volta %GUIA_C%
+if %GUIA_C% GEQ 3 goto fim
+goto volta
+:fim
+echo Acabou
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A linha <code>rem conta ate 3 com goto</code> é um comentário clássico. A linha <code>:: comentario com dois-pontos duplos</code> é o outro jeito, com dois-pontos duplos. Nenhuma das duas altera o que o script faz quando roda.</p>
+<hr>
+<h2>4. Palavras depois do nome</h2>
+<p>Você pode passar palavras depois do nome do arquivo. O <code>params.bat</code> da coleta mostra a primeira (<code>%1</code>), a segunda (<code>%2</code>), todas (<code>%*</code>) e o nome do script (<code>%~n0</code>). A aula de parâmetros aprofunda isso; aqui o importante é ver o arquivo rodar com argumentos, na pasta de teste:</p>
+<pre class="file">@echo off
+echo Primeiro: %1
+echo Segundo: %2
+echo Todos: %*
+echo Nome do script: %~n0</pre>
+<!-- coleta: type params.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type params.bat">C:\Users\ana\guia-cmd-teste&gt;type params.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: params.bat Ana Recife -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="params.bat Ana Recife">C:\Users\ana\guia-cmd-teste&gt;params.bat Ana Recife
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: params.bat "Ana Paula" Recife 2026 -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="params.bat &quot;Ana Paula&quot; Recife 2026">C:\Users\ana\guia-cmd-teste&gt;params.bat "Ana Paula" Recife 2026
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>5. O <code>pause</code>, só em texto</h2>
+<p>O <code>pause</code> escreve um recado e espera você apertar uma tecla. É interativo, então não entra na coleta automática e não tem caixa de terminal nesta aula.</p>
+<hr>
+<h2>Formas diferentes de usar um .bat</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td>Bloco de Notas ou <code>echo &gt;</code></td><td>Para criar o arquivo, só na pasta de teste. Sem caixa de saída neste lote.</td></tr>
+<tr><td><code>@echo off</code></td><td>No começo do <code>.bat</code>, para não repetir cada linha na tela.</td></tr>
+<tr><td><code>ola.bat</code></td><td>Para executar o arquivo pelo nome, na pasta atual.</td></tr>
+<tr><td><code>call ola.bat</code></td><td>Para chamar o arquivo e, de dentro de outro script, voltar depois. Veja a aula do <code>call</code>.</td></tr>
+<tr><td><code>rem</code> / <code>::</code></td><td>Comentário no script, como no <code>conta.bat</code> da coleta.</td></tr>
+<tr><td><code>pause</code></td><td>Espera uma tecla. Só em texto nesta aula, porque é interativo.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um .bat que não existe</strong>
+<p>O pedido <code>nao-existe.bat</code> foi coletado na aula do <code>call</code>, não nesta. Aqui não inventamos essa mensagem de erro.</p>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>type ola.bat</code></td><td>Mostra as linhas do arquivo.</td></tr>
+<tr><td><code>ola.bat</code></td><td>Executa o arquivo pelo nome.</td></tr>
+<tr><td><code>call ola.bat</code></td><td>Chama o arquivo (e volta, se você estiver em outro <code>.bat</code>).</td></tr>
+<tr><td><code>params.bat Ana Recife</code></td><td>Executa passando palavras, que o script lê como <code>%1</code> e <code>%2</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para executar o arquivo <code>ola.bat</code> pelo nome:</p><div class="ex-code"><input data-answer="ola.bat" aria-label="comando"></div></div>
+<div class="exercise"><h3>2. Esconder o eco</h3><p>Qual linha, no começo do <code>.bat</code>, pede para o Prompt não repetir cada comando?</p><div class="ex-code"><input data-answer="@echo off" aria-label="linha"></div></div>
+<div class="exercise"><h3>3. Chamar e voltar</h3><p>Complete para chamar <code>ola.bat</code> com o comando que, de dentro de outro script, devolve a execução depois:</p><div class="ex-code"><input data-answer="call" aria-label="comando"> ola.bat</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que é um arquivo <code>.bat</code>, neste guia?</p>
+<label><input type="radio" name="q4"> Um atalho do Windows que formata o disco</label>
+<label><input type="radio" name="q4"> Uma lista de pedidos que o Prompt executa em sequência</label>
+<label><input type="radio" name="q4"> Um programa que só existe no PowerShell</label>
+<label><input type="radio" name="q4"> Uma pasta especial da raiz do disco</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que o <code>pause</code> aparece só no texto, sem caixa de terminal?</p>
+<label><input type="radio" name="q5"> Porque ele espera uma tecla, é interativo, e esta aula não inventa essa saída</label>
+<label><input type="radio" name="q5"> Porque o comando não existe no Prompt</label>
+<label><input type="radio" name="q5"> Porque ele apaga o arquivo <code>.bat</code></label>
+<label><input type="radio" name="q5"> Porque ele lista o <code>%PATH%</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>@echo off</code> no começo do <code>.bat</code> serve para quê?</p>
+<label><input type="radio" name="q6"> Para apagar as variáveis da aula</label>
+<label><input type="radio" name="q6"> Para pausar o script</label>
+<label><input type="radio" name="q6"> Para o Prompt não repetir cada linha do arquivo antes de executá-la</label>
+<label><input type="radio" name="q6"> Para criar o arquivo no Bloco de Notas</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bola\b;;semerro -->
+<div class="trycmd" data-goal="src:\bola\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, execute o arquivo <code>ola.bat</code> pelo nome.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ola.bat
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bcall\b;;semerro -->
+<div class="trycmd" data-goal="src:\bcall\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> chame o mesmo arquivo com <code>call ola.bat</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+call ola.bat
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btype\b;;src:\bconta\b;;out:rem conta ate 3 com goto;;out:comentario com dois-pontos duplos">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre o <code>conta.bat</code> com o <code>type</code> e observe as linhas de comentário <code>rem</code> e <code>::</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+type conta.bat
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+@echo off
+rem conta ate 3 com goto
+:: comentario com dois-pontos duplos
+set /a GUIA_C=0
+:volta
+set /a GUIA_C+=1
+echo Volta %GUIA_C%
+if %GUIA_C% GEQ 3 goto fim
+goto volta
+:fim
+echo Acabou
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>Um <code>.bat</code> é uma receita de comandos. Você o executa pelo nome, na pasta de teste.</li>
+<li><code>@echo off</code> esconde a repetição das linhas. <code>rem</code> e <code>::</code> são comentários, como no <code>conta.bat</code>. O <code>pause</code> fica só no texto, porque é interativo.</li>
+<li>A criação com Bloco de Notas ou <code>echo &gt;</code> também fica só no texto: a coleta já deixou os arquivos prontos.</li>
+<li>As saídas reais ainda estão a coletar.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

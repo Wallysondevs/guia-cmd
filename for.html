@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>for — repetir um comando no Prompt, na linha e no .bat | Guia CMD</title>
+<meta name="description" content="O comando for no Prompt de Comando: lista na linha de comando, *.txt da pasta de teste, for /l, for /f e %%i no .bat. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1><span class="hl">for</span></h1>
+
+
+<p class="intro">O <code>for</code> é um <strong>carrossel</strong>: ele pega cada item de uma lista e roda o mesmo pedido com esse item. Na linha de comando a variável é <code>%i</code> (ou <code>%f</code>, <code>%a</code>…); dentro de um arquivo <code>.bat</code>, o mesmo nome se escreve com dois percentuais, <code>%%i</code>. As respostas reais ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>for %f in (notas.txt agenda.txt)</code> na linha de comando — a coleta deste lote usa esses dois arquivos da pasta de teste, e não uma lista solta do tipo <code>(a b c)</code>.</li>
+<li>O <code>for</code> com <code>*.txt</code>, só na pasta de teste, com caminho relativo.</li>
+<li>Que, dentro de um <code>.bat</code>, a variável se escreve <code>%%i</code>. O exemplo coletado está no <code>soma.bat</code> da aula de <code>goto</code>; nesta página isso fica só no texto.</li>
+<li>O <code>for /l</code>, que conta, e o <code>for /f</code>, que lê um arquivo da pasta de teste (<code>log.txt</code>).</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+
+<p>Todos os pedidos desta aula são relativos à pasta de teste. Não usamos o <code>for /r</code>, que desceria em subpastas e poderia imprimir caminhos além do que a aula precisa.</p>
+<hr>
+<h2>A ideia: um item de cada vez</h2>
+<p>Você entrega uma lista ao <code>for</code> e um pedido com um buraco. A cada volta, o buraco (<code>%f</code>, <code>%i</code>…) recebe o próximo item, e o pedido roda de novo.</p>
+<hr>
+<h2>1. Uma lista de arquivos, na linha de comando</h2>
+<p>Os parênteses são obrigatórios. A coleta passou dois arquivos da pasta de teste e pediu o <code>type</code> de cada um. Não há, neste lote, um <code>for %i in (a b c)</code> com letras soltas — e nós não inventamos essa saída.</p>
+<!-- coleta: for %f in (notas.txt agenda.txt) do @type %f -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (notas.txt agenda.txt) do @type %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (notas.txt agenda.txt) do @type %f
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>for</dt><dd>o comando: “para cada item…”.</dd><dt>%f</dt><dd>o nome temporário de cada item, com um <code>%</code>, na linha de comando.</dd><dt>in (notas.txt agenda.txt)</dt><dd>a lista, entre parênteses.</dd><dt>do @type %f</dt><dd>o pedido de cada volta. O <code>@</code> esconde a repetição da própria linha.</dd></dl>
+<hr>
+<h2>2. Todos os <code>*.txt</code> da pasta de teste</h2>
+<p>O curinga <code>*.txt</code> também vai entre parênteses, e só vale na pasta atual da coleta (a pasta de teste):</p>
+<!-- coleta: for %f in (*.txt) do @echo %f -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do @echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do @echo %f
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Sem o <code>@</code>, o Prompt também ecoa a linha de cada volta. A coleta tem os dois jeitos:</p>
+<!-- coleta: for %f in (*.txt) do echo %f -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do echo %f
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>for /d %d in (*)</code> passa só pelas pastas da pasta atual, ainda com caminho relativo:</p>
+<!-- coleta: for /d %d in (*) do @echo pasta: %d -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /d %d in (*) do @echo pasta: %d">C:\Users\ana\guia-cmd-teste&gt;for /d %d in (*) do @echo pasta: %d
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Dentro de um <code>.bat</code>: <code>%%i</code></h2>
+<p>Na linha de comando você escreve <code>%i</code>. Dentro de um arquivo <code>.bat</code>, o mesmo lugar da variável pede <code>%%i</code> (dois percentuais). A coleta desta aula de <code>for</code> rodou só a linha de comando. O <code>soma.bat</code>, coletado na aula de <code>goto</code>, é o <code>.bat</code> que usa <code>%%i</code> e <code>%%f</code>. Nesta página não inventamos uma caixa para ele.</p>
+<hr>
+<h2>4. Contar: <code>for /l</code></h2>
+<p>O <code>/l</code> conta. A forma é <code>(início,passo,fim)</code>. A coleta tem uma contagem de 1 a 5, de 1 em 1, e outra que desce de 10 a 1, de 3 em 3:</p>
+<!-- coleta: for /l %i in (1,1,5) do @echo volta %i -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (1,1,5) do @echo volta %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (1,1,5) do @echo volta %i
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: for /l %i in (10,-3,1) do @echo %i -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (10,-3,1) do @echo %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (10,-3,1) do @echo %i
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>5. Ler um arquivo: <code>for /f</code></h2>
+<p>O <code>/f</code> lê um arquivo da pasta de teste, linha a linha. Aqui o arquivo é o <code>log.txt</code>. As chaves <code>tokens</code> e <code>delims</code> escolhem pedaços de cada linha. Uma das chamadas ainda lê a saída de um <code>dir /b *.txt</code> relativo:</p>
+<!-- coleta: for /f "tokens=1,2" %a in (log.txt) do @echo %a = %b -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;tokens=1,2&quot; %a in (log.txt) do @echo %a = %b">C:\Users\ana\guia-cmd-teste&gt;for /f "tokens=1,2" %a in (log.txt) do @echo %a = %b
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: for /f "tokens=2*" %a in (log.txt) do @echo %a: %b -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;tokens=2*&quot; %a in (log.txt) do @echo %a: %b">C:\Users\ana\guia-cmd-teste&gt;for /f "tokens=2*" %a in (log.txt) do @echo %a: %b
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: for /f "delims=" %l in ('dir /b *.txt') do @echo [%l] -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;delims=&quot; %l in ('dir /b *.txt') do @echo [%l]">C:\Users\ana\guia-cmd-teste&gt;for /f "delims=" %l in ('dir /b *.txt') do @echo [%l]
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de usar o for</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>for %f in (notas.txt agenda.txt) do …</code></td><td>Para percorrer uma lista curta, na linha de comando.</td></tr>
+<tr><td><code>for %f in (*.txt) do …</code></td><td>Para percorrer os <code>.txt</code> da pasta de teste.</td></tr>
+<tr><td><code>%%i</code> dentro do <code>.bat</code></td><td>O mesmo papel do <code>%i</code>, com dois percentuais. Exemplo na aula de <code>goto</code> (<code>soma.bat</code>).</td></tr>
+<tr><td><code>for /l %i in (1,1,5) do …</code></td><td>Para contar, do início ao fim, no passo indicado.</td></tr>
+<tr><td><code>for /f … in (log.txt) do …</code></td><td>Para ler um arquivo da pasta de teste, linha a linha.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Sem parênteses</strong>
+<p>O <code>for %f in *.txt do @echo %f</code>, sem parênteses em volta da lista, devolve uma mensagem de erro. A frase real está a coletar.</p>
+<!-- coleta: for %f in *.txt do @echo %f -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for %f in *.txt do @echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in *.txt do @echo %f
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>Uma contagem incompleta</strong>
+<p>O <code>for /l %i in (1,1) do @echo %i</code> não traz os três números que o <code>/l</code> espera. A resposta real está a coletar — não inventamos o texto.</p>
+<!-- coleta: for /l %i in (1,1) do @echo %i -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (1,1) do @echo %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (1,1) do @echo %i
+
+« saída a coletar » — mensagem de erro real, nunca inventar
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>for %f in (lista) do comando</code></td><td>Roda o comando para cada item, na linha de comando.</td></tr>
+<tr><td><code>%%f</code> no <code>.bat</code></td><td>O mesmo item, escrito com dois <code>%</code>.</td></tr>
+<tr><td><code>for /l</code></td><td>Conta de um número a outro.</td></tr>
+<tr><td><code>for /f</code></td><td>Lê um arquivo (nesta aula, <code>log.txt</code> na pasta de teste).</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para listar cada <code>.txt</code> da pasta de teste:</p><div class="ex-code"><input data-answer="for" aria-label="comando"> %f in (*.txt) do @echo %f</div></div>
+<div class="exercise"><h3>2. Dentro do .bat</h3><p>Na linha de comando a variável é <code>%i</code>. Como ela se escreve dentro de um <code>.bat</code>?</p><div class="ex-code"><input data-answer="%%i" aria-label="variável"></div></div>
+<div class="exercise"><h3>3. Contagem</h3><p>Qual chave pede ao <code>for</code> que conte de um número a outro?</p><div class="ex-code">for <input data-answer="/l" aria-label="chave"> %i in (1,1,5) do @echo volta %i</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Por que a lista do <code>for</code> vai entre parênteses?</p>
+<label><input type="radio" name="q4"> Porque os parênteses apagam os arquivos</label>
+<label><input type="radio" name="q4"> Porque, sem parênteses, o Prompt não entende a lista — e a coleta deste lote tem exatamente esse erro</label>
+<label><input type="radio" name="q4"> Porque os parênteses ligam o <code>/r</code></label>
+<label><input type="radio" name="q4"> Porque só assim o <code>for</code> funciona no PowerShell</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Esta aula usa o <code>for /r</code>?</p>
+<label><input type="radio" name="q5"> Não: os pedidos são relativos à pasta de teste, sem descer com <code>/r</code></label>
+<label><input type="radio" name="q5"> Sim, para varrer o disco inteiro</label>
+<label><input type="radio" name="q5"> Sim, mas só na pasta <code>C:\Windows</code></label>
+<label><input type="radio" name="q5"> Só se você usar <code>%%i</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>for /f</code> desta aula lê o que?</p>
+<label><input type="radio" name="q6"> A raiz do disco <code>C:</code></label>
+<label><input type="radio" name="q6"> O <code>%PATH%</code> do sistema</label>
+<label><input type="radio" name="q6"> O arquivo <code>log.txt</code> da pasta de teste (e, numa das chamadas, um <code>dir /b *.txt</code> relativo)</label>
+<label><input type="radio" name="q6"> Um site na internet</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfor\b;;semerro -->
+<div class="trycmd" data-goal="src:\bfor\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, percorra os arquivos <code>*.txt</code> com o <code>for</code> e mostre cada nome com <code>@echo %f</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+for %f in (*.txt) do @echo %f
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfor\b;;semerro -->
+<div class="trycmd" data-goal="src:\bfor\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> conte de 1 a 5 com <code>for /l</code> e, a cada volta, escreva <code>volta</code> e o número.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+for /l %i in (1,1,5) do @echo volta %i
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>Na linha de comando, <code>for %f in (lista) do …</code> percorre a lista. Os parênteses são obrigatórios.</li>
+<li>Dentro de um <code>.bat</code>, a variável se escreve <code>%%i</code>. O exemplo coletado está no <code>soma.bat</code> da aula de <code>goto</code>.</li>
+<li><code>for /l</code> conta; <code>for /f</code> lê um arquivo da pasta de teste. Não usamos <code>for /r</code>.</li>
+<li>As saídas reais ainda estão a coletar.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

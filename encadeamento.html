@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Se der certo, se der errado (&amp;&amp; e ||) — encadear comandos no Prompt | Guia CMD</title>
+<meta name="description" content="Os operadores &amp;, &amp;&amp; e || no Prompt de Comando, e o código de saída com %errorlevel% e !errorlevel!. Saídas ainda a coletar.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Se der certo, se der errado (<span class="hl">&amp;&amp;</span> e <span class="hl">||</span>)</h1>
+
+
+<p class="intro">Às vezes você quer <strong>encadear</strong> dois pedidos na mesma linha: um depois do outro, ou o segundo só se o primeiro deu certo, ou só se o primeiro falhou. O Prompt usa <code>&amp;</code>, <code>&amp;&amp;</code> e <code>||</code> para isso, e guarda um código de saída no <code>%errorlevel%</code>. As respostas reais ainda estão a coletar.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>&amp;</code>, que roda o segundo comando sempre, tenha o primeiro dado certo ou não.</li>
+<li>O <code>&amp;&amp;</code>, que só roda o segundo se o primeiro deu certo, e o <code>||</code>, que só roda o segundo se o primeiro falhou.</li>
+<li>O código de saída no <code>%errorlevel%</code> e o que acontece quando ele é lido na mesma linha (expansão antecipada): o lote 2b mostrou <code>0</code> e não imprimiu <code>deu erro</code>. Para ver o código novo na mesma linha, a outra coleta usa <code>!errorlevel!</code> com <code>cmd /v:on</code>.</li>
+</ul></div>
+<div class="note"><strong>Saídas desta aula.</strong> Parte das respostas do Prompt já veio do lote 2b, anonimizado em <code>_saidas-anon/cmd-lote2b.txt</code>. As demais caixas ainda mostram o placeholder <strong>« saída a coletar »</strong>, até o restante da coleta entrar. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>As saídas reais foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. O placeholder <strong>« saída a coletar »</strong> não é resposta do <code>cmd</code>; as caixas já preenchidas trazem a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt.</p>
+
+<hr>
+<h2>A ideia: três tipos de “e depois”</h2>
+<p>O <code>&amp;</code> é um “e também”, sem perguntar se o primeiro deu certo. O <code>&amp;&amp;</code> é um “e, se deu certo, então…”. O <code>||</code> é um “ou, se deu errado, então…”. Os três não são o pipe <code>|</code>: o pipe passa a saída adiante; estes decidem se o próximo comando roda.</p>
+<hr>
+<h2>1. Sempre os dois: <code>&amp;</code></h2>
+<p>O <code>echo</code> da direita roda mesmo quando o <code>type</code> da esquerda encontra o arquivo, e também quando o arquivo não existe:</p>
+<!-- coleta: type notas.txt & echo isto sempre roda -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type notas.txt &amp; echo isto sempre roda">C:\Users\ana\guia-cmd-teste&gt;type notas.txt &amp; echo isto sempre roda
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: type arquivo-nao-existe.txt & echo isto sempre roda -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type arquivo-nao-existe.txt &amp; echo isto sempre roda">C:\Users\ana\guia-cmd-teste&gt;type arquivo-nao-existe.txt &amp; echo isto sempre roda
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>type notas.txt</dt><dd>o primeiro pedido.</dd><dt>&amp;</dt><dd>“e também”, sempre.</dd><dt>echo isto sempre roda</dt><dd>o segundo pedido, que não depende do resultado do primeiro.</dd></dl>
+<hr>
+<h2>2. Só se der certo, só se der errado: <code>&amp;&amp;</code> e <code>||</code></h2>
+<p>Com o <code>dir</code> de um arquivo que existe, o <code>&amp;&amp;</code> deixa o <code>echo</code> rodar. Com um arquivo que não existe, o <code>&amp;&amp;</code> segura o segundo pedido, e o <code>||</code> é quem fala:</p>
+<!-- coleta: dir notas.txt >nul && echo notas.txt existe -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir notas.txt &gt;nul &amp;&amp; echo notas.txt existe">C:\Users\ana\guia-cmd-teste&gt;dir notas.txt &gt;nul &amp;&amp; echo notas.txt existe
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: dir arquivo-nao-existe.txt >nul 2>&1 && echo existe -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir arquivo-nao-existe.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo existe">C:\Users\ana\guia-cmd-teste&gt;dir arquivo-nao-existe.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo existe
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: dir arquivo-nao-existe.txt >nul 2>&1 || echo não existe -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir arquivo-nao-existe.txt &gt;nul 2&gt;&amp;1 || echo não existe">C:\Users\ana\guia-cmd-teste&gt;dir arquivo-nao-existe.txt &gt;nul 2&gt;&amp;1 || echo não existe
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O mesmo raciocínio vale para criar pastas, só dentro da pasta de teste. O <code>md projetos</code> cria uma pasta nova; o <code>md fotos</code> tenta criar uma pasta que a semente já deixou lá:</p>
+<!-- coleta: md projetos && echo pasta criada -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="md projetos &amp;&amp; echo pasta criada">C:\Users\ana\guia-cmd-teste&gt;md projetos &amp;&amp; echo pasta criada
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: md fotos || echo não deu para criar -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="md fotos || echo não deu para criar">C:\Users\ana\guia-cmd-teste&gt;md fotos || echo não deu para criar
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Na mesma linha, <code>&amp;&amp;</code> e <code>||</code> também se combinam: “se achei, diga achei; senão, diga não achei”.</p>
+<!-- coleta: dir notas.txt >nul 2>&1 && echo achei || echo não achei -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir notas.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo achei || echo não achei">C:\Users\ana\guia-cmd-teste&gt;dir notas.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo achei || echo não achei
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: dir nada.txt >nul 2>&1 && echo achei || echo não achei -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nada.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo achei || echo não achei">C:\Users\ana\guia-cmd-teste&gt;dir nada.txt &gt;nul 2&gt;&amp;1 &amp;&amp; echo achei || echo não achei
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. O código de saída: <code>%errorlevel%</code> e <code>!errorlevel!</code></h2>
+<p>Depois de cada comando, o Prompt guarda um número: zero costuma significar “deu certo”; outro valor, “deu errado”. Esse número é o <code>%errorlevel%</code>.</p>
+<p>Na mesma linha, porém, o Prompt <strong>expande o <code>%errorlevel%</code> antes de rodar o <code>dir</code></strong>. O lote 2b coletou isso com um arquivo que não existe. A mensagem <code>Arquivo não encontrado</code> apareceu, mas o <code>echo %errorlevel%</code> imprimiu <code>0</code> — o código antigo, de um comando que tinha dado certo, não o código novo do <code>dir</code>:</p>
+<!-- coleta (lote 2b): dir nao-existe.txt & echo %errorlevel% -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nao-existe.txt &amp; echo %errorlevel%">C:\Users\ana\guia-cmd-teste&gt;dir nao-existe.txt &amp; echo %errorlevel%
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+0
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O mesmo vale para o <code>if %errorlevel% NEQ 0</code> na mesma linha: o teste usou o valor velho (zero), então a frase <code>deu erro</code> <strong>não foi impressa</strong>. Só o cabeçalho do <code>dir</code> e o <code>Arquivo não encontrado</code> apareceram:</p>
+<!-- coleta (lote 2b): dir nao-existe.txt & if %errorlevel% NEQ 0 echo deu erro -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro">C:\Users\ana\guia-cmd-teste&gt;dir nao-existe.txt &amp; if %errorlevel% NEQ 0 echo deu erro
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<div class="tip"><strong>Expansão antecipada</strong>
+<p>Tudo o que está entre <code>%</code> e <code>%</code> numa linha é trocado pelo valor <em>atual</em> antes de a linha começar a rodar. Por isso <code>%errorlevel%</code> na mesma linha do comando que acabou de falhar ainda mostra o código anterior. Para ler o código novo na mesma linha, a outra coleta ligou a expansão atrasada (<code>cmd /v:on</code>) e usou <code>!errorlevel!</code>. Essas caixas ainda estão a completar:</p></div>
+<!-- coleta: dir notas.txt >nul & echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir notas.txt &gt;nul &amp; echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;dir notas.txt &gt;nul &amp; echo errorlevel: !errorlevel!
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: dir nada.txt >nul 2>&1 & echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="dir nada.txt &gt;nul 2&gt;&amp;1 &amp; echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;dir nada.txt &gt;nul 2&gt;&amp;1 &amp; echo errorlevel: !errorlevel!
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>4. Dois ecos no mesmo arquivo</h2>
+<p>Os parênteses juntam dois <code>echo</code> ligados por <code>&amp;</code>, e o <code>&gt;</code> manda os dois para o mesmo arquivo. O <code>type</code> mostra o que ficou gravado:</p>
+<!-- coleta: (echo um & echo dois) > duas-linhas.txt -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="(echo um &amp; echo dois) &gt; duas-linhas.txt">C:\Users\ana\guia-cmd-teste&gt;(echo um &amp; echo dois) &gt; duas-linhas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: type duas-linhas.txt -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type duas-linhas.txt">C:\Users\ana\guia-cmd-teste&gt;type duas-linhas.txt
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de encadear</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>comando1 &amp; comando2</code></td><td>Para rodar os dois, sempre.</td></tr>
+<tr><td><code>comando1 &amp;&amp; comando2</code></td><td>Para rodar o segundo só se o primeiro deu certo.</td></tr>
+<tr><td><code>comando1 || comando2</code></td><td>Para rodar o segundo só se o primeiro falhou.</td></tr>
+<tr><td><code>comando1 &amp;&amp; eco1 || eco2</code></td><td>Para dizer uma coisa se deu certo e outra se deu errado.</td></tr>
+<tr><td><code>echo %errorlevel%</code> na mesma linha</td><td>Expande o valor <em>antes</em> do comando: no lote 2b saiu <code>0</code>, mesmo depois de um <code>dir</code> que falhou.</td></tr>
+<tr><td><code>echo errorlevel: !errorlevel!</code></td><td>Para ver o código novo na mesma linha, com <code>cmd /v:on</code>.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um arquivo que não existe, com <code>&amp;</code> e com <code>||</code></strong>
+<p>Os pedidos com <code>arquivo-nao-existe.txt</code> e <code>nada.txt</code> já estão nas seções acima. A mensagem de erro real — e o fato de o segundo comando rodar ou não — só entra quando a coleta for anonimizada. Não traduzimos a frase do Windows.</p>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>&amp;</code></td><td>Roda o próximo comando sempre.</td></tr>
+<tr><td><code>&amp;&amp;</code></td><td>Roda o próximo só se o anterior deu certo.</td></tr>
+<tr><td><code>||</code></td><td>Roda o próximo só se o anterior falhou.</td></tr>
+<tr><td><code>%errorlevel%</code> / <code>!errorlevel!</code></td><td>O código de saída. Na mesma linha, <code>%errorlevel%</code> ainda tem o valor antigo; <code>!errorlevel!</code> (com <code>/v:on</code>) lê o valor novo.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Sempre os dois</h3><p>Qual símbolo roda o segundo comando mesmo se o primeiro falhar?</p><div class="ex-code"><input data-answer="&amp;|&amp;" aria-label="símbolo"></div></div>
+<div class="exercise"><h3>2. Só se der certo</h3><p>Complete para mostrar a mensagem só se o <code>dir</code> encontrar o arquivo:</p><div class="ex-code">dir notas.txt &gt;nul <input data-answer="&amp;&amp;" aria-label="operador"> echo notas.txt existe</div></div>
+<div class="exercise"><h3>3. Só se der errado</h3><p>Qual operador roda o segundo comando só quando o primeiro falha?</p><div class="ex-code"><input data-answer="||" aria-label="operador"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Qual é a diferença entre <code>&amp;</code> e <code>&amp;&amp;</code>?</p>
+<label><input type="radio" name="q4"> São o mesmo símbolo, escritos de dois jeitos</label>
+<label><input type="radio" name="q4"> O <code>&amp;</code> roda o segundo sempre; o <code>&amp;&amp;</code> só roda o segundo se o primeiro deu certo</label>
+<label><input type="radio" name="q4"> O <code>&amp;</code> grava um arquivo; o <code>&amp;&amp;</code> lista pastas</label>
+<label><input type="radio" name="q4"> O <code>&amp;&amp;</code> é o pipe, o mesmo que <code>|</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O <code>||</code> serve para quê?</p>
+<label><input type="radio" name="q5"> Para rodar o segundo comando só se o primeiro falhou</label>
+<label><input type="radio" name="q5"> Para passar a saída do primeiro para o segundo, como o <code>|</code></label>
+<label><input type="radio" name="q5"> Para apagar o primeiro comando</label>
+<label><input type="radio" name="q5"> Para ligar o eco dos comandos</label></div>
+<div class="mc" data-answer="2"><p class="mc-q">6. Por que o <code>dir nao-existe.txt &amp; echo %errorlevel%</code> imprimiu <code>0</code>, se o <code>dir</code> não encontrou o arquivo?</p>
+<label><input type="radio" name="q6"> Porque o <code>dir</code> devolve sempre zero</label>
+<label><input type="radio" name="q6"> Porque o <code>%errorlevel%</code> foi expandido antes do <code>dir</code> rodar, e ainda valia o código antigo (zero)</label>
+<label><input type="radio" name="q6"> Porque o Prompt traduziu a mensagem de erro</label>
+<label><input type="radio" name="q6"> Porque o arquivo <code>nao-existe.txt</code> estava na pasta</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdir\b;;semerro -->
+<div class="trycmd" data-goal="src:\bdir\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, confira se <code>notas.txt</code> existe com <code>dir notas.txt &gt;nul</code> e, só se der certo, escreva <code>notas.txt existe</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir notas.txt &gt;nul &amp;&amp; echo notas.txt existe
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdir\b;;semerro -->
+<div class="trycmd" data-goal="src:\bdir\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> tente um <code>dir</code> de <code>arquivo-nao-existe.txt</code>, escondendo a saída com <code>&gt;nul 2&gt;&amp;1</code> e, só se der errado, escreva <code>não existe</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir arquivo-nao-existe.txt &gt;nul 2&gt;&amp;1 || echo não existe
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bdir\b;;src:%errorlevel%;;erro:Arquivo não encontrado;;outre:^0$">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, rode <code>dir nao-existe.txt &amp; echo %errorlevel%</code> e observe a mensagem de erro e o <code>0</code> da expansão antecipada.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+dir nao-existe.txt &amp; echo %errorlevel%
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ O volume na unidade C não tem nome.
+ O Número de Série do Volume é XXXX-XXXX
+
+ Pasta de C:\Users\ana\guia-cmd-teste
+
+Arquivo não encontrado
+0
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>&amp;</code> roda os dois sempre; <code>&amp;&amp;</code> roda o segundo só se o primeiro deu certo; <code>||</code> só se o primeiro falhou.</li>
+<li>Isso não é o pipe <code>|</code>: aqui a decisão é “roda ou não”, não “passa a saída adiante”.</li>
+<li>O código de saída fica no <code>%errorlevel%</code>. Na mesma linha, a expansão é antecipada: o lote 2b mostrou <code>0</code> e o <code>if %errorlevel% NEQ 0</code> não imprimiu <code>deu erro</code>. O <code>!errorlevel!</code> (com <code>/v:on</code>) lê o valor novo.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

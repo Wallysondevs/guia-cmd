@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>goto e Rótulos — pular para um marco no script do Prompt | Guia CMD</title>
+<meta name="description" content="Rótulos e o comando goto no Prompt de Comando: decide.bat e o laço com contador do conta.bat (Volta 1 a 3 e Acabou). O goto :eof fica na aula do call.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1><span class="hl">goto</span> e Rótulos</h1>
+
+
+<p class="intro">Um <strong>rótulo</strong> é um marco no script: uma linha que começa com <code>:</code>, como <code>:fim</code>. O <code>goto</code> pula a execução para esse marco. Nesta aula você vê o <code>decide.bat</code>, que usa <code>goto</code> e rótulos, e o <code>conta.bat</code>, um laço com contador que escreve <code>Volta 1</code> até <code>Volta 3</code> e depois <code>Acabou</code>. O <code>goto :eof</code> fica no texto: a coleta está no <code>chama.bat</code> da aula do <code>call</code>.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>Os rótulos <code>:nome</code> e o <code>goto</code> que pula para eles, no <code>decide.bat</code>.</li>
+<li>O <code>goto :eof</code>, só em texto aqui: ele encerra o script (ou o pedaço chamado por <code>call :rótulo</code>). A coleta está no <code>chama.bat</code> da aula do <code>call</code>.</li>
+<li>Um laço feito com <code>goto</code> e um <strong>contador</strong> que em algum momento termina, no <code>conta.bat</code>: <code>Volta 1</code>, <code>Volta 2</code>, <code>Volta 3</code> e <code>Acabou</code>.</li>
+</ul></div>
+<div class="note"><strong>Saídas desta aula.</strong> Parte das respostas do Prompt já veio do lote 2b, anonimizado em <code>_saidas-anon/cmd-lote2b.txt</code>. As demais caixas ainda mostram o placeholder <strong>« saída a coletar »</strong>, até o restante da coleta entrar. Não complete as caixas de memória e não traduza mensagem de erro.</div>
+<p>As saídas reais foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. O placeholder <strong>« saída a coletar »</strong> não é resposta do <code>cmd</code>; as caixas já preenchidas trazem a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt.</p>
+
+<hr>
+<h2>A ideia: um pulo até o marco</h2>
+<p>Em vez de seguir linha a linha até o fim, o script pode pular para um pedaço com nome. O rótulo é a placa (<code>:semparam</code>, <code>:fim</code>). O <code>goto</code> é o pulo.</p>
+<hr>
+<h2>1. Rótulos e <code>goto</code> no <code>decide.bat</code></h2>
+<p>O arquivo que a coleta deixou na pasta de teste tem estas linhas:</p>
+<pre class="file">@echo off
+if "%~1"=="" goto semparam
+echo Você passou: %1
+goto fim
+:semparam
+echo Nenhum parâmetro.
+:fim
+echo Fim.</pre>
+<p>Se você não passa nenhuma palavra, o script pula para <code>:semparam</code>. Se você passa alguma, ele mostra o parâmetro e vai para <code>:fim</code>. Nos dois caminhos, a última linha é o recado de fim. A coleta rodou o <code>type</code> e as duas execuções:</p>
+<!-- coleta: type decide.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type decide.bat">C:\Users\ana\guia-cmd-teste&gt;type decide.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: decide.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="decide.bat">C:\Users\ana\guia-cmd-teste&gt;decide.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: decide.bat teste -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="decide.bat teste">C:\Users\ana\guia-cmd-teste&gt;decide.bat teste
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>goto semparam</dt><dd>pula para o rótulo <code>:semparam</code>.</dd><dt>:semparam</dt><dd>o marco: uma linha que começa com <code>:</code> e o nome.</dd><dt>goto fim</dt><dd>pula para o <code>:fim</code>, para não cair no outro recado.</dd></dl>
+<hr>
+<h2>2. <code>goto :eof</code>, só em texto nesta aula</h2>
+<p>O <code>:eof</code> é um rótulo especial: “fim do arquivo” (end of file). O <code>goto :eof</code> encerra o script, ou o pedaço que um <code>call :rótulo</code> estava executando, e devolve a execução. Neste lote, isso aparece no <code>chama.bat</code>, coletado na aula do <code>call</code>. Aqui não repetimos essa caixa nem inventamos outra.</p>
+<hr>
+<h2>3. Laço com <code>goto</code> e contador: o <code>conta.bat</code></h2>
+<p>Dá para montar um laço pulando de volta para o mesmo rótulo. Esse laço <strong>precisa de um contador</strong> (uma variável que cresce ou diminui e, em algum momento, faz o script seguir em frente). Sem isso, o pulo não termina. O <code>conta.bat</code> da coleta do lote 2b faz exatamente isso, com a variável <code>GUIA_C</code>. Os comentários <code>rem</code> e <code>::</code> desse arquivo também aparecem na aula de arquivos <code>.bat</code>.</p>
+<!-- coleta (lote 2b): type conta.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type conta.bat">C:\Users\ana\guia-cmd-teste&gt;type conta.bat
+@echo off
+rem conta ate 3 com goto
+:: comentario com dois-pontos duplos
+set /a GUIA_C=0
+:volta
+set /a GUIA_C+=1
+echo Volta %GUIA_C%
+if %GUIA_C% GEQ 3 goto fim
+goto volta
+:fim
+echo Acabou
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>A cada volta, o script soma 1 em <code>GUIA_C</code>, escreve <code>Volta</code> e o número, e só vai para <code>:fim</code> quando o contador chega a 3. A saída real foi esta:</p>
+<!-- coleta (lote 2b): conta.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="conta.bat">C:\Users\ana\guia-cmd-teste&gt;conta.bat
+Volta 1
+Volta 2
+Volta 3
+Acabou
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O outro arquivo desta seção, o <code>soma.bat</code>, também foi coletado no lote 2. Ele soma de 1 a 5 com <code>for /l</code> e <code>%%i</code> (e lista os <code>*.txt</code> com <code>%%f</code>), não com <code>goto</code>. É o exemplo de <code>%%i</code> dentro de um <code>.bat</code> de que a aula do <code>for</code> fala:</p>
+<pre class="file">@echo off
+setlocal
+set /a total=0
+for /l %%i in (1,1,5) do set /a total+=%%i
+echo Soma de 1 a 5: %total%
+for %%f in (*.txt) do echo arquivo: %%f
+endlocal</pre>
+<!-- coleta: type soma.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="type soma.bat">C:\Users\ana\guia-cmd-teste&gt;type soma.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: soma.bat -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="soma.bat">C:\Users\ana\guia-cmd-teste&gt;soma.bat
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de pular</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>:nome</code></td><td>Para marcar um ponto no script.</td></tr>
+<tr><td><code>goto nome</code></td><td>Para pular para esse marco, como no <code>decide.bat</code>.</td></tr>
+<tr><td><code>goto :eof</code></td><td>Para encerrar o script ou o pedaço chamado por <code>call :rótulo</code>. Coletado na aula do <code>call</code>.</td></tr>
+<tr><td>laço com <code>goto</code> e contador</td><td>Como no <code>conta.bat</code>: o <code>GUIA_C</code> cresce e, no 3, o script vai para <code>:fim</code>.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um rótulo que não existe</strong>
+<p>O <code>semrotulo.bat</code>, que faz <code>goto rotulo-que-nao-existe</code>, foi coletado na aula do <code>call</code>. A mensagem de erro real está lá. Nesta página não inventamos essa caixa.</p>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>:fim</code></td><td>Cria o rótulo <code>fim</code>.</td></tr>
+<tr><td><code>goto fim</code></td><td>Pula para esse rótulo.</td></tr>
+<tr><td><code>decide.bat</code> / <code>decide.bat teste</code></td><td>Executa o exemplo com rótulos, sem parâmetro e com parâmetro.</td></tr>
+<tr><td><code>conta.bat</code></td><td>Roda o laço com contador: Volta 1, 2, 3 e Acabou.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o rótulo</h3><p>Complete para marcar o ponto chamado <code>fim</code> no script:</p><div class="ex-code"><input data-answer=":fim" aria-label="rótulo"></div></div>
+<div class="exercise"><h3>2. O pulo</h3><p>Complete para pular para o rótulo <code>semparam</code>:</p><div class="ex-code"><input data-answer="goto" aria-label="comando"> semparam</div></div>
+<div class="exercise"><h3>3. Fim do arquivo</h3><p>Qual pedido encerra o script (ou o pedaço de um <code>call :rótulo</code>) pulando para o fim do arquivo?</p><div class="ex-code"><input data-answer="goto :eof" aria-label="comando"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que o <code>decide.bat</code> faz quando você não passa nenhuma palavra?</p>
+<label><input type="radio" name="q4"> Apaga a pasta de teste</label>
+<label><input type="radio" name="q4"> Pula para o rótulo <code>:semparam</code> e segue até o <code>:fim</code></label>
+<label><input type="radio" name="q4"> Entra num laço de <code>goto</code> sem contador</label>
+<label><input type="radio" name="q4"> Chama o <code>chama.bat</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que um laço feito com <code>goto</code> precisa de um contador?</p>
+<label><input type="radio" name="q5"> Para o pulo, em algum momento, seguir em frente e o script terminar</label>
+<label><input type="radio" name="q5"> Porque o <code>goto</code> só funciona com números</label>
+<label><input type="radio" name="q5"> Porque o Windows exige um <code>set /p</code> em todo laço</label>
+<label><input type="radio" name="q5"> Para traduzir a mensagem de erro</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>soma.bat</code> desta seção conta de 1 a 5 de que jeito?</p>
+<label><input type="radio" name="q6"> Com um laço de <code>goto</code> e contador, coletado nesta aula</label>
+<label><input type="radio" name="q6"> Com o <code>set /p</code></label>
+<label><input type="radio" name="q6"> Com <code>for /l</code> e <code>%%i</code> dentro do <code>.bat</code>, não com <code>goto</code></label>
+<label><input type="radio" name="q6"> Com o <code>for /r</code> na raiz do disco</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdecide\b;;semerro -->
+<div class="trycmd" data-goal="src:\bdecide\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, execute o <code>decide.bat</code> sem passar nenhuma palavra.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+decide.bat
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdecide\b;;semerro -->
+<div class="trycmd" data-goal="src:\bdecide\b;;semerro">
+<p class="try-task"><strong>Missão:</strong> execute de novo o <code>decide.bat</code>, desta vez passando a palavra <code>teste</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+decide.bat teste
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bconta\b;;out:Volta 1;;out:Volta 2;;out:Volta 3;;out:Acabou">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, execute o <code>conta.bat</code> e observe as três voltas e o <code>Acabou</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+conta.bat
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Volta 1
+Volta 2
+Volta 3
+Acabou
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>Um rótulo começa com <code>:</code>. O <code>goto</code> pula para esse marco, como no <code>decide.bat</code>.</li>
+<li>O <code>goto :eof</code> encerra o script ou o pedaço de um <code>call :rótulo</code>; a coleta está na aula do <code>call</code>.</li>
+<li>Um laço de <code>goto</code> precisa de contador. No <code>conta.bat</code>, a saída real foi <code>Volta 1</code>, <code>Volta 2</code>, <code>Volta 3</code> e <code>Acabou</code>. O <code>soma.bat</code> conta com <code>for /l</code>, não com <code>goto</code>.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
