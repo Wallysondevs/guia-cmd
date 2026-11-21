@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Processos (tasklist) — listar processos no Prompt | Guia CMD</title>
+<meta name="description" content="O comando tasklist no Prompt de Comando: filtrar por nome de imagem (cmd.exe e um nome que não existe). Saída ainda a coletar; quando chegar, o PID virá com um valor fixo, já anonimizado.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Processos (<span class="hl">tasklist</span>)</h1>
+
+
+<p class="intro">O <code>tasklist</code> lista os <strong>processos</strong> em execução. Nesta aula ele não lista a máquina inteira: os pedidos da coleta usam o filtro <code>/fi</code>, primeiro com <code>cmd.exe</code> e depois com um nome que não existe. A saída real ainda está a coletar. Quando chegar, o PID terá um valor fixo, já anonimizado pela Mira — não usamos o número real da máquina.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>tasklist /fi "imagename eq cmd.exe"</code>, que filtra pelo nome da imagem.</li>
+<li>O mesmo filtro com um nome que não está em execução, <code>nao-existe.exe</code>.</li>
+<li>Por que o PID, no guia, entra com um valor fixo: é a anonimização, não o número real da coleta.</li>
+</ul></div>
+<div class="note"><strong>Saída a coletar.</strong> A Luna coleta estes comandos no lote 2e e a Mira anonimiza em <code>_saidas-anon/cmd-lote2e.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
+<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, com o PID já fixo. No seu computador, pratique só com filtros parecidos, sem espalhar a lista de todos os processos. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<hr>
+<h2>A ideia: a lista da recepção, com um filtro</h2>
+<p>Em vez de pedir a lista de todo mundo no prédio, você pergunta: “tem alguém chamado <code>cmd.exe</code>?”. O <code>/fi</code> é esse filtro.</p>
+<hr>
+<h2>1. Filtrar pelo nome da imagem</h2>
+<p>O primeiro pedido da coleta é o <code>tasklist</code> só para <code>cmd.exe</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tasklist /fi "imagename eq cmd.exe"
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Um nome que não está em execução</h2>
+<p>O segundo pedido usa o mesmo filtro com <code>nao-existe.exe</code>. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tasklist /fi "imagename eq nao-existe.exe"
+
+« saída a coletar »
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de listar</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>tasklist /fi "imagename eq cmd.exe"</code></td><td>Para ver só o processo com esse nome de imagem.</td></tr>
+<tr><td><code>tasklist /fi "imagename eq nao-existe.exe"</code></td><td>Para ver o que o comando responde quando esse nome não está em execução.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>tasklist /fi "imagename eq nome.exe"</code></td><td>Lista os processos cujo nome de imagem é esse.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para listar só o <code>cmd.exe</code>:</p><div class="ex-code">tasklist <input data-answer="/fi" aria-label="chave"> "imagename eq cmd.exe"</div></div>
+<div class="exercise"><h3>2. O filtro</h3><p>Qual chave aplica o filtro?</p><div class="ex-code">tasklist <input data-answer="/fi" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. A imagem</h3><p>Nesta coleta, o nome de imagem do Prompt é:</p><div class="ex-code"><input data-answer="cmd.exe" aria-label="imagem"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não pede um <code>tasklist</code> sem filtro?</p>
+<label><input type="radio" name="q4"> Porque o comando não existe sem filtro</label>
+<label><input type="radio" name="q4"> Porque a coleta desta aula usa o <code>/fi</code>, em vez de listar todos os processos da máquina</label>
+<label><input type="radio" name="q4"> Porque o <code>tasklist</code> só funciona como administrador</label>
+<label><input type="radio" name="q4"> Porque o comando apaga processos</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
+<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar a lista nem o PID</label>
+<label><input type="radio" name="q5"> Inventa uma tabela com um PID qualquer</label>
+<label><input type="radio" name="q5"> Copia uma lista de outro guia e traduz</label>
+<label><input type="radio" name="q5"> Mostra os processos deste Linux</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Quando a coleta chegar, o PID no guia entra com um valor fixo porque:</p>
+<label><input type="radio" name="q6"> O Windows sempre usa o mesmo número</label>
+<label><input type="radio" name="q6"> Inventamos o número para a aula ficar mais bonita</label>
+<label><input type="radio" name="q6"> A Mira anonimiza o número real da máquina</label>
+<label><input type="radio" name="q6"> O <code>tasklist</code> não mostra PID</label></div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote2e.txt; metas out/outre só depois da saída real. Provisório: src + semerro. -->
+<div class="trycmd" data-goal="src:\btasklist\b;;src:/fi;;src:cmd\.exe;;semerro">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, liste o processo <code>cmd.exe</code> com o filtro <code>/fi</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+tasklist /fi "imagename eq cmd.exe"
+</pre>
+</div>
+<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote2e.txt; metas out/outre só depois da saída real. Provisório: src + semerro. -->
+<div class="trycmd" data-goal="src:\btasklist\b;;src:/fi;;src:nao-existe\.exe;;semerro">
+<p class="try-task"><strong>Missão:</strong> repita o filtro com o nome <code>nao-existe.exe</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+tasklist /fi "imagename eq nao-existe.exe"
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>tasklist /fi "imagename eq …"</code> filtra pelo nome da imagem.</li>
+<li>Nesta coleta entram <code>cmd.exe</code> e <code>nao-existe.exe</code>.</li>
+<li>A saída real, com o PID já fixo, ainda está a coletar: não foi inventada.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
