@@ -32,6 +32,7 @@ var NIVEIS = [
   ]},
   { id: "n2", nome: "Nível 2 · Intermediário", curto: "Intermediário", desc: "Mais comandos, filtros e variáveis", grupos: [
     { grupo: "Mais sobre Arquivos", itens: [
+      ["ren.html", "Renomeando (ren)"],
       ["xcopy.html", "Copiando Pastas (xcopy)"],
       ["robocopy.html", "Cópia Robusta (robocopy)"],
       ["attrib.html", "Atributos (attrib)"],
@@ -62,8 +63,8 @@ var NIVEIS = [
       ["for.html", "for"],
       ["goto.html", "goto e Rótulos"],
       ["call.html", "Chamando Outro Script (call)"],
-      ["setlocal.html", "setlocal e endlocal", {pronta: false}],
-      ["parametros.html", "Parâmetros (%1, %2…)", {pronta: false}],
+      ["setlocal.html", "setlocal e endlocal"],
+      ["parametros.html", "Parâmetros (%1, %2…)"],
       ["choice.html", "Perguntando ao Usuário (choice)", {pronta: false}],
       ["timeout.html", "Esperando (timeout)", {pronta: false}]
     ]},

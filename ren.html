@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Renomeando (ren) — trocar o nome de arquivo ou pasta no Prompt | Guia CMD</title>
+<meta name="description" content="O comando ren no Prompt de Comando: renomear arquivo, curingas, pasta, o sinônimo rename e as mensagens reais de arquivo inexistente, nome repetido e sintaxe incorreta.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Renomeando (<span class="hl">ren</span>)</h1>
+
+
+<p class="intro">O <code>ren</code> troca o <strong>nome</strong> de um arquivo ou de uma pasta, no mesmo lugar. Quando dá certo, ele não imprime nada: a prova aparece no <code>dir</code>. O sinônimo é <code>rename</code>. No Nível 1 o <code>ren</code> já aparece, com outro exemplo, em <a href="copy-move-del.html">Copiando, Movendo e Apagando</a>; esta aula aprofunda, com curingas, pasta e os erros reais desta coleta.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>ren antigo novo</code>, que troca o nome e, se der certo, fica em silêncio.</li>
+<li>O uso de curingas, como <code>ren *.tmp *.bak</code>.</li>
+<li>O <code>rename</code>, que é o mesmo comando.</li>
+<li>As mensagens reais quando o arquivo não existe, quando o nome novo já está em uso e quando o nome novo vem com um caminho.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
+<hr>
+<h2>A ideia: trocar a etiqueta, sem mudar o lugar</h2>
+<p>Renomear é trocar a etiqueta da caixa, não carregá-la para outra prateleira. O arquivo continua na mesma pasta; só o nome muda. Se você precisa de outro lugar, isso é o <code>move</code>, que já aparece em <a href="copy-move-del.html">Copiando, Movendo e Apagando</a>.</p>
+<hr>
+<h2>1. Um arquivo de cada vez</h2>
+<p>Na pasta de teste, o <code>ren notas.txt lista.txt</code> não escreveu nada. O <code>dir /b</code> logo em seguida mostrou <code>lista.txt</code> e não mostrou mais <code>notas.txt</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren notas.txt lista.txt
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lista.txt
+lixeira
+log.txt
+nomes.txt
+rascunho.tmp
+rascunho2.tmp
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>2. Vários de uma vez, com curingas</h2>
+<p>O <code>ren *.tmp *.bak</code> também ficou em silêncio. O <code>dir /b</code> trocou <code>rascunho.tmp</code> e <code>rascunho2.tmp</code> por <code>rascunho.bak</code> e <code>rascunho2.bak</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren *.tmp *.bak
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b
+agenda.txt
+backup
+docs
+fotos
+lista.txt
+lixeira
+log.txt
+nomes.txt
+rascunho.bak
+rascunho2.bak
+relatorio.docx
+relatorio.txt
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>rename</code> é o mesmo comando. Nesta coleta ele renomeou o <code>relatorio.docx</code>, de novo sem imprimir nada. Não houve um <code>dir</code> logo depois deste pedido, então a prova do novo nome não entra nesta caixa:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;rename relatorio.docx relatorio-velho.docx
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Uma pasta, e um arquivo dentro dela</h2>
+<p>O <code>ren fotos imagens</code> trocou o nome da pasta. O <code>dir /b /ad</code> mostrou <code>imagens</code> e não mostrou mais <code>fotos</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren fotos imagens
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b /ad
+backup
+docs
+imagens
+lixeira
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com o novo nome da pasta, o <code>ren imagens\legenda.txt leia.txt</code> trocou só o arquivo de dentro. O <code>dir /b imagens</code> mostrou <code>leia.txt</code> no lugar de <code>legenda.txt</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren imagens\legenda.txt leia.txt
+
+C:\Users\ana\guia-cmd-teste&gt;dir /b imagens
+ferias.png
+leia.txt
+praia.png
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>Formas diferentes de renomear</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>ren antigo.txt novo.txt</code></td><td>Para trocar o nome de um arquivo, na mesma pasta.</td></tr>
+<tr><td><code>ren *.tmp *.bak</code></td><td>Para trocar a extensão (ou parte do nome) de vários arquivos de uma vez.</td></tr>
+<tr><td><code>rename arquivo novo</code></td><td>O mesmo comando, com o nome comprido.</td></tr>
+<tr><td><code>ren fotos imagens</code></td><td>Para trocar o nome de uma pasta.</td></tr>
+<tr><td><code>ren pasta\arquivo.txt novo.txt</code></td><td>Para trocar o nome de um arquivo que está dentro de uma pasta. O nome novo é só o nome, não um caminho.</td></tr>
+</table></div>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um arquivo que não existe</strong>
+<p>O <code>ren arquivo-nao-existe.txt x.txt</code> devolveu esta mensagem, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren arquivo-nao-existe.txt x.txt
+O sistema não pode encontrar o arquivo especificado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>Um nome que já está em uso</strong>
+<p>Depois de <code>ren notas.txt lista.txt</code>, a pasta já tinha <code>lista.txt</code> e também <code>relatorio.txt</code>. Pedir <code>ren lista.txt relatorio.txt</code> devolveu estas duas linhas:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren lista.txt relatorio.txt
+Já existe um arquivo com o mesmo nome
+ou o arquivo não pode ser encontrado.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<div class="cenario"><strong>Um nome novo com caminho</strong>
+<p>O <code>ren lista.txt docs\lista.txt</code> não move o arquivo. O Prompt respondeu isto, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;ren lista.txt docs\lista.txt
+A sintaxe do comando está incorreta.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>ren antigo novo</code></td><td>Troca o nome, no mesmo lugar. Silêncio quando dá certo.</td></tr>
+<tr><td><code>rename antigo novo</code></td><td>O mesmo comando.</td></tr>
+<tr><td><code>ren *.tmp *.bak</code></td><td>Troca o nome de vários arquivos de uma vez, com curingas.</td></tr>
+<tr><td><code>dir /b</code></td><td>Mostra os nomes, para você conferir a troca.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para trocar <code>notas.txt</code> por <code>lista.txt</code>:</p><div class="ex-code"><input data-answer="ren|rename" aria-label="comando"> notas.txt lista.txt</div></div>
+<div class="exercise"><h3>2. Curingas</h3><p>Complete para trocar a extensão <code>.tmp</code> por <code>.bak</code>:</p><div class="ex-code">ren <input data-answer="*.tmp" aria-label="origem"> *.bak</div></div>
+<div class="exercise"><h3>3. Sinônimo</h3><p>Qual é o outro nome do <code>ren</code>?</p><div class="ex-code"><input data-answer="rename" aria-label="sinonimo"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. Quando o <code>ren notas.txt lista.txt</code> desta coleta deu certo, o que o Prompt imprimiu?</p>
+<label><input type="radio" name="q4"> A palavra “renomeado”</label>
+<label><input type="radio" name="q4"> Nada: o comando ficou em silêncio, e a prova veio no <code>dir /b</code></label>
+<label><input type="radio" name="q4"> O conteúdo de <code>lista.txt</code></label>
+<label><input type="radio" name="q4"> Uma tradução nossa, “troca feita”</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual é a mensagem real de <code>ren arquivo-nao-existe.txt x.txt</code>?</p>
+<label><input type="radio" name="q5"> <code>O sistema não pode encontrar o arquivo especificado.</code></label>
+<label><input type="radio" name="q5"> <code>Arquivo não encontrado  - ARQUIVO-NAO-EXISTE.TXT</code></label>
+<label><input type="radio" name="q5"> Uma tradução nossa, “não achei o arquivo”</label>
+<label><input type="radio" name="q5"> Nenhuma saída</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O pedido <code>ren lista.txt docs\lista.txt</code> desta coleta devolveu qual mensagem?</p>
+<label><input type="radio" name="q6"> Nada: ele moveu o arquivo</label>
+<label><input type="radio" name="q6"> <code>O sistema não pode encontrar o caminho especificado.</code></label>
+<label><input type="radio" name="q6"> <code>A sintaxe do comando está incorreta.</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “o ren não move”</label></div>
+<div class="trycmd" data-goal="src:\bren\b;;out:agenda.txt;;out:rascunho.tmp">
+<p class="try-task"><strong>Missão:</strong> renomeie <code>notas.txt</code> para <code>lista.txt</code> e confira com <code>dir /b</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ren notas.txt lista.txt
+dir /b
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+backup
+docs
+fotos
+lista.txt
+lixeira
+log.txt
+nomes.txt
+rascunho.tmp
+rascunho2.tmp
+relatorio.docx
+relatorio.txt
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bren\b;;src:\.tmp;;out:rascunho.bak;;out:rascunho2.bak">
+<p class="try-task"><strong>Missão:</strong> troque a extensão dos arquivos <code>.tmp</code> para <code>.bak</code> e confira com <code>dir /b</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ren *.tmp *.bak
+dir /b
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+backup
+docs
+fotos
+lista.txt
+lixeira
+log.txt
+nomes.txt
+rascunho.bak
+rascunho2.bak
+relatorio.docx
+relatorio.txt
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bren\b;;src:arquivo-nao-existe;;out:O sistema não pode encontrar o arquivo especificado.">
+<p class="try-task"><strong>Missão:</strong> tente renomear um arquivo que não existe, <code>arquivo-nao-existe.txt</code>, para <code>x.txt</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ren arquivo-nao-existe.txt x.txt
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+O sistema não pode encontrar o arquivo especificado.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li><code>ren</code> (ou <code>rename</code>) troca o nome, no mesmo lugar, e fica em silêncio quando dá certo. Confira com o <code>dir</code>.</li>
+<li>Curingas, pastas e arquivos dentro de pasta entraram nesta coleta.</li>
+<li>As mensagens de erro desta aula são as do Prompt, sem tradução: arquivo inexistente, nome já usado e sintaxe incorreta quando o nome novo traz um caminho.</li>
+<li>No Nível 1 há outro exemplo do <code>ren</code> em <a href="copy-move-del.html">Copiando, Movendo e Apagando</a>.</li>
+</ul>
+
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
