@@ -44,10 +44,10 @@ var NIVEIS = [
       ["more.html", "Página a Página (more)"],
       ["sort.html", "Ordenando (sort)"],
       ["pipe.html", "O Encadeamento (|)"],
-      ["encadeamento.html", "Se der certo, se der errado (&& e ||)", {pronta: false}]
+      ["encadeamento.html", "Se der certo, se der errado (&& e ||)"]
     ]},
     { grupo: "Sistema e Variáveis", itens: [
-      ["variaveis.html", "Variáveis (%VAR% e set)", {pronta: false}],
+      ["variaveis.html", "Variáveis (%VAR% e set)"],
       ["where.html", "Onde Está o Comando (where)"],
       ["tasklist.html", "Processos (tasklist)", {pronta: false}],
       ["ver.html", "A Versão do Windows (ver)"],
@@ -58,11 +58,11 @@ var NIVEIS = [
   ]},
   { id: "n3", nome: "Nível 3 · Avançado", curto: "Avançado", desc: "Arquivos .bat, rede e administração", grupos: [
     { grupo: "Arquivos de Lote", itens: [
-      ["arquivos-bat.html", "Arquivos .bat", {pronta: false}],
-      ["if.html", "if", {pronta: false}],
-      ["for.html", "for", {pronta: false}],
-      ["goto.html", "goto e Rótulos", {pronta: false}],
-      ["call.html", "Chamando Outro Script (call)", {pronta: false}],
+      ["arquivos-bat.html", "Arquivos .bat"],
+      ["if.html", "if"],
+      ["for.html", "for"],
+      ["goto.html", "goto e Rótulos"],
+      ["call.html", "Chamando Outro Script (call)"],
       ["setlocal.html", "setlocal e endlocal", {pronta: false}],
       ["parametros.html", "Parâmetros (%1, %2…)", {pronta: false}],
       ["choice.html", "Perguntando ao Usuário (choice)", {pronta: false}],
