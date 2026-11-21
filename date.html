@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A Data (date /t) — ver a data do sistema no Prompt | Guia CMD</title>
-<meta name="description" content="O comando date /t no Prompt de Comando: mostrar a data do sistema, sem abrir o pedido de alteração. Saída ainda a coletar.">
+<meta name="description" content="O comando date /t no Prompt de Comando: mostrar a data do sistema sem abrir o pedido de alteração, a variável %DATE% e o redirecionamento para um arquivo.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,29 +19,37 @@
 <h1>A Data (<span class="hl">date /t</span>)</h1>
 
 
-<p class="intro">O <code>date</code> sozinho pede para você alterar a data e pode esperar uma resposta. A forma desta aula é o <code>date /t</code>: só <strong>mostra</strong> a data e devolve o prompt. A saída real ainda está a coletar.</p>
+<p class="intro">O <code>date</code> sozinho pede para você alterar a data e pode esperar uma resposta. A forma desta aula é o <code>date /t</code>: só <strong>mostra</strong> a data e devolve o prompt. As saídas abaixo são as da coleta do lote 2e, nesta pasta de teste, no dia da captura.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>date /t</code>, que mostra a data do sistema sem pedir alteração.</li>
-<li>A diferença desta forma para o <code>date</code> sozinho, que entra em um diálogo.</li>
+<li>A variável <code>%DATE%</code>, que nesta coleta trouxe a mesma data, num <code>echo</code>.</li>
+<li>Que o <code>date /t</code> desta coleta deixou um espaço no fim da linha — inclusive quando a saída foi para um arquivo.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A Luna coleta estes comandos no lote 2e e a Mira anonimiza em <code>_saidas-anon/cmd-lote2e.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, a data será a do <em>seu</em> sistema, no mesmo formato que o Prompt usar. Pratique numa pasta de teste parecida, não na raiz do disco.</p>
 <hr>
 <h2>A ideia: olhar o calendário, sem virar a folha</h2>
 <p>Você quer saber que dia é hoje, não mudar o relógio da parede. A chave <code>/t</code> pede só a leitura.</p>
 <hr>
 <h2>1. Só ver a data</h2>
-<p>Na pasta de teste, o pedido desta coleta é o <code>date /t</code>:</p>
+<p>O <code>date /t</code> mostrou a data e devolveu o prompt. A linha veio com um espaço no fim:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;date /t
-
-« saída a coletar »
-
+20/11/2026 
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>O <code>echo Hoje é %DATE%</code> repetiu a mesma data, desta vez <em>sem</em> o espaço no fim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo Hoje é %DATE%
+Hoje é 20/11/2026
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Mandando a saída para um arquivo e lendo com o <code>type</code>, o espaço do <code>date /t</code> também foi para o arquivo:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;date /t &gt; hoje.txt &amp; type hoje.txt
+20/11/2026 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Formas diferentes de ver a data</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>date /t</code></td><td>Para ver a data e continuar no prompt, sem diálogo.</td></tr>
+<tr><td><code>echo %DATE%</code></td><td>Para usar a data no meio de um texto. Nesta coleta, veio a mesma data, sem o espaço do <code>date /t</code>.</td></tr>
+<tr><td><code>date /t &gt; hoje.txt</code></td><td>Para gravar a data num arquivo. O <code>type</code> mostrou o espaço no fim.</td></tr>
 <tr><td><code>date</code></td><td>Não entra nesta coleta: sozinho, o comando pede uma data nova e pode esperar você responder.</td></tr>
 </table></div>
 <hr>
@@ -49,29 +57,29 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
 <tr><td><code>date /t</code></td><td>Mostra a data do sistema e devolve o prompt.</td></tr>
+<tr><td><code>echo %DATE%</code></td><td>Mostra a data no meio de um texto.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver a data sem pedir alteração:</p><div class="ex-code">date <input data-answer="/t" aria-label="chave"></div></div>
-<div class="exercise"><h3>2. A chave</h3><p>Qual chave desta aula evita o diálogo de alteração?</p><div class="ex-code"><input data-answer="/t" aria-label="chave"></div></div>
+<div class="exercise"><h3>2. A variável</h3><p>Qual variável desta coleta trouxe a data no <code>echo</code>?</p><div class="ex-code">echo Hoje é <input data-answer="%DATE%" aria-label="variavel"></div></div>
 <div class="exercise"><h3>3. O comando</h3><p>Qual comando mostra a data?</p><div class="ex-code"><input data-answer="date" aria-label="comando"> /t</div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula usa <code>date /t</code> e não o <code>date</code> sozinho?</p>
-<label><input type="radio" name="q4"> Porque o <code>/t</code> apaga a data</label>
-<label><input type="radio" name="q4"> Porque o <code>date</code> sozinho pede uma alteração e pode esperar uma resposta</label>
-<label><input type="radio" name="q4"> Porque o <code>date /t</code> muda o fuso</label>
-<label><input type="radio" name="q4"> Não há diferença</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar a data</label>
-<label><input type="radio" name="q5"> Inventa uma data de memória</label>
-<label><input type="radio" name="q5"> Copia a data de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Mostra a data deste computador Linux</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. O <code>date /t</code> desta aula serve para quê?</p>
-<label><input type="radio" name="q6"> Para mudar a data do Windows</label>
-<label><input type="radio" name="q6"> Para apagar arquivos antigos</label>
-<label><input type="radio" name="q6"> Para só mostrar a data do sistema</label>
-<label><input type="radio" name="q6"> Para formatar o disco</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote2e.txt; metas out/outre só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bdate\b;;src:/t;;semerro">
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, o <code>date /t</code> mostrou qual linha?</p>
+<label><input type="radio" name="q4"> <code>20-11-2026</code>, sem espaço no fim</label>
+<label><input type="radio" name="q4"> <code>20/11/2026</code>, com um espaço no fim</label>
+<label><input type="radio" name="q4"> Uma data inventada</label>
+<label><input type="radio" name="q4"> Nada: o comando pediu uma data nova</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula usa <code>date /t</code> e não o <code>date</code> sozinho?</p>
+<label><input type="radio" name="q5"> Porque o <code>date</code> sozinho pede uma alteração e pode esperar uma resposta</label>
+<label><input type="radio" name="q5"> Porque o <code>/t</code> apaga a data</label>
+<label><input type="radio" name="q5"> Porque o <code>date /t</code> muda o fuso</label>
+<label><input type="radio" name="q5"> Não há diferença</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O <code>echo Hoje é %DATE%</code> desta coleta deixou espaço no fim da linha?</p>
+<label><input type="radio" name="q6"> Sim, o mesmo espaço do <code>date /t</code></label>
+<label><input type="radio" name="q6"> A captura não mostrou essa linha</label>
+<label><input type="radio" name="q6"> Não: a linha foi <code>Hoje é 20/11/2026</code>, sem o espaço</label>
+<label><input type="radio" name="q6"> Ele traduziu a data para o inglês</label></div>
+<div class="trycmd" data-goal="src:\bdate\b;;src:/t;;out:20/11/2026">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre a data do sistema com <code>date /t</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -79,12 +87,28 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 date /t
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+20/11/2026 
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\becho\b;;src:%DATE%;;out:20/11/2026">
+<p class="try-task"><strong>Missão:</strong> mostre a data no meio de um texto, com <code>echo Hoje é %DATE%</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+echo Hoje é %DATE%
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Hoje é 20/11/2026
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li><code>date /t</code> mostra a data e devolve o prompt; o <code>date</code> sozinho não entra nesta coleta.</li>
-<li>A saída real ainda está a coletar: não foi inventada.</li>
+<li>Nesta captura a linha do <code>date /t</code> foi <code>20/11/2026</code> com um espaço no fim; o <code>%DATE%</code> trouxe a mesma data, sem esse espaço.</li>
+<li>No seu computador, a data será a do seu sistema.</li>
 </ul>
 
 

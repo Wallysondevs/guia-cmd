@@ -49,11 +49,11 @@ var NIVEIS = [
     { grupo: "Sistema e Variáveis", itens: [
       ["variaveis.html", "Variáveis (%VAR% e set)"],
       ["where.html", "Onde Está o Comando (where)"],
-      ["tasklist.html", "Processos (tasklist)", {pronta: false}],
+      ["tasklist.html", "Processos (tasklist)"],
       ["ver.html", "A Versão do Windows (ver)"],
-      ["date.html", "A Data (date /t)", {pronta: false}],
-      ["time.html", "A Hora (time /t)", {pronta: false}],
-      ["hostname.html", "O Nome do Computador (hostname)", {pronta: false}]
+      ["date.html", "A Data (date /t)"],
+      ["time.html", "A Hora (time /t)"],
+      ["hostname.html", "O Nome do Computador (hostname)"]
     ]}
   ]},
   { id: "n3", nome: "Nível 3 · Avançado", curto: "Avançado", desc: "Arquivos .bat, rede e administração", grupos: [
@@ -65,8 +65,8 @@ var NIVEIS = [
       ["call.html", "Chamando Outro Script (call)"],
       ["setlocal.html", "setlocal e endlocal"],
       ["parametros.html", "Parâmetros (%1, %2…)"],
-      ["choice.html", "Perguntando ao Usuário (choice)", {pronta: false}],
-      ["timeout.html", "Esperando (timeout)", {pronta: false}]
+      ["choice.html", "Perguntando ao Usuário (choice)"],
+      ["timeout.html", "Esperando (timeout)"]
     ]},
     { grupo: "Processos e Serviços", itens: [
       ["taskkill.html", "Encerrando Processos (taskkill)", {pronta: false}],

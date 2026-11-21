@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>O Nome do Computador (hostname) — ver o nome da máquina no Prompt | Guia CMD</title>
-<meta name="description" content="O comando hostname no Prompt de Comando: mostrar o nome do computador. Saída ainda a coletar; quando chegar, o nome real terá sido trocado por NOTEBOOK.">
+<meta name="description" content="O comando hostname no Prompt de Comando: mostrar o nome do computador. Na coleta anonimizada o nome é NOTEBOOK; no seu PC aparece o nome da sua máquina.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,29 +19,32 @@
 <h1>O Nome do Computador (<span class="hl">hostname</span>)</h1>
 
 
-<p class="intro">O <code>hostname</code> mostra o <strong>nome do computador</strong>. É um dado de privacidade: na coleta, a Mira troca o nome real por <code>NOTEBOOK</code> antes da aula usar a saída. Enquanto o arquivo anonimizado não chega, a caixa fica como placeholder. Não inventamos um nome.</p>
+<p class="intro">O <code>hostname</code> mostra o <strong>nome do computador</strong>. É um dado de privacidade: na coleta, a Mira trocou o nome real por <code>NOTEBOOK</code> antes desta aula usar a saída. No seu computador, o mesmo comando mostra o nome da <em>sua</em> máquina — não o <code>NOTEBOOK</code> do laboratório.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>hostname</code>, que imprime o nome da máquina.</li>
-<li>Por que esse nome, no guia, aparece como <code>NOTEBOOK</code>: é o placeholder da anonimização, não o computador real da coleta.</li>
+<li>Por que, neste guia, a saída da coleta é <code>NOTEBOOK</code>: é o placeholder da anonimização, não o computador real.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A Luna coleta estes comandos no lote 2e e a Mira anonimiza em <code>_saidas-anon/cmd-lote2e.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, e o nome da máquina virá já como <code>NOTEBOOK</code>. No seu computador, o comando mostra o nome da <em>sua</em> máquina. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, e o nome da máquina já veio como <code>NOTEBOOK</code>. No seu computador, pratique numa pasta de teste parecida: o que aparece é o nome do <em>seu</em> PC.</p>
 <hr>
 <h2>A ideia: a plaquinha na porta da sala</h2>
-<p>Cada computador tem um nome, como a plaquinha na porta. O <code>hostname</code> lê essa plaquinha. No guia, a plaquinha visível é sempre <code>NOTEBOOK</code>, para não vazar o nome real.</p>
+<p>Cada computador tem um nome, como a plaquinha na porta. O <code>hostname</code> lê essa plaquinha. No guia, a plaquinha visível é <code>NOTEBOOK</code>, para não vazar o nome real da coleta. Na sua casa, a plaquinha é outra.</p>
 <hr>
 <h2>1. Ver o nome</h2>
-<p>Na pasta de teste, o pedido desta coleta é o <code>hostname</code>:</p>
+<p>O <code>hostname</code> desta coleta mostrou só isto:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;hostname
-
-« saída a coletar »
-
+NOTEBOOK
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>Com um <code>echo</code> na mesma linha, o Prompt escreveu o texto e, na linha seguinte, o mesmo nome. A linha do <code>echo</code> veio com um espaço no fim, antes da quebra:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;echo O computador se chama: &amp; hostname
+O computador se chama: 
+NOTEBOOK
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>hostname</code></td><td>Para ver o nome do computador.</td></tr>
+<tr><td><code>hostname</code></td><td>Para ver o nome do computador. No seu PC, aparece o nome dele; nesta coleta, <code>NOTEBOOK</code>.</td></tr>
+<tr><td><code>echo … &amp; hostname</code></td><td>Para juntar um texto e o nome, em dois comandos na mesma linha.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
@@ -52,25 +55,24 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver o nome do computador:</p><div class="ex-code"><input data-answer="hostname" aria-label="comando"></div></div>
-<div class="exercise"><h3>2. No guia</h3><p>Qual é o placeholder do nome da máquina, depois da anonimização?</p><div class="ex-code"><input data-answer="NOTEBOOK" aria-label="placeholder"></div></div>
-<div class="exercise"><h3>3. Privacidade</h3><p>O nome real da máquina da coleta entra no guia?</p><div class="ex-code"><input data-answer="nao|não" aria-label="resposta"></div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. No guia, o nome do computador aparece como <code>NOTEBOOK</code> porque:</p>
-<label><input type="radio" name="q4"> Esse era o nome real da máquina da coleta</label>
-<label><input type="radio" name="q4"> A Mira troca o nome real por esse placeholder, na anonimização</label>
+<div class="exercise"><h3>2. No guia</h3><p>Qual nome apareceu na coleta, depois da anonimização?</p><div class="ex-code"><input data-answer="NOTEBOOK" aria-label="placeholder"></div></div>
+<div class="exercise"><h3>3. No seu PC</h3><p>O <code>hostname</code> no seu computador mostra o nome de quem?</p><div class="ex-code">do <input data-answer="seu|meu" aria-label="resposta"> PC</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No laboratório, o <code>hostname</code> mostrou <code>NOTEBOOK</code> porque:</p>
+<label><input type="radio" name="q4"> Esse era o nome real da máquina da coleta, e publicamos assim</label>
+<label><input type="radio" name="q4"> A Mira trocou o nome real por esse placeholder, na anonimização</label>
 <label><input type="radio" name="q4"> O <code>hostname</code> sempre imprime essa palavra, em qualquer PC</label>
 <label><input type="radio" name="q4"> Inventamos o nome para preencher a caixa</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar o nome</label>
-<label><input type="radio" name="q5"> Já escreve <code>NOTEBOOK</code> como se fosse a saída do Prompt</label>
-<label><input type="radio" name="q5"> Mostra o hostname deste Linux</label>
-<label><input type="radio" name="q5"> Copia um nome de outro guia</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Se você rodar o <code>hostname</code> no seu computador, o que aparece?</p>
+<label><input type="radio" name="q5"> O nome do seu PC, que pode ser diferente de <code>NOTEBOOK</code></label>
+<label><input type="radio" name="q5"> Sempre <code>NOTEBOOK</code>, em qualquer máquina</label>
+<label><input type="radio" name="q5"> O endereço IP</label>
+<label><input type="radio" name="q5"> Nada: o comando só funciona no laboratório</label></div>
 <div class="mc" data-answer="3"><p class="mc-q">6. O <code>hostname</code> mostra:</p>
 <label><input type="radio" name="q6"> O usuário logado</label>
 <label><input type="radio" name="q6"> O endereço IP</label>
 <label><input type="radio" name="q6"> O nome do computador</label>
 <label><input type="radio" name="q6"> A pasta atual</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote2e.txt; metas out/outre só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bhostname\b;;semerro">
+<div class="trycmd" data-goal="src:\bhostname\b;;out:NOTEBOOK">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre o nome do computador com <code>hostname</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -78,12 +80,15 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 hostname
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+NOTEBOOK
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li><code>hostname</code> mostra o nome da máquina.</li>
-<li>No guia, esse nome entra como <code>NOTEBOOK</code>, depois da anonimização. A saída real ainda está a coletar.</li>
+<li>Nesta coleta, o nome entra como <code>NOTEBOOK</code>, depois da anonimização. No seu computador, aparece o nome do seu PC.</li>
 </ul>
 
 
