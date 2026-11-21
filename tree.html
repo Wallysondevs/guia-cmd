@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Árvore de Pastas (tree) — ver a hierarquia de pastas no Prompt | Guia CMD</title>
-<meta name="description" content="O comando tree no Prompt de Comando: ver a árvore de pastas da pasta de teste, com /f e /a. Saídas ainda a coletar.">
+<meta name="description" content="O comando tree no Prompt de Comando: a árvore de pastas da pasta de teste, com /f (arquivos) e /f /a (desenho ASCII). Saídas reais da recoleta, com os caracteres de caixa inteiros.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,53 +19,98 @@
 <h1>Árvore de Pastas (<span class="hl">tree</span>)</h1>
 
 
-<p class="intro">O <code>dir</code> lista um nível de cada vez. O <code>tree</code> desenha a <strong>árvore</strong>: pastas dentro de pastas, como galhos. Nesta aula ele roda na pasta de teste. O desenho verdadeiro — com ou sem acentos de caixa, com ou sem nomes de arquivo — ainda está a coletar: não inventamos um ramo sequer.</p>
+<p class="intro">O <code>dir</code> lista um nível de cada vez. O <code>tree</code> desenha a <strong>árvore</strong>: pastas dentro de pastas, como galhos. Nesta aula ele roda na pasta de teste. As saídas abaixo são as da recoleta (arquivo <code>cmd-lote2c.txt</code>): os acentos e as linhas <code>├───</code>, <code>│</code> e <code>└───</code> vieram inteiros. A captura anterior, com o desenho quebrado, não entra nesta aula.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>tree</code>, que mostra as subpastas da pasta atual.</li>
 <li>A chave <code>/f</code>, que inclui também os nomes dos arquivos.</li>
-<li>A chave <code>/a</code>, que pede um desenho só com caracteres ASCII (útil se a árvore vier quebrada no seu terminal).</li>
+<li>A chave <code>/a</code>, que pede um desenho só com caracteres ASCII (<code>+---</code>, <code>|</code>, <code>\---</code>). Nesta coleta ela veio junto com <code>/f</code>, no pedido <code>tree /f /a</code>.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> O PC usado na coleta está offline. Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<div class="note"><strong>Aguardando recoleta.</strong> A captura do lote 2 desta aula veio com as linhas gráficas da árvore perdidas (os caracteres de desenho não se conservaram). Por isso as caixas continuam com o placeholder « saída a coletar », e a página segue <code>pronta:false</code> no menu, até uma recoleta aproveitável. Não usamos a captura quebrada e não inventamos o desenho.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. Nela, neste lote, já existiam, entre outros, os arquivos <code>notas.txt</code>, <code>relatorio.txt</code>, <code>agenda.txt</code>, <code>nomes.txt</code>, <code>log.txt</code> e <code>rascunho.tmp</code>, o oculto <code>um-oculto.txt</code> e as pastas <code>fotos</code>, <code>docs</code>, <code>backup</code> e <code>lixeira</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco.</p>
 <hr>
 <h2>A ideia: o mapa da casa</h2>
 <p>Se o <code>dir</code> é a lista do que tem nesta sala, o <code>tree</code> é o mapa da casa: corredores, cômodos e, se você pedir, os móveis (os arquivos) em cada cômodo.</p>
 <hr>
 <h2>1. Só as pastas</h2>
-<p>Na pasta de teste, o <code>tree</code> sozinho deve mostrar as subpastas (<code>fotos</code>, <code>docs</code>, <code>backup</code>, <code>lixeira</code> e as que a coleta tiver criado):</p>
+<p>Na pasta de teste, o <code>tree</code> sozinho mostrou as quatro subpastas, com o desenho de caixa e a linha do serial no formato anonimizado:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree
-
-« saída a coletar »
-
+Listagem de caminhos de pasta
+O número de série do volume é XXXX-XXXX
+C:.
+├───backup
+├───docs
+├───fotos
+└───lixeira
 C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>tree</dt><dd>o comando: “desenhe as pastas a partir daqui”.</dd><dt>├─── e └───</dt><dd>os galhos da árvore, no desenho padrão do Windows.</dd></dl>
 <hr>
 <h2>2. Também os arquivos</h2>
-<p>A chave <code>/f</code> inclui os nomes dos arquivos em cada pasta:</p>
+<p>A chave <code>/f</code> inclui os nomes dos arquivos em cada pasta. Os arquivos da pasta atual aparecem com <code>│</code> à esquerda; em <code>fotos</code> e em <code>lixeira</code>, os nomes vêm indentados debaixo do galho:</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree /f
-
-« saída a coletar »
-
+Listagem de caminhos de pasta
+O número de série do volume é XXXX-XXXX
+C:.
+│   agenda.txt
+│   log.txt
+│   nomes.txt
+│   notas.txt
+│   rascunho.tmp
+│   rascunho2.tmp
+│   relatorio.docx
+│   relatorio.txt
+│   
+├───backup
+├───docs
+├───fotos
+│       ferias.png
+│       legenda.txt
+│       praia.png
+│       
+└───lixeira
+        dois.txt
+        um.txt
+        velho.tmp
+        
 C:\Users\ana\guia-cmd-teste&gt;</pre>
-<p>A chave <code>/a</code> pede o desenho com caracteres simples:</p>
-<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree /a
-
-« saída a coletar »
-
+<p>Com <code>/a</code>, o mesmo conteúdo (ainda com <code>/f</code>) veio num desenho só com caracteres ASCII: <code>+---</code>, <code>|</code> e <code>\---</code>:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree /f /a
+Listagem de caminhos de pasta
+O número de série do volume é XXXX-XXXX
+C:.
+|   agenda.txt
+|   log.txt
+|   nomes.txt
+|   notas.txt
+|   rascunho.tmp
+|   rascunho2.tmp
+|   relatorio.docx
+|   relatorio.txt
+|   
++---backup
++---docs
++---fotos
+|       ferias.png
+|       legenda.txt
+|       praia.png
+|       
+\---lixeira
+        dois.txt
+        um.txt
+        velho.tmp
+        
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Formas diferentes de ver a árvore</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
 <tr><td><code>tree</code></td><td>Para ver só as subpastas, a partir da pasta atual.</td></tr>
-<tr><td><code>tree /f</code></td><td>Para ver também os arquivos em cada pasta.</td></tr>
-<tr><td><code>tree /a</code></td><td>Para um desenho só com caracteres ASCII.</td></tr>
-<tr><td><code>tree fotos</code></td><td>Para começar a árvore numa subpasta, ainda dentro da pasta de teste.</td></tr>
+<tr><td><code>tree /f</code></td><td>Para ver também os arquivos em cada pasta, com o desenho de caixa.</td></tr>
+<tr><td><code>tree /f /a</code></td><td>O mesmo, com o desenho ASCII (<code>+---</code>, <code>|</code>, <code>\---</code>). Útil se a árvore de caixa vier quebrada no seu terminal.</td></tr>
+<tr><td><code>tree fotos</code></td><td>Para começar a árvore numa subpasta, ainda dentro da pasta de teste. Esta forma não entrou na recoleta; não inventamos a saída.</td></tr>
 </table></div>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Um caminho que não existe</strong>
-<p>O <code>tree pasta-nao-existe</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos.</p>
+<p>O <code>tree pasta-nao-existe</code> não entrou nesta recoleta. A captura anterior, no lote 2, veio com as linhas gráficas perdidas e foi descartada. Por isso esta caixa permanece como placeholder: não inventamos nem traduzimos a mensagem.</p>
 <pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree pasta-nao-existe
 
 « saída a coletar » — mensagem de erro real, nunca inventar
@@ -78,30 +123,29 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <tr><th>Você digita</th><th>O que faz</th></tr>
 <tr><td><code>tree</code></td><td>Desenha as subpastas da pasta atual.</td></tr>
 <tr><td><code>tree /f</code></td><td>Inclui os arquivos no desenho.</td></tr>
-<tr><td><code>tree /a</code></td><td>Usa caracteres ASCII no desenho.</td></tr>
+<tr><td><code>tree /f /a</code></td><td>O mesmo, com caracteres ASCII no desenho.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver a árvore da pasta atual:</p><div class="ex-code"><input data-answer="tree" aria-label="comando"></div></div>
 <div class="exercise"><h3>2. Com arquivos</h3><p>Qual chave inclui os nomes dos arquivos?</p><div class="ex-code">tree <input data-answer="/f" aria-label="chave"></div></div>
-<div class="exercise"><h3>3. ASCII</h3><p>Qual chave pede o desenho só com caracteres ASCII?</p><div class="ex-code">tree <input data-answer="/a" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. ASCII</h3><p>Qual chave pede o desenho só com caracteres ASCII?</p><div class="ex-code">tree /f <input data-answer="/a" aria-label="chave"></div></div>
 <div class="mc" data-answer="2"><p class="mc-q">4. Qual é a diferença, em resumo, entre <code>dir</code> e <code>tree</code>?</p>
 <label><input type="radio" name="q4"> O <code>tree</code> apaga pastas; o <code>dir</code> cria pastas</label>
 <label><input type="radio" name="q4"> O <code>dir</code> lista o conteúdo; o <code>tree</code> desenha a hierarquia de pastas (e, com <code>/f</code>, também os arquivos)</label>
 <label><input type="radio" name="q4"> Não há diferença</label>
 <label><input type="radio" name="q4"> O <code>tree</code> só funciona na raiz do disco</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com o desenho da árvore, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar um ramo</label>
-<label><input type="radio" name="q5"> Inventa uma árvore de memória, com as pastas da semente</label>
-<label><input type="radio" name="q5"> Copia uma árvore de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Mostra uma foto no lugar do terminal</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. A chave <code>/f</code> serve para quê?</p>
-<label><input type="radio" name="q6"> Para formatar o disco</label>
-<label><input type="radio" name="q6"> Para procurar um texto</label>
-<label><input type="radio" name="q6"> Para incluir os arquivos no desenho da árvore</label>
-<label><input type="radio" name="q6"> Para apagar arquivos ocultos</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\btree\\b;;semerro -->
-<div class="trycmd" data-goal="src:\btree\b;;semerro">
+<div class="mc" data-answer="1"><p class="mc-q">5. No laboratório, a linha do serial do volume, nas três capturas do <code>tree</code>, foi:</p>
+<label><input type="radio" name="q5"> <code>O número de série do volume é XXXX-XXXX</code></label>
+<label><input type="radio" name="q5"> <code>O Número de Série do Volume é 000000EF XXXX:XXXX</code></label>
+<label><input type="radio" name="q5"> Uma linha inventada, com o serial real da máquina</label>
+<label><input type="radio" name="q5"> Essa linha não apareceu</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. No <code>tree /f /a</code> desta coleta, o último galho (a pasta <code>lixeira</code>) começou com qual desenho?</p>
+<label><input type="radio" name="q6"> <code>└───lixeira</code></label>
+<label><input type="radio" name="q6"> <code>├───lixeira</code></label>
+<label><input type="radio" name="q6"> <code>\---lixeira</code></label>
+<label><input type="radio" name="q6"> Uma tradução nossa, “fim da árvore”</label></div>
+<div class="trycmd" data-goal="src:\btree\b;;out:Listagem de caminhos de pasta;;out:├───backup;;out:└───lixeira">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, desenhe a árvore de pastas com o <code>tree</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -109,9 +153,17 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 tree
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Listagem de caminhos de pasta
+O número de série do volume é XXXX-XXXX
+C:.
+├───backup
+├───docs
+├───fotos
+└───lixeira
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\btree\\b;;semerro -->
-<div class="trycmd" data-goal="src:\btree\b;;semerro">
+<div class="trycmd" data-goal="src:\btree\b;;src:/f;;out:│   agenda.txt;;out:legenda.txt;;out:velho.tmp">
 <p class="try-task"><strong>Missão:</strong> repita o desenho incluindo os arquivos, com <code>tree /f</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -119,13 +171,39 @@ tree
 <pre class="solucao" data-file="comandos.bat">
 tree /f
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Listagem de caminhos de pasta
+O número de série do volume é XXXX-XXXX
+C:.
+│   agenda.txt
+│   log.txt
+│   nomes.txt
+│   notas.txt
+│   rascunho.tmp
+│   rascunho2.tmp
+│   relatorio.docx
+│   relatorio.txt
+│   
+├───backup
+├───docs
+├───fotos
+│       ferias.png
+│       legenda.txt
+│       praia.png
+│       
+└───lixeira
+        dois.txt
+        um.txt
+        velho.tmp
+        
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li><code>tree</code> desenha as subpastas; <code>/f</code> inclui os arquivos; <code>/a</code> pede caracteres ASCII.</li>
+<li><code>tree</code> desenha as subpastas; <code>/f</code> inclui os arquivos; <code>/a</code> (nesta coleta, <code>tree /f /a</code>) pede caracteres ASCII.</li>
 <li>Rode na pasta de teste, não na raiz do disco.</li>
-<li>O desenho real ainda está a coletar: não foi inventado.</li>
+<li>A linha do serial, nas três saídas, foi <code>O número de série do volume é XXXX-XXXX</code>.</li>
 </ul>
 
 

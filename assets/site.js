@@ -36,7 +36,7 @@ var NIVEIS = [
       ["xcopy.html", "Copiando Pastas (xcopy)"],
       ["robocopy.html", "Cópia Robusta (robocopy)"],
       ["attrib.html", "Atributos (attrib)"],
-      ["tree.html", "Árvore de Pastas (tree)", {pronta: false}]
+      ["tree.html", "Árvore de Pastas (tree)"]
     ]},
     { grupo: "Filtros e Encadeamento", itens: [
       ["find.html", "Procurando Texto (find)"],
