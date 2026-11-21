@@ -23,7 +23,7 @@
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>whoami</code> simples, que nesta coleta mostrou <code>notebook\ana</code>.</li>
 <li>O <code>whoami /groups | find "Administradores"</code>, com o SID <code>S-1-5-32-544</code>, igual em todo Windows.</li>
-<li>O <code>whoami /priv</code>, que listou 24 privilégios: só 4 apareceram como <code>Ativada</code>, entre eles o <code>SeDebugPrivilege</code>, porque o Prompt da coleta estava elevado.</li>
+<li>O <code>whoami /priv</code>, que listou 24 privilégios: só 4 apareceram como <code>Ativada</code>, entre eles o <code>SeDebugPrivilege</code>, porque o Prompt da coleta estava elevado. Num Prompt comum, sem “Executar como administrador”, a lista é bem menor e o <code>SeDebugPrivilege</code> nem aparece.</li>
 <li>Os erros reais do <code>whoami /upn</code> (conta local, sem UPN) e do <code>whoami /opcao-invalida</code>.</li>
 </ul></div>
 <p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, e a linha do <code>whoami</code> simples já veio como <code>notebook\ana</code>. No seu computador, o comando mostra o <em>seu</em> usuário. Não inventamos nem traduzimos mensagem de erro.</p>
