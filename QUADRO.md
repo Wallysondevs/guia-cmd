@@ -103,7 +103,7 @@ Coleta do lote 2 em `_saidas-anon/cmd-lote2.txt` e recoleta do `tree` em `_saida
 
 `variaveis.html` (`set` / `%VAR%`, só com filtro ou nome), `if.html`, `for.html`, `goto.html` / `call.html`, `%errorlevel%`, `encadeamento.html` (`&&` / `||`), `arquivos-bat.html`. Conteúdo escrito pelo Zeca no `c7a06d0`; `pronta` no `NIVEIS` no `87709f0`. Também `setlocal.html` e `parametros.html` (conteúdo `07bf305`; `pronta` no `NIVEIS` no `92958ae`, ainda no Nível 3). O Zeca não edita o `NIVEIS`; se criar páginas novas, o Tito inclui o slug.
 
-Os esqueletos de `tasklist.html`, `date.html`, `time.html` e `hostname.html` estão no repo, ainda `{pronta:false}`, com « saída a coletar » (hash `8a3924a`). A Luna coleta o lote 2e (`date /t`, `time /t`, `hostname`, `tasklist /fi` com `cmd.exe` e `nao-existe.exe`); a Mira anonimiza em `_saidas-anon/cmd-lote2e.txt` (`NOTEBOOK`, PID fixo). O arquivo ainda não chegou. No Nível 3, `setlocal.html` e `parametros.html` foram fechados pelo Zeca no `07bf305` e marcados `pronta` no `NIVEIS` no `92958ae`, no mesmo lugar do menu; o Tito não editou essas páginas.
+A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; PID `12345`). O Tito preencheu `date.html`, `time.html`, `hostname.html` e `tasklist.html` só com essa saída, finalizou as metas e as marcou `pronta`. Cabeçalhos cortados do `tasklist` (`Identifi`, `Uso de memór`) entraram como vieram. O Zeca fechou `choice.html` e `timeout.html` no `2ce28c3`; o Tito as marcou `pronta` no `NIVEIS`, ainda no Nível 3, sem editar as páginas. Hash: `64233e9`. O Nível 2 ficou sem páginas “em breve”. No Nível 3 restam 7: `taskkill`, `sc-query`, `ipconfig`, `ping`, `systeminfo`, `whoami` e `shutdown`.
 
 
 ## Nível 3 (proposta) — notas de privacidade e admin
@@ -148,3 +148,8 @@ Os esqueletos de `tasklist.html`, `date.html`, `time.html` e `hostname.html` est
 - [x] `ren.html` escrito só com as saídas do lote 2, missões com metas que não batem com o comando colado, link para `copy-move-del.html`. `NIVEIS`: `ren` como primeiro item de “Mais sobre Arquivos”, `pronta`. No mesmo commit, `setlocal.html` e `parametros.html` (Zeca, `07bf305`) saíram de `{pronta:false}` e permaneceram no Nível 3, no mesmo lugar. Hash: `92958ae`.
 - [x] Esqueletos de `tasklist.html`, `date.html`, `time.html` e `hostname.html`, `{pronta:false}`, com « saída a coletar ». `_saidas-anon/cmd-lote2e.txt` ainda não chegou. Hash: `8a3924a`.
 - [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (69 missões, 0 problema, inclusive `ren`, `setlocal` e `parametros`); `testar-navegador.js --todas` OK: 38 páginas, 0 com problema; 74 caixas; 296 negativos, 0 falso positivo; 6 “Quase lá!”; 68 “Missão cumprida!”. Sem push. Páginas do Zeca não foram editadas.
+
+## Entrega das 23:20 (20/11/2026, America/Sao_Paulo)
+
+- [x] Lote 2e preenchido (`date`, `time`, `hostname`, `tasklist`) a partir de `_saidas-anon/cmd-lote2e.txt`. `choice` e `timeout` (Zeca, `2ce28c3`) prontos no `NIVEIS`, no Nível 3. Hash: `64233e9`.
+- [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (81 missões, 0 problema); `testar-navegador.js --todas` OK: 40 páginas, 0 com problema; 81 caixas; 324 negativos, 0 falso positivo; 1 “Quase lá!”; 80 “Missão cumprida!”. Sem push. Nível 2: 0 “em breve”. Nível 3: 7 “em breve”.
