@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esperando (timeout) — pausar o Prompt, e a pegadinha do redirecionamento | Guia CMD</title>
+<meta name="description" content="O comando timeout no Prompt de Comando, com a saída real do lote 2e: o erro de redirecionamento de entrada com < nul, e o valor inválido abc.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Esperando (<span class="hl">timeout</span>)</h1>
+
+<p class="intro">O <code>timeout</code> <strong>espera</strong> alguns segundos antes de seguir. Nesta aula as saídas são as da coleta do lote 2e. O invólucro dessa coleta sempre redireciona a entrada com <code>&lt; nul</code>, e o <code>timeout</code> recusou isso: os dois pedidos (<code>/t 1 /nobreak</code> e <code>/t 1</code>) devolveram o mesmo erro de redirecionamento. Essa é a pegadinha da aula. A contagem normal, sem redirecionar a entrada, <strong>não foi coletada</strong> e fica só no texto, sem caixa de saída.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>Que <code>timeout /t 1 /nobreak</code> e <code>timeout /t 1</code>, nesta coleta com a entrada redirecionada, devolveram <code>ERRO: não há suporte para o redirecionamento de entrada; saindo do processo imediatamente.</code></li>
+<li>Que <code>timeout /t abc</code> devolveu o erro real de valor inválido, com o intervalo de <code>-1</code> a <code>99999</code>.</li>
+<li>Que a contagem normal (sem <code>&lt; nul</code>) não tem caixa nesta aula: a coleta não registrou essa saída.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro. A aula de <a href="redirecionamento.html">redirecionamento</a> mostra o <code>&lt;</code>; aqui o foco é o que o <code>timeout</code> faz quando a entrada vem de <code>nul</code>.</p>
+<hr>
+<h2>A ideia: uma pausa no script</h2>
+<p>Às vezes o script precisa esperar um pouco — por exemplo, antes de o próximo pedido rodar. O <code>timeout /t 1</code> é essa pausa de um segundo. Na coleta, porém, a entrada foi redirecionada, e o que apareceu não foi a pausa: foi um erro. Vale entender essa pegadinha antes de usar o comando no seu Prompt.</p>
+<hr>
+<h2>1. A pegadinha: entrada redirecionada</h2>
+<p>O invólucro da coleta sempre manda <code>&lt; nul</code> junto com o pedido. Na tela do Prompt, a linha do comando saiu sem esse redirecionamento, mas a entrada veio de <code>nul</code> do mesmo jeito. Os dois pedidos recusaram e saíram na hora:</p>
+<!-- coleta: timeout /t 1 /nobreak  (entrada redirecionada com < nul) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="timeout /t 1 /nobreak  (entrada redirecionada com &lt; nul)">C:\Users\ana\guia-cmd-teste&gt;timeout /t 1 /nobreak
+ERRO: não há suporte para o redirecionamento de entrada; saindo do processo
+      imediatamente.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<!-- coleta: timeout /t 1  (entrada redirecionada com < nul) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="timeout /t 1  (entrada redirecionada com &lt; nul)">C:\Users\ana\guia-cmd-teste&gt;timeout /t 1
+ERRO: não há suporte para o redirecionamento de entrada; saindo do processo
+      imediatamente.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>/t 1</dt><dd>o tempo da pausa, em segundos, que nesta coleta nem chegou a contar.</dd><dt>/nobreak</dt><dd>no uso normal, impede que uma tecla interrompa a espera. Aqui, com a entrada redirecionada, o pedido também saiu com o mesmo erro.</dd></dl>
+<p>Para reproduzir essa pegadinha no seu Prompt, rode o pedido com <code>&lt; nul</code> no fim: é isso que a coleta fez, e é isso que as missões pedem.</p>
+<hr>
+<h2>2. A contagem normal, só em texto</h2>
+<p>Sem redirecionar a entrada, o <code>timeout /t 1</code> espera o número de segundos (e, no uso comum, mostra uma contagem; com <code>/nobreak</code>, uma tecla não cancela a espera). Essa saída normal <strong>não foi coletada</strong> neste lote, porque o invólucro sempre manda <code>&lt; nul</code>. Esta aula não inventa a caixa. Fica só nesta explicação.</p>
+<hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um valor que não é número</strong>
+<p>O pedido <code>timeout /t abc</code> não é um tempo válido. A coleta devolveu este erro, com o intervalo aceito de <code>-1</code> a <code>99999</code>:</p>
+<!-- coleta: timeout /t abc -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="timeout /t abc">C:\Users\ana\guia-cmd-teste&gt;timeout /t abc
+ERRO: foi especificado um valor inválido para o tempo limite (/T).
+      O intervalo válido vai de -1 a 99999.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
+<h2>Formas diferentes de usar o timeout</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>timeout /t 1</code></td><td>Para esperar um segundo, sem redirecionar a entrada. A contagem normal fica só no texto nesta aula.</td></tr>
+<tr><td><code>timeout /t 1 /nobreak</code></td><td>A mesma espera, sem deixar uma tecla cancelar. Só no texto, no uso normal.</td></tr>
+<tr><td><code>timeout /t 1 &lt; nul</code> ou <code>timeout /t 1 /nobreak &lt; nul</code></td><td>Para reproduzir a pegadinha da coleta: o erro de redirecionamento de entrada.</td></tr>
+<tr><td><code>timeout /t abc</code></td><td>Não use: o valor é inválido, e a coleta mostrou o erro com o intervalo de <code>-1</code> a <code>99999</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>timeout /t 1 /nobreak &lt; nul</code></td><td>Nesta coleta (e com <code>&lt; nul</code>), devolve <code>ERRO: não há suporte para o redirecionamento de entrada</code>.</td></tr>
+<tr><td><code>timeout /t 1 &lt; nul</code></td><td>O mesmo erro, sem o <code>/nobreak</code>.</td></tr>
+<tr><td><code>timeout /t abc</code></td><td>Devolve o erro de valor inválido para o <code>/T</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Qual chave indica o tempo da pausa, em segundos?</p><div class="ex-code">timeout <input data-answer="/t" aria-label="chave"> 1</div></div>
+<div class="exercise"><h3>2. Sem interromper</h3><p>Qual chave, no uso normal, impede que uma tecla cancele a espera?</p><div class="ex-code">timeout /t 1 <input data-answer="/nobreak" aria-label="chave"></div></div>
+<div class="exercise"><h3>3. O intervalo válido</h3><p>No erro do <code>timeout /t abc</code>, até que número vai o intervalo válido do <code>/T</code>?</p><div class="ex-code">O intervalo válido vai de -1 a <input data-answer="99999" aria-label="limite">.</div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O que a coleta mostrou ao rodar <code>timeout /t 1 /nobreak</code> (com a entrada redirecionada)?</p>
+<label><input type="radio" name="q4"> Uma contagem de um segundo, e depois o próximo prompt</label>
+<label><input type="radio" name="q4"> <code>ERRO: não há suporte para o redirecionamento de entrada; saindo do processo imediatamente.</code></label>
+<label><input type="radio" name="q4"> O erro de valor inválido para o <code>/T</code></label>
+<label><input type="radio" name="q4"> Nada: o comando ficou esperando uma tecla para sempre</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que esta aula não traz caixa da contagem normal do <code>timeout</code>?</p>
+<label><input type="radio" name="q5"> Porque essa saída não foi coletada (o invólucro sempre manda <code>&lt; nul</code>), e a aula não inventa a caixa</label>
+<label><input type="radio" name="q5"> Porque o <code>timeout</code> não existe no Prompt em português</label>
+<label><input type="radio" name="q5"> Porque o <code>/t 1</code> é uma sintaxe inválida</label>
+<label><input type="radio" name="q5"> Porque a pasta de teste recusou o comando</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. No pedido <code>timeout /t abc</code>, o que a coleta mostrou?</p>
+<label><input type="radio" name="q6"> Uma pausa de 1 segundo, tratando <code>abc</code> como 1</label>
+<label><input type="radio" name="q6"> O erro de redirecionamento de entrada</label>
+<label><input type="radio" name="q6"> O erro de valor inválido para o tempo limite, com o intervalo de <code>-1</code> a <code>99999</code></label>
+<label><input type="radio" name="q6"> A mensagem <code>Continuar [S,N]?S</code></label></div>
+<div class="trycmd" data-goal="src:\btimeout\b;;src:/nobreak;;src:&lt; nul;;erro:não há suporte para o redirecionamento de entrada">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, rode <code>timeout /t 1 /nobreak &lt; nul</code> e observe o erro de redirecionamento de entrada.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+timeout /t 1 /nobreak &lt; nul
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ERRO: não há suporte para o redirecionamento de entrada; saindo do processo
+      imediatamente.
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btimeout\b;;src:/t 1;;src:&lt; nul;;erro:não há suporte para o redirecionamento de entrada">
+<p class="try-task"><strong>Missão:</strong> rode também <code>timeout /t 1 &lt; nul</code>, sem o <code>/nobreak</code>, e confirme o mesmo erro.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+timeout /t 1 &lt; nul
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ERRO: não há suporte para o redirecionamento de entrada; saindo do processo
+      imediatamente.
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btimeout\b;;src:\babc\b;;erro:foi especificado um valor inválido para o tempo limite (/T).">
+<p class="try-task"><strong>Missão:</strong> rode <code>timeout /t abc</code> e observe o erro de valor inválido, com o intervalo de <code>-1</code> a <code>99999</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+timeout /t abc
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ERRO: foi especificado um valor inválido para o tempo limite (/T).
+      O intervalo válido vai de -1 a 99999.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>Nesta coleta, <code>timeout /t 1 /nobreak</code> e <code>timeout /t 1</code> devolveram <code>ERRO: não há suporte para o redirecionamento de entrada; saindo do processo imediatamente.</code> A causa foi o <code>&lt; nul</code> do invólucro.</li>
+<li>A contagem normal, sem redirecionar a entrada, não foi coletada: fica só no texto, sem caixa de saída.</li>
+<li>O <code>timeout /t abc</code> mostrou o erro de valor inválido, com o intervalo de <code>-1</code> a <code>99999</code>.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

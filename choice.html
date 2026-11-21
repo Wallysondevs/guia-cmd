@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perguntando ao Usuário (choice) — perguntar S ou N no Prompt e ler o errorlevel | Guia CMD</title>
+<meta name="description" content="O comando choice no Prompt de Comando, com a saída real do lote 2e: Continuar [S,N]?S, errorlevel 2 com o padrão n, e o erro de /T sem /D.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Tópicos"></nav>
+<main class="main">
+<div class="content">
+
+<div class="pager"></div>
+
+<h1>Perguntando ao Usuário (<span class="hl">choice</span>)</h1>
+
+<p class="intro">O <code>choice</code> faz uma <strong>pergunta de letras</strong> no Prompt: o usuário escolhe uma das opções, e o código de saída fica no <code>errorlevel</code>. Nesta aula as saídas são as da coleta do lote 2e, todas com <code>/t 1</code> e <code>/d</code>, para o comando não ficar esperando tecla. O uso interativo, em que alguém aperta S ou N, fica só no texto: esta coleta não tem caixa desse pedido.</p>
+<div class="note"><strong>Você vai aprender</strong><ul>
+<li>O <code>choice /c sn /t 1 /d s /m "Continuar"</code>, que nesta coleta mostrou <code>Continuar [S,N]?S</code>.</li>
+<li>O <code>choice /c sn /t 1 /d n /m "Apagar tudo" &gt;nul &amp; echo errorlevel: !errorlevel!</code>, coletado com <code>cmd /v:on</code>, que mostrou <code>errorlevel: 2</code>.</li>
+<li>Que <code>choice /c sn /t 1</code>, sem <code>/d</code>, devolveu o erro real: <code>/T só pode ser especificado quando /D é especificado</code>.</li>
+<li>O uso interativo (sem <code>/t</code> e sem <code>/d</code>, esperando uma tecla) <strong>não foi coletado</strong>, e por isso fica só no texto, sem caixa de saída.</li>
+</ul></div>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro. A aula de <a href="if.html">if</a> já mostrou o <code>errorlevel</code>; aqui o foco é o <code>choice</code> que o preenche.</p>
+<hr>
+<h2>A ideia: uma pergunta com letras</h2>
+<p>Em vez de um “sim ou não” escrito por extenso, o <code>choice</code> mostra as letras permitidas e espera uma delas. Na coleta, para ninguém precisar apertar tecla, o pedido usou <code>/t 1</code> (espera um segundo) e <code>/d</code> (a letra padrão, se o tempo acabar).</p>
+<hr>
+<h2>1. A resposta automática com <code>/d s</code></h2>
+<p>O <code>/c sn</code> libera as letras S e N. O <code>/m</code> coloca o texto da pergunta. Com o padrão <code>s</code>, a coleta devolveu a pergunta e, no fim da mesma linha, a letra escolhida: <code>S</code>.</p>
+<!-- coleta: choice /c sn /t 1 /d s /m "Continuar" -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="choice /c sn /t 1 /d s /m &quot;Continuar&quot;">C:\Users\ana\guia-cmd-teste&gt;choice /c sn /t 1 /d s /m "Continuar"
+Continuar [S,N]?S
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<dl class="anatomy"><dt>/c sn</dt><dd>as letras permitidas: S ou N.</dd><dt>/t 1</dt><dd>espera um segundo antes de usar o padrão.</dd><dt>/d s</dt><dd>a letra padrão, quando o tempo acaba.</dd><dt>/m "Continuar"</dt><dd>o texto da pergunta, que a tela mostrou junto com <code>[S,N]?</code>.</dd></dl>
+<p>A lista saiu em maiúsculas, <code>[S,N]</code>, mesmo com o <code>/c sn</code> em minúsculas. A letra padrão também apareceu como <code>S</code>.</p>
+<hr>
+<h2>2. O <code>errorlevel</code> com o padrão <code>n</code></h2>
+<p>A primeira letra do <code>/c</code> vale 1, a segunda vale 2, e assim por diante. Nesta coleta o padrão foi <code>n</code> — a segunda letra — e a tela mostrou <code>errorlevel: 2</code>. O <code>&gt;nul</code> escondeu a pergunta <code>Apagar tudo [S,N]?</code>; só o <code>echo</code> do código de saída ficou visível.</p>
+<p>O <code>!errorlevel!</code> foi coletado com expansão atrasada, em <code>cmd /v:on</code>, para o valor ser lido <em>depois</em> do <code>choice</code> na mesma linha. Sem essa expansão, a aula de <a href="if.html">if</a> já mostrou o problema do <code>%errorlevel%</code> expandido cedo demais.</p>
+<!-- coleta: choice /c sn /t 1 /d n /m "Apagar tudo" >nul & echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on) -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="choice /c sn /t 1 /d n /m &quot;Apagar tudo&quot; &gt;nul &amp; echo errorlevel: !errorlevel!  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;choice /c sn /t 1 /d n /m "Apagar tudo" &gt;nul &amp; echo errorlevel: !errorlevel!
+errorlevel: 2
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. Sem <code>/d</code>, o <code>/t</code> sozinho é erro</h2>
+<p>O pedido <code>choice /c sn /t 1</code>, sem a chave <code>/d</code>, não chegou a perguntar nada. A coleta devolveu este erro:</p>
+<!-- coleta: choice /c sn /t 1 -->
+<pre class="term" data-title="Prompt de Comando" data-coleta="choice /c sn /t 1">C:\Users\ana\guia-cmd-teste&gt;choice /c sn /t 1
+ERRO: Sintaxe inválida. /T só pode ser especificado quando /D é especificado.
+Digite "CHOICE /?" para obter detalhes sobre o uso.
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>4. O uso interativo, só em texto</h2>
+<p>Sem <code>/t</code> e sem <code>/d</code>, o <code>choice</code> fica parado até alguém apertar uma das letras. Esse pedido interativo <strong>não foi coletado</strong> neste lote (todos os casos usaram <code>/t 1</code>, para não esperar tecla), e esta aula não inventa a caixa. Fica só nesta explicação.</p>
+<hr>
+<h2>Formas diferentes de usar o choice</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Forma</th><th>Quando usar</th></tr>
+<tr><td><code>choice /c sn /t 1 /d s /m "Continuar"</code></td><td>Para perguntar S ou N, com padrão S depois de um segundo. Na coleta, a tela mostrou <code>Continuar [S,N]?S</code>.</td></tr>
+<tr><td><code>choice … /d n &gt;nul &amp; echo errorlevel: !errorlevel!</code></td><td>Para ler o código de saída (com <code>cmd /v:on</code>). Nesta coleta, o padrão N devolveu <code>errorlevel: 2</code>.</td></tr>
+<tr><td><code>choice /c sn /t 1</code></td><td>Não use: sem <code>/d</code>, o <code>/t</code> sozinho devolve o erro de sintaxe da coleta.</td></tr>
+<tr><td><code>choice /c sn /m "Continuar"</code></td><td>Uso interativo, esperando uma tecla. Só no texto nesta aula.</td></tr>
+</table></div>
+<hr>
+<h2>Referência rápida</h2>
+<div class="table-wrap"><table class="ref">
+<tr><th>Você digita</th><th>O que faz</th></tr>
+<tr><td><code>choice /c sn /t 1 /d s /m "Continuar"</code></td><td>Pergunta S ou N e, na coleta, escolheu S sozinho: <code>Continuar [S,N]?S</code>.</td></tr>
+<tr><td><code>choice /c sn /t 1 /d n /m "Apagar tudo" &gt;nul &amp; echo errorlevel: !errorlevel!</code></td><td>Esconde a pergunta e mostra o código. Na coleta, com <code>cmd /v:on</code>, saiu <code>errorlevel: 2</code>.</td></tr>
+<tr><td><code>choice /c sn /t 1</code></td><td>Falhou: <code>/T só pode ser especificado quando /D é especificado</code>.</td></tr>
+</table></div>
+<hr>
+<h2>Exercícios</h2>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Qual chave indica as letras permitidas, como o <code>sn</code> da coleta?</p><div class="ex-code">choice <input data-answer="/c" aria-label="chave"> sn /t 1 /d s /m "Continuar"</div></div>
+<div class="exercise"><h3>2. O padrão</h3><p>Qual chave escolhe a letra usada quando o tempo do <code>/t</code> acaba?</p><div class="ex-code">choice /c sn /t 1 <input data-answer="/d" aria-label="chave"> s /m "Continuar"</div></div>
+<div class="exercise"><h3>3. O código de saída</h3><p>Na coleta com o padrão <code>n</code>, qual número apareceu depois de <code>errorlevel:</code>?</p><div class="ex-code">errorlevel: <input data-answer="2" aria-label="código"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. No pedido <code>choice /c sn /t 1 /d s /m "Continuar"</code>, o que a coleta mostrou?</p>
+<label><input type="radio" name="q4"> Só a letra <code>S</code>, numa linha sozinha</label>
+<label><input type="radio" name="q4"> <code>Continuar [S,N]?S</code></label>
+<label><input type="radio" name="q4"> <code>errorlevel: 2</code></label>
+<label><input type="radio" name="q4"> O erro de que <code>/T</code> precisa de <code>/D</code></label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Por que o <code>choice /c sn /t 1</code>, sem <code>/d</code>, não fez a pergunta?</p>
+<label><input type="radio" name="q5"> Porque a sintaxe é inválida: <code>/T</code> só pode ser especificado quando <code>/D</code> é especificado</label>
+<label><input type="radio" name="q5"> Porque o <code>choice</code> não existe no Prompt em português</label>
+<label><input type="radio" name="q5"> Porque o <code>/c sn</code> exige um arquivo <code>.bat</code></label>
+<label><input type="radio" name="q5"> Porque o Prompt recusou a pasta de teste</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. Por que esta aula não traz caixa do <code>choice</code> esperando uma tecla?</p>
+<label><input type="radio" name="q6"> Porque o <code>choice</code> não funciona sem <code>/t</code></label>
+<label><input type="radio" name="q6"> Porque esse pedido apaga a pasta de teste</label>
+<label><input type="radio" name="q6"> Porque esta coleta não rodou o pedido interativo, e a aula não inventa a saída</label>
+<label><input type="radio" name="q6"> Porque o <code>errorlevel</code> 2 proíbe o uso interativo</label></div>
+<div class="trycmd" data-goal="src:\bchoice\b;;src:/d s;;out:Continuar [S,N]?S">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, rode <code>choice /c sn /t 1 /d s /m "Continuar"</code> e observe a pergunta com a letra <code>S</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+choice /c sn /t 1 /d s /m "Continuar"
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Continuar [S,N]?S
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bchoice\b;;src:!errorlevel!;;out:errorlevel: 2">
+<p class="try-task"><strong>Missão:</strong> rode <code>choice /c sn /t 1 /d n /m "Apagar tudo" &gt;nul &amp; echo errorlevel: !errorlevel!</code> com expansão atrasada (<code>cmd /v:on</code>) e observe o <code>errorlevel: 2</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+choice /c sn /t 1 /d n /m "Apagar tudo" &gt;nul &amp; echo errorlevel: !errorlevel!
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+errorlevel: 2
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bchoice\b;;src:/t 1;;erro:Sintaxe inválida. /T só pode ser especificado quando /D é especificado.">
+<p class="try-task"><strong>Missão:</strong> rode <code>choice /c sn /t 1</code>, sem o <code>/d</code>, e observe o erro de sintaxe.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+choice /c sn /t 1
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+ERRO: Sintaxe inválida. /T só pode ser especificado quando /D é especificado.
+Digite "CHOICE /?" para obter detalhes sobre o uso.
+</pre>
+</div>
+<hr>
+<h2>Resumo</h2>
+<ul>
+<li>O <code>choice /c sn /t 1 /d s /m "Continuar"</code> mostrou <code>Continuar [S,N]?S</code>.</li>
+<li>Com o padrão <code>n</code> e o <code>!errorlevel!</code> (em <code>cmd /v:on</code>), a coleta mostrou <code>errorlevel: 2</code>.</li>
+<li>Sem <code>/d</code>, o <code>/t</code> sozinho devolveu o erro: <code>/T só pode ser especificado quando /D é especificado</code>.</li>
+<li>O uso interativo, esperando tecla, não foi coletado: fica só no texto, sem caixa de saída.</li>
+</ul>
+
+<div class="pager"></div>
+
+</div>
+</main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>
