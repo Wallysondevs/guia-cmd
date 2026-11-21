@@ -29,7 +29,7 @@
 </ul></div>
 <div class="note"><strong>Sobre as saídas.</strong> Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro.</div>
 
-<p>A coleta deixou na pasta de teste alguns arquivos prontos, entre eles <code>ola.bat</code> e <code>params.bat</code>. As linhas abaixo são o conteúdo que a coleta gravou — não são a saída do <code>type</code>. A caixa do <code>type</code> continua com o placeholder, até a Mira liberar o arquivo anonimizado.</p>
+<p>A coleta deixou na pasta de teste alguns arquivos prontos, entre eles <code>ola.bat</code> e <code>params.bat</code>. Nesta aula você vê o conteúdo desses arquivos e a saída real do <code>type</code>, da execução pelo nome e do <code>call</code>.</p>
 <hr>
 <h2>A ideia: uma receita salva</h2>
 <p>Em vez de ditar cada passo na hora, você escreve os passos num arquivo e chama o arquivo pelo nome. O Prompt lê de cima para baixo. A pasta de trabalho continua sendo a pasta de teste.</p>
@@ -42,7 +42,7 @@
 <pre class="file">@echo off
 echo Olá do arquivo .bat
 echo Pasta atual: %CD%</pre>
-<p>O <code>@echo off</code> pede para o Prompt não repetir cada linha antes de executá-la. O <code>@</code> na frente aplica isso já à própria linha. O <code>echo Pasta atual: %CD%</code> mostra a pasta corrente (na saída real, o caminho será anonimizado pela Mira; não adiantamos esse texto).</p>
+<p>O <code>@echo off</code> pede para o Prompt não repetir cada linha antes de executá-la. O <code>@</code> na frente aplica isso já à própria linha. O <code>echo Pasta atual: %CD%</code> mostra a pasta corrente — na saída colhida, <code>C:\Users\ana\guia-cmd-teste</code>.</p>
 <p>O <code>type</code> mostra o arquivo. Rodar <code>ola.bat</code> pelo nome executa a receita. O <code>call ola.bat</code> também chama o arquivo, e é o jeito certo de chamá-lo de dentro de outro <code>.bat</code> se você quiser que a execução volte — isso fica para a aula do <code>call</code>.</p>
 <!-- coleta: type ola.bat -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="type ola.bat">C:\Users\ana\guia-cmd-teste&gt;type ola.bat
