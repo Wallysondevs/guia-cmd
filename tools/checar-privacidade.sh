@@ -6,7 +6,7 @@
 # dos padrões embutidos (genéricos: SID, MAC, GUID, IP, serial do
 # volume do dir, C:\Users\<nome> que não seja ana, Endereço Físico).
 # Os nomes reais (computador, usuário, pastas da máquina) NÃO ficam
-# neste script: a Mira os mantém só no arquivo de fora do repo.
+# neste script: eles ficam só no arquivo de fora do repositório.
 # "re:" = expressão regular (grep -P), sem diferenciar maiúsculas.
 set -u
 cd "$(dirname "$0")/.."

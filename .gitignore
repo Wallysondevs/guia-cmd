@@ -8,3 +8,6 @@ tools/node_modules/
 __pycache__/
 tools/_aula_lib.py
 tools/_lote1-cmds.json
+
+# quadro interno de trabalho, não publicar
+QUADRO.md
