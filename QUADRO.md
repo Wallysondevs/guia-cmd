@@ -160,6 +160,11 @@ A Mira liberou `_saidas-anon/cmd-lote2e.txt` (checador OK; hostname `NOTEBOOK`; 
 
 O Tito escreve `taskkill.html` (só um `ping -n 30 127.0.0.1` aberto pelo próprio script, encerrado pelo PID, e o erro com `nao-existe.exe`), `sc-query.html` (`sc query Spooler` e `sc query servico-que-nao-existe`) e `shutdown.html` (`shutdown /?` e `shutdown /a`; no texto, `/s` e `/r` desligam e reiniciam de verdade e não têm caixa de execução). O Zeca escreve `ipconfig.html`, `ping.html`, `systeminfo.html` e `whoami.html`; o Tito não cria nem edita essas páginas.
 
-Esqueletos das 3 aulas do Tito, `{pronta:false}`, com « saída a coletar ». Hash: `06adaf1`. A coleta anonimizada em `_saidas-anon/cmd-lote3*.txt` ainda não chegou.
+A Mira liberou `_saidas-anon/cmd-lote3.txt`. O Tito preencheu `taskkill.html`, `sc-query.html` e `shutdown.html` com a saída real e as marcou `pronta` (hash `879fae4`). No `taskkill`, o `/pid` sem `/f` já encerrou o ping; o `/f` logo depois deu processo não encontrado. No `sc`, o Spooler estava `RUNNING` e o nome inexistente deu `FALHA 1060` (não houve `sc qc` na captura). No `shutdown`, entram o `/?`, o `/a` com erro `1116` e a opção inválida, que só repetiu a ajuda. O checador (e a linha correspondente do `PROIBIDO`) libera o `192.168.56.1` exato e só os ilustrativos `169.254.10.20` e `169.254.10.21`, não a faixa `169.254` inteira. No arquivo, o `169.254` já vinha como `169.254.10.20`. Os SIDs bem conhecidos `S-1-5-32-544` e `S-1-5-114` não são barrados pelo padrão `S-1-5-21-`. As páginas do Zeca (`ipconfig`, `ping`, `systeminfo`, `whoami`) não foram editadas nem incluídas neste commit.
 
 - [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (81 missões, 0 problema; as 3 novas continuam “em breve” e foram puladas neste teste); `testar-navegador.js --todas` OK: 43 páginas, 0 com problema; 84 caixas; 336 negativos, 0 falso positivo; 4 “Quase lá!”; 80 “Missão cumprida!”. Sem push.
+
+## Entrega do lote 3 do Tito (20/11/2026, America/Sao_Paulo)
+
+- [x] `taskkill.html`, `sc-query.html` e `shutdown.html` preenchidos com `_saidas-anon/cmd-lote3.txt`, `pronta` no `NIVEIS`. Checador: libera `192.168.56.1` e `169.254.10.20`/`169.254.10.21` (exatos). Hash: `879fae4`.
+- [x] Checador com `PROIBIDO` OK; `testar-missoes.js` OK (87 missões, 0 problema); `testar-navegador.js --todas` OK: 47 páginas, 0 com problema; 100 caixas; 400 negativos, 0 falso positivo; 1 “Quase lá!”; 99 “Missão cumprida!”. Sem push. Páginas do Zeca não entraram no commit.
