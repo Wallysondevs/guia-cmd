@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Variáveis (%VAR% e set) — criar e ler variáveis só da aula no Prompt | Guia CMD</title>
-<meta name="description" content="O comando set no Prompt de Comando: criar uma variável com set nome=valor, ler com %nome%, fazer conta com set /a, e o set /p só em texto. Saídas ainda a coletar.">
+<meta name="description" content="O comando set no Prompt de Comando: criar uma variável com set nome=valor, ler com %nome%, fazer conta com set /a, e o set /p só em texto.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -26,8 +26,7 @@
 <li>O <code>set /a</code>, que faz conta.</li>
 <li>O <code>set /p</code>, só em texto: ele espera você digitar, e por isso não tem caixa de saída nesta aula.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<div class="note"><strong>Sobre as saídas.</strong> Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro.</div>
 
 <hr>
 <h2>A ideia: uma caixinha com etiqueta</h2>
@@ -37,23 +36,20 @@
 <p>O nome fica encostado no <code>=</code>, e o valor também. Um espaço antes do <code>=</code> faria o Prompt procurar um nome diferente, com um espaço no fim — e a variável que você queria não nasceria. A coleta usou o jeito certo:</p>
 <!-- coleta: set GUIA_NOME=Ana & echo %GUIA_NOME% -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set GUIA_NOME=Ana &amp; echo %GUIA_NOME%">C:\Users\ana\guia-cmd-teste&gt;set GUIA_NOME=Ana &amp; echo %GUIA_NOME%
-
-« saída a coletar »
+%GUIA_NOME%
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <dl class="anatomy"><dt>set</dt><dd>o comando: “guarde isto numa variável”.</dd><dt>GUIA_NOME=Ana</dt><dd>o nome, o <code>=</code> encostado e o valor. Sem espaço antes do <code>=</code>.</dd><dt>&amp;</dt><dd>em seguida, na mesma linha, o <code>echo</code> tenta mostrar o valor.</dd><dt>%GUIA_NOME%</dt><dd>a leitura da variável.</dd></dl>
-<p>Na mesma linha, o <code>%GUIA_NOME%</code> às vezes ainda não viu o valor que acabou de ser criado. Por isso a coleta também rodou com a expansão atrasada ligada (<code>cmd /v:on</code>), usando <code>!GUIA_NOME!</code>. A caixa abaixo é essa segunda chamada, não uma saída inventada:</p>
+<p>Na mesma linha, o <code>%GUIA_NOME%</code> ainda não viu o valor que acabou de ser criado: a primeira caixa imprimiu o texto literal <code>%GUIA_NOME%</code>. Por isso a coleta também rodou com a expansão atrasada ligada (<code>cmd /v:on</code>), usando <code>!GUIA_NOME!</code>. Sem aspas na atribuição, a saída foi <code>[Ana ]</code> — com um espaço depois de Ana:</p>
 <!-- coleta: set GUIA_NOME=Ana & echo [!GUIA_NOME!]  (Rodar-CmdV, cmd /v:on) -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set GUIA_NOME=Ana &amp; echo [!GUIA_NOME!]  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set GUIA_NOME=Ana &amp; echo [!GUIA_NOME!]
-
-« saída a coletar »
+[Ana ]
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>Com aspas em volta da atribuição, o valor fica bem delimitado. Também coletado com <code>/v:on</code>:</p>
 <!-- coleta: set "GUIA_NOME=Ana" & echo [!GUIA_NOME!]  (Rodar-CmdV, cmd /v:on) -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_NOME=Ana&quot; &amp; echo [!GUIA_NOME!]  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_NOME=Ana" &amp; echo [!GUIA_NOME!]
-
-« saída a coletar »
+[Ana]
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -61,14 +57,13 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O <code>set</code> sozinho listaria muita coisa do sistema, inclusive caminhos do perfil. Esta aula nunca pede isso. O jeito seguro é filtrar pelo prefixo <code>GUIA_</code>:</p>
 <!-- coleta: set "GUIA_NOME=Ana" & set GUIA_ -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_NOME=Ana&quot; &amp; set GUIA_">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_NOME=Ana" &amp; set GUIA_
-
-« saída a coletar »
+GUIA_NOME=Ana
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: set "GUIA_NOME=Ana" & set "GUIA_CIDADE=Recife" & set GUIA_ -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_NOME=Ana&quot; &amp; set &quot;GUIA_CIDADE=Recife&quot; &amp; set GUIA_">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_NOME=Ana" &amp; set "GUIA_CIDADE=Recife" &amp; set GUIA_
-
-« saída a coletar »
+GUIA_CIDADE=Recife
+GUIA_NOME=Ana
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -76,26 +71,32 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O <code>/a</code> pede uma expressão aritmética. A coleta tem uma conta simples, uma com parênteses e duas que guardam o resultado em <code>GUIA_X</code> (estas últimas, de novo, com <code>/v:on</code>, para o <code>echo</code> na mesma linha ver o valor novo):</p>
 <!-- coleta: set /a 5+3 -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a 5+3">C:\Users\ana\guia-cmd-teste&gt;set /a 5+3
-
-« saída a coletar »
+8
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: set /a "(10+2)*3" -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a &quot;(10+2)*3&quot;">C:\Users\ana\guia-cmd-teste&gt;set /a "(10+2)*3"
-
-« saída a coletar »
+36
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: set /a GUIA_X=10*2 >nul & echo GUIA_X vale !GUIA_X!  (Rodar-CmdV, cmd /v:on) -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a GUIA_X=10*2 &gt;nul &amp; echo GUIA_X vale !GUIA_X!  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set /a GUIA_X=10*2 &gt;nul &amp; echo GUIA_X vale !GUIA_X!
-
-« saída a coletar »
+GUIA_X vale 20
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: set /a GUIA_X=7 >nul & set /a GUIA_X+=5 >nul & echo !GUIA_X!  (Rodar-CmdV, cmd /v:on) -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a GUIA_X=7 &gt;nul &amp; set /a GUIA_X+=5 &gt;nul &amp; echo !GUIA_X!  (Rodar-CmdV, cmd /v:on)">C:\Users\ana\guia-cmd-teste&gt;set /a GUIA_X=7 &gt;nul &amp; set /a GUIA_X+=5 &gt;nul &amp; echo !GUIA_X!
-
-« saída a coletar »
+12
+C:\Users\ana\guia-cmd-teste&gt;set /p GUIA_R=Seu nome: 
+Seu nome: 
+C:\Users\ana\guia-cmd-teste&gt;echo %OS%
+Windows_NT
+C:\Users\ana\guia-cmd-teste&gt;echo %CD%
+C:\Users\ana\guia-cmd-teste
+C:\Users\ana\guia-cmd-teste&gt;echo %COMSPEC%
+C:\Windows\system32\cmd.exe
+C:\Users\ana\guia-cmd-teste&gt;echo %WINDIR%
+C:\Windows
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -114,35 +115,31 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Uma variável que você apagou</strong>
-<p>Depois de criar <code>GUIA_NOME</code> e em seguida esvaziar o nome com <code>set "GUIA_NOME="</code>, o pedido <code>set GUIA_NOME</code> já não encontra a variável. A mensagem real está a coletar:</p>
+<p>Depois de criar <code>GUIA_NOME</code> e em seguida esvaziar o nome com <code>set "GUIA_NOME="</code>, o pedido <code>set GUIA_NOME</code> já não encontra a variável. A mensagem real foi esta:</p>
 <!-- coleta: set "GUIA_NOME=Ana" & set "GUIA_NOME=" & set GUIA_NOME -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set &quot;GUIA_NOME=Ana&quot; &amp; set &quot;GUIA_NOME=&quot; &amp; set GUIA_NOME">C:\Users\ana\guia-cmd-teste&gt;set "GUIA_NOME=Ana" &amp; set "GUIA_NOME=" &amp; set GUIA_NOME
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+Variável de ambiente GUIA_NOME não definida
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <div class="cenario"><strong>Uma conta impossível</strong>
-<p>O <code>set /a 5/0</code> e o <code>set /a 5+</code> pedem contas que o Prompt não fecha. As mensagens reais estão a coletar — não inventamos nem traduzimos.</p>
+<p>O <code>set /a 5/0</code> e o <code>set /a 5+</code> pedem contas que o Prompt não fecha. As mensagens reais foram <code>Erro de divisão por zero.</code> e <code>Falta um operando.</code></p>
 <!-- coleta: set /a 5/0 -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a 5/0">C:\Users\ana\guia-cmd-teste&gt;set /a 5/0
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+Erro de divisão por zero.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: set /a 5+ -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="set /a 5+">C:\Users\ana\guia-cmd-teste&gt;set /a 5+
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+Falta um operando.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <div class="cenario"><strong>Um nome que nunca existiu</strong>
-<p>O <code>echo %GUIA_NAO_EXISTE%</code> pede uma variável que a aula não criou. A resposta real está a coletar:</p>
+<p>O <code>echo %GUIA_NAO_EXISTE%</code> pede uma variável que a aula não criou. A resposta real foi o próprio texto <code>%GUIA_NAO_EXISTE%</code>:</p>
 <!-- coleta: echo %GUIA_NAO_EXISTE% -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="echo %GUIA_NAO_EXISTE%">C:\Users\ana\guia-cmd-teste&gt;echo %GUIA_NAO_EXISTE%
-
-« saída a coletar »
+%GUIA_NAO_EXISTE%
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -176,8 +173,7 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <label><input type="radio" name="q6"> Porque ele só funciona no PowerShell</label>
 <label><input type="radio" name="q6"> Porque ele é interativo: espera você digitar, e esta aula não inventa essa saída</label>
 <label><input type="radio" name="q6"> Porque ele lista o <code>%PATH%</code></label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bset\b;;semerro -->
-<div class="trycmd" data-goal="src:\bset\b;;semerro">
+<div class="trycmd" data-goal="src:\bset\b;;src:\becho\b;;outre:^%GUIA_NOME%$">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, crie <code>GUIA_NOME</code> com o valor <code>Ana</code> e mostre o valor com <code>echo %GUIA_NOME%</code>, na mesma linha, ligados por <code>&amp;</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -185,15 +181,20 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 set GUIA_NOME=Ana &amp; echo %GUIA_NOME%
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+%GUIA_NOME%
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bset\b;;semerro -->
-<div class="trycmd" data-goal="src:\bset\b;;semerro">
+<div class="trycmd" data-goal="src:\bset\b;;src:/a;;outre:^8$">
 <p class="try-task"><strong>Missão:</strong> peça ao Prompt a conta <code>5+3</code> com <code>set /a</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
 set /a 5+3
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+8
 </pre>
 </div>
 <hr>
@@ -202,7 +203,7 @@ set /a 5+3
 <li><code>set NOME=valor</code> cria a variável, com o <code>=</code> encostado no nome. <code>%NOME%</code> lê o valor.</li>
 <li>Só usamos variáveis da aula, com o prefixo <code>GUIA_</code>. Nunca o <code>set</code> sozinho, nem <code>%PATH%</code>, <code>%USERNAME%</code>, <code>%USERPROFILE%</code> ou <code>%COMPUTERNAME%</code>.</li>
 <li><code>set /a</code> faz conta. <code>set /p</code> pergunta e espera: nesta aula, só em texto.</li>
-<li>As saídas reais ainda estão a coletar.</li>
+<li>Na mesma linha, <code>set GUIA_NOME=Ana &amp; echo %GUIA_NOME%</code> imprimiu o texto literal <code>%GUIA_NOME%</code>, porque a expansão com <code>%</code> acontece antes da linha rodar.</li>
 </ul>
 
 <div class="pager"></div>

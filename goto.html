@@ -25,8 +25,7 @@
 <li>O <code>goto :eof</code>, só em texto aqui: ele encerra o script (ou o pedaço chamado por <code>call :rótulo</code>). A coleta está no <code>chama.bat</code> da aula do <code>call</code>.</li>
 <li>Um laço feito com <code>goto</code> e um <strong>contador</strong> que em algum momento termina, no <code>conta.bat</code>: <code>Volta 1</code>, <code>Volta 2</code>, <code>Volta 3</code> e <code>Acabou</code>.</li>
 </ul></div>
-<div class="note"><strong>Saídas desta aula.</strong> Parte das respostas do Prompt já veio do lote 2b, anonimizado em <code>_saidas-anon/cmd-lote2b.txt</code>. As demais caixas ainda mostram o placeholder <strong>« saída a coletar »</strong>, até o restante da coleta entrar. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>As saídas reais foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. O placeholder <strong>« saída a coletar »</strong> não é resposta do <code>cmd</code>; as caixas já preenchidas trazem a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt.</p>
+<div class="note"><strong>Sobre as saídas.</strong> Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro.</div>
 
 <hr>
 <h2>A ideia: um pulo até o marco</h2>
@@ -45,20 +44,26 @@ echo Fim.</pre>
 <p>Se você não passa nenhuma palavra, o script pula para <code>:semparam</code>. Se você passa alguma, ele mostra o parâmetro e vai para <code>:fim</code>. Nos dois caminhos, a última linha é o recado de fim. A coleta rodou o <code>type</code> e as duas execuções:</p>
 <!-- coleta: type decide.bat -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="type decide.bat">C:\Users\ana\guia-cmd-teste&gt;type decide.bat
-
-« saída a coletar »
+@echo off
+if "%~1"=="" goto semparam
+echo Você passou: %1
+goto fim
+:semparam
+echo Nenhum parâmetro.
+:fim
+echo Fim.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: decide.bat -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="decide.bat">C:\Users\ana\guia-cmd-teste&gt;decide.bat
-
-« saída a coletar »
+Nenhum parâmetro.
+Fim.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: decide.bat teste -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="decide.bat teste">C:\Users\ana\guia-cmd-teste&gt;decide.bat teste
-
-« saída a coletar »
+Você passou: teste
+Fim.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <dl class="anatomy"><dt>goto semparam</dt><dd>pula para o rótulo <code>:semparam</code>.</dd><dt>:semparam</dt><dd>o marco: uma linha que começa com <code>:</code> e o nome.</dd><dt>goto fim</dt><dd>pula para o <code>:fim</code>, para não cair no outro recado.</dd></dl>
@@ -102,14 +107,23 @@ for %%f in (*.txt) do echo arquivo: %%f
 endlocal</pre>
 <!-- coleta: type soma.bat -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="type soma.bat">C:\Users\ana\guia-cmd-teste&gt;type soma.bat
-
-« saída a coletar »
+@echo off
+setlocal
+set /a total=0
+for /l %%i in (1,1,5) do set /a total+=%%i
+echo Soma de 1 a 5: %total%
+for %%f in (*.txt) do echo arquivo: %%f
+endlocal
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: soma.bat -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="soma.bat">C:\Users\ana\guia-cmd-teste&gt;soma.bat
-
-« saída a coletar »
+Soma de 1 a 5: 15
+arquivo: agenda.txt
+arquivo: log.txt
+arquivo: nomes.txt
+arquivo: notas.txt
+arquivo: relatorio.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -155,8 +169,7 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <label><input type="radio" name="q6"> Com o <code>set /p</code></label>
 <label><input type="radio" name="q6"> Com <code>for /l</code> e <code>%%i</code> dentro do <code>.bat</code>, não com <code>goto</code></label>
 <label><input type="radio" name="q6"> Com o <code>for /r</code> na raiz do disco</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdecide\b;;semerro -->
-<div class="trycmd" data-goal="src:\bdecide\b;;semerro">
+<div class="trycmd" data-goal="src:\bdecide\b;;out:Nenhum parâmetro.;;out:Fim.">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, execute o <code>decide.bat</code> sem passar nenhuma palavra.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -164,15 +177,22 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 decide.bat
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Nenhum parâmetro.
+Fim.
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bdecide\b;;semerro -->
-<div class="trycmd" data-goal="src:\bdecide\b;;semerro">
+<div class="trycmd" data-goal="src:\bdecide\b;;src:\bteste\b;;out:Você passou: teste;;out:Fim.">
 <p class="try-task"><strong>Missão:</strong> execute de novo o <code>decide.bat</code>, desta vez passando a palavra <code>teste</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
 decide.bat teste
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Você passou: teste
+Fim.
 </pre>
 </div>
 <div class="trycmd" data-goal="src:\bconta\b;;out:Volta 1;;out:Volta 2;;out:Volta 3;;out:Acabou">

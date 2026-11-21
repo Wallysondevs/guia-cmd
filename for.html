@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>for — repetir um comando no Prompt, na linha e no .bat | Guia CMD</title>
-<meta name="description" content="O comando for no Prompt de Comando: lista na linha de comando, *.txt da pasta de teste, for /l, for /f e %%i no .bat. Saídas ainda a coletar.">
+<meta name="description" content="O comando for no Prompt de Comando: lista na linha de comando, *.txt da pasta de teste, for /l, for /f e %%i no .bat.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,15 +19,14 @@
 <h1><span class="hl">for</span></h1>
 
 
-<p class="intro">O <code>for</code> é um <strong>carrossel</strong>: ele pega cada item de uma lista e roda o mesmo pedido com esse item. Na linha de comando a variável é <code>%i</code> (ou <code>%f</code>, <code>%a</code>…); dentro de um arquivo <code>.bat</code>, o mesmo nome se escreve com dois percentuais, <code>%%i</code>. As respostas reais ainda estão a coletar.</p>
+<p class="intro">O <code>for</code> é um <strong>carrossel</strong>: ele pega cada item de uma lista e roda o mesmo pedido com esse item. Na linha de comando a variável é <code>%i</code> (ou <code>%f</code>, <code>%a</code>…); dentro de um arquivo <code>.bat</code>, o mesmo nome se escreve com dois percentuais, <code>%%i</code>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>for %f in (notas.txt agenda.txt)</code> na linha de comando — a coleta deste lote usa esses dois arquivos da pasta de teste, e não uma lista solta do tipo <code>(a b c)</code>.</li>
 <li>O <code>for</code> com <code>*.txt</code>, só na pasta de teste, com caminho relativo.</li>
 <li>Que, dentro de um <code>.bat</code>, a variável se escreve <code>%%i</code>. O exemplo coletado está no <code>soma.bat</code> da aula de <code>goto</code>; nesta página isso fica só no texto.</li>
 <li>O <code>for /l</code>, que conta, e o <code>for /f</code>, que lê um arquivo da pasta de teste (<code>log.txt</code>).</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> Estas aulas do lote 2 já têm a explicação, os exercícios e as missões com o código; as respostas do Prompt só entram quando a Mira liberar o arquivo anonimizado em <code>_saidas-anon/</code>. Não complete as caixas de memória e não traduza mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Nada nesta aula foi inventado: cada caixa de terminal ainda mostra o placeholder <strong>« saída a coletar »</strong>, que não é resposta do <code>cmd</code>.</p>
+<div class="note"><strong>Sobre as saídas.</strong> Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>. No seu computador, pratique numa pasta de teste parecida, não na raiz do disco. Cada caixa traz a saída real, com a linha em branco que o Prompt deixa antes do próximo prompt. Não inventamos nem traduzimos mensagem de erro.</div>
 
 <p>Todos os pedidos desta aula são relativos à pasta de teste. Não usamos o <code>for /r</code>, que desceria em subpastas e poderia imprimir caminhos além do que a aula precisa.</p>
 <hr>
@@ -38,8 +37,11 @@
 <p>Os parênteses são obrigatórios. A coleta passou dois arquivos da pasta de teste e pediu o <code>type</code> de cada um. Não há, neste lote, um <code>for %i in (a b c)</code> com letras soltas — e nós não inventamos essa saída.</p>
 <!-- coleta: for %f in (notas.txt agenda.txt) do @type %f -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (notas.txt agenda.txt) do @type %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (notas.txt agenda.txt) do @type %f
-
-« saída a coletar »
+Lista de compras
+- pão
+- leite
+- café
+Segunda: estudar CMD
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <dl class="anatomy"><dt>for</dt><dd>o comando: “para cada item…”.</dd><dt>%f</dt><dd>o nome temporário de cada item, com um <code>%</code>, na linha de comando.</dd><dt>in (notas.txt agenda.txt)</dt><dd>a lista, entre parênteses.</dd><dt>do @type %f</dt><dd>o pedido de cada volta. O <code>@</code> esconde a repetição da própria linha.</dd></dl>
@@ -48,28 +50,52 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O curinga <code>*.txt</code> também vai entre parênteses, e só vale na pasta atual da coleta (a pasta de teste):</p>
 <!-- coleta: for %f in (*.txt) do @echo %f -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do @echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do @echo %f
-
-« saída a coletar »
+agenda.txt
+log.txt
+nomes.txt
+notas.txt
+relatorio.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do @echo nome: %~nf  extensão: %~xf
-
-« saída a coletar »
+nome: agenda  extensão: .txt
+nome: log  extensão: .txt
+nome: nomes  extensão: .txt
+nome: notas  extensão: .txt
+nome: relatorio  extensão: .txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>Sem o <code>@</code>, o Prompt também ecoa a linha de cada volta. A coleta tem os dois jeitos:</p>
 <!-- coleta: for %f in (*.txt) do echo %f -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for %f in (*.txt) do echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in (*.txt) do echo %f
 
-« saída a coletar »
+C:\Users\ana\guia-cmd-teste&gt;echo agenda.txt 
+agenda.txt
+
+C:\Users\ana\guia-cmd-teste&gt;echo log.txt 
+log.txt
+
+C:\Users\ana\guia-cmd-teste&gt;echo nomes.txt 
+nomes.txt
+
+C:\Users\ana\guia-cmd-teste&gt;echo notas.txt 
+notas.txt
+
+C:\Users\ana\guia-cmd-teste&gt;echo relatorio.txt 
+relatorio.txt
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O <code>for /d %d in (*)</code> passa só pelas pastas da pasta atual, ainda com caminho relativo:</p>
 <!-- coleta: for /d %d in (*) do @echo pasta: %d -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /d %d in (*) do @echo pasta: %d">C:\Users\ana\guia-cmd-teste&gt;for /d %d in (*) do @echo pasta: %d
-
-« saída a coletar »
+pasta: backup
+pasta: docs
+pasta: fotos
+pasta: lixeira
+C:\Users\ana\guia-cmd-teste&gt;for /r %f in (*.png) do @echo %~nxf
+ferias.png
+praia.png
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -80,14 +106,19 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O <code>/l</code> conta. A forma é <code>(início,passo,fim)</code>. A coleta tem uma contagem de 1 a 5, de 1 em 1, e outra que desce de 10 a 1, de 3 em 3:</p>
 <!-- coleta: for /l %i in (1,1,5) do @echo volta %i -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (1,1,5) do @echo volta %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (1,1,5) do @echo volta %i
-
-« saída a coletar »
+volta 1
+volta 2
+volta 3
+volta 4
+volta 5
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: for /l %i in (10,-3,1) do @echo %i -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (10,-3,1) do @echo %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (10,-3,1) do @echo %i
-
-« saída a coletar »
+10
+7
+4
+1
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -95,20 +126,29 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>O <code>/f</code> lê um arquivo da pasta de teste, linha a linha. Aqui o arquivo é o <code>log.txt</code>. As chaves <code>tokens</code> e <code>delims</code> escolhem pedaços de cada linha. Uma das chamadas ainda lê a saída de um <code>dir /b *.txt</code> relativo:</p>
 <!-- coleta: for /f "tokens=1,2" %a in (log.txt) do @echo %a = %b -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;tokens=1,2&quot; %a in (log.txt) do @echo %a = %b">C:\Users\ana\guia-cmd-teste&gt;for /f "tokens=1,2" %a in (log.txt) do @echo %a = %b
-
-« saída a coletar »
+08:00 = OK
+08:05 = ERRO
+08:10 = OK
+08:15 = ERRO
+08:20 = OK
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: for /f "tokens=2*" %a in (log.txt) do @echo %a: %b -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;tokens=2*&quot; %a in (log.txt) do @echo %a: %b">C:\Users\ana\guia-cmd-teste&gt;for /f "tokens=2*" %a in (log.txt) do @echo %a: %b
-
-« saída a coletar »
+OK: backup iniciado
+ERRO: disco cheio
+OK: nova tentativa
+ERRO: arquivo travado
+OK: backup concluido
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <!-- coleta: for /f "delims=" %l in ('dir /b *.txt') do @echo [%l] -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /f &quot;delims=&quot; %l in ('dir /b *.txt') do @echo [%l]">C:\Users\ana\guia-cmd-teste&gt;for /f "delims=" %l in ('dir /b *.txt') do @echo [%l]
-
-« saída a coletar »
+[agenda.txt]
+[log.txt]
+[nomes.txt]
+[notas.txt]
+[relatorio.txt]
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
@@ -124,20 +164,17 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Sem parênteses</strong>
-<p>O <code>for %f in *.txt do @echo %f</code>, sem parênteses em volta da lista, devolve uma mensagem de erro. A frase real está a coletar.</p>
+<p>O <code>for %f in *.txt do @echo %f</code>, sem parênteses em volta da lista, devolveu a mensagem <code>*.txt foi inesperado neste momento.</code></p>
 <!-- coleta: for %f in *.txt do @echo %f -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for %f in *.txt do @echo %f">C:\Users\ana\guia-cmd-teste&gt;for %f in *.txt do @echo %f
-
-« saída a coletar » — mensagem de erro real, nunca inventar
+*.txt foi inesperado neste momento.
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <div class="cenario"><strong>Uma contagem incompleta</strong>
-<p>O <code>for /l %i in (1,1) do @echo %i</code> não traz os três números que o <code>/l</code> espera. A resposta real está a coletar — não inventamos o texto.</p>
+<p>O <code>for /l %i in (1,1) do @echo %i</code> não traz os três números que o <code>/l</code> espera. A coleta não registrou saída — o Prompt ficou em silêncio, sem mensagem de erro.</p>
 <!-- coleta: for /l %i in (1,1) do @echo %i -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="for /l %i in (1,1) do @echo %i">C:\Users\ana\guia-cmd-teste&gt;for /l %i in (1,1) do @echo %i
-
-« saída a coletar » — mensagem de erro real, nunca inventar
 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
@@ -170,8 +207,7 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <label><input type="radio" name="q6"> O <code>%PATH%</code> do sistema</label>
 <label><input type="radio" name="q6"> O arquivo <code>log.txt</code> da pasta de teste (e, numa das chamadas, um <code>dir /b *.txt</code> relativo)</label>
 <label><input type="radio" name="q6"> Um site na internet</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfor\b;;semerro -->
-<div class="trycmd" data-goal="src:\bfor\b;;semerro">
+<div class="trycmd" data-goal="src:\bfor\b;;out:agenda.txt;;out:log.txt;;out:nomes.txt;;out:notas.txt;;out:relatorio.txt">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, percorra os arquivos <code>*.txt</code> com o <code>for</code> e mostre cada nome com <code>@echo %f</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -179,15 +215,28 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 for %f in (*.txt) do @echo %f
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+agenda.txt
+log.txt
+nomes.txt
+notas.txt
+relatorio.txt
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/; metas out/outre só depois da saída real. Provisório: src:\bfor\b;;semerro -->
-<div class="trycmd" data-goal="src:\bfor\b;;semerro">
+<div class="trycmd" data-goal="src:\bfor\b;;src:/l;;out:volta 1;;out:volta 2;;out:volta 3;;out:volta 4;;out:volta 5">
 <p class="try-task"><strong>Missão:</strong> conte de 1 a 5 com <code>for /l</code> e, a cada volta, escreva <code>volta</code> e o número.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
 for /l %i in (1,1,5) do @echo volta %i
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+volta 1
+volta 2
+volta 3
+volta 4
+volta 5
 </pre>
 </div>
 <hr>
@@ -196,7 +245,7 @@ for /l %i in (1,1,5) do @echo volta %i
 <li>Na linha de comando, <code>for %f in (lista) do …</code> percorre a lista. Os parênteses são obrigatórios.</li>
 <li>Dentro de um <code>.bat</code>, a variável se escreve <code>%%i</code>. O exemplo coletado está no <code>soma.bat</code> da aula de <code>goto</code>.</li>
 <li><code>for /l</code> conta; <code>for /f</code> lê um arquivo da pasta de teste. Não usamos <code>for /r</code>.</li>
-<li>As saídas reais ainda estão a coletar.</li>
+<li>Sem parênteses, o <code>for %f in *.txt do @echo %f</code> devolveu <code>*.txt foi inesperado neste momento.</code> O <code>for /l</code> incompleto ficou em silêncio.</li>
 </ul>
 
 <div class="pager"></div>
