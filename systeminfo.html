@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Informações do Sistema (systeminfo) — nome e versão do Windows no Prompt | Guia CMD</title>
-<meta name="description" content="O comando systeminfo no Prompt de Comando: só o nome e a versão do sistema, filtrados com findstr. A saída completa não é coletada. O pedido demora uns 20 segundos. Saída ainda a coletar.">
+<meta name="description" content="O comando systeminfo no Prompt de Comando, com a saída real do lote 3: só o nome (Windows 10 Pro for Workstations) e a versão (10.0.19045), filtrados com findstr. O pedido demora uns 20 segundos.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,27 +19,27 @@
 <h1>Informações do Sistema (<span class="hl">systeminfo</span>)</h1>
 
 
-<p class="intro">O <code>systeminfo</code> lista <strong>muita</strong> informação do Windows. Nesta aula a coleta nunca pede a saída inteira: o pedido passa pelo <code>findstr</code> e fica só com o nome e a versão do sistema operacional. Esse filtro demora uns 20 segundos — não é travamento. A saída real ainda está a coletar. Não inventamos o nome nem o número da versão.</p>
+<p class="intro">O <code>systeminfo</code> lista <strong>muita</strong> informação do Windows. Nesta aula a coleta nunca pediu a saída inteira: o pedido passou pelo <code>findstr</code> e ficou só com o nome e a versão do sistema operacional. Esse filtro demora uns 20 segundos — não é travamento. Nesta coleta o nome foi <code>Microsoft Windows 10 Pro for Workstations</code> e a versão, <code>10.0.19045 N/A compilação 19045</code>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
 <li>O <code>systeminfo</code> filtrado com <code>findstr</code>, só para o nome e a versão do sistema operacional.</li>
 <li>Que este pedido demora uns 20 segundos, e isso é esperado.</li>
+<li>Que, nesta coleta, o Windows foi o <code>10 Pro for Workstations</code>, compilação <code>19045</code>.</li>
 <li>Por que esta aula não pede o <code>systeminfo</code> sem filtro: a saída completa traz dados demais da máquina.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, na página de código 850 (para o acento de «Versão» no filtro encontrar a linha). No seu computador, pratique só com o mesmo filtro, sem pedir o relatório completo. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, na página de código 850 (para o acento de «Versão» no filtro encontrar a linha). No seu computador, o nome e a versão podem ser outros. Pratique só com o mesmo filtro, sem pedir o relatório completo. Não inventamos nem traduzimos mensagem de erro.</p>
 <hr>
 <h2>A ideia: pedir só o nome e a data de nascimento</h2>
 <p>Você não pede a ficha inteira da pessoa: só o nome e a versão. O <code>findstr</code> é esse recorte. A ficha completa do <code>systeminfo</code> fica no armário, sem caixa nesta aula.</p>
 <hr>
 <h2>1. Nome e versão, com o <code>findstr</code></h2>
-<p>A coleta roda o <code>systeminfo</code> e deixa passar só as linhas que começam com <code>Nome do sistema operacional</code> e <code>Versão do sistema operacional</code>. O pedido demora uns 20 segundos. A saída real ainda está a coletar:</p>
+<p>A coleta rodou o <code>systeminfo</code> e deixou passar só as linhas que começam com <code>Nome do sistema operacional</code> e <code>Versão do sistema operacional</code>. O pedido demora uns 20 segundos. Estas foram as duas linhas:</p>
 <!-- coleta: systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional" -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="systeminfo | findstr /b /c:&quot;Nome do sistema operacional&quot; /c:&quot;Versão do sistema operacional&quot;">C:\Users\ana\guia-cmd-teste&gt;systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional"
-
-« saída a coletar »
-
+Nome do sistema operacional:               Microsoft Windows 10 Pro for Workstations
+Versão do sistema operacional:             10.0.19045 N/A compilação 19045
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <dl class="anatomy"><dt>systeminfo</dt><dd>o relatório do Windows, que nesta aula não aparece inteiro.</dd><dt>findstr /b</dt><dd>fica só com as linhas que <em>começam</em> com o texto pedido.</dd><dt>/c:"…"</dt><dd>cada trecho procurado: o nome e a versão do sistema operacional.</dd></dl>
+<p>O nome saiu <code>Microsoft Windows 10 Pro for Workstations</code>. A versão saiu <code>10.0.19045 N/A compilação 19045</code>. No seu PC, essas duas linhas podem ser outras; o recorte é o mesmo.</p>
 <hr>
 <h2>O que esta aula não pede para rodar</h2>
 <p>O <code>systeminfo</code> sem filtro devolve a ficha completa da máquina. Ele aparece aqui só para você reconhecer o risco, <strong>sem caixa de execução</strong>:</p>
@@ -51,7 +51,7 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional"</code></td><td>Para ver só o nome e a versão. Demora uns 20 segundos.</td></tr>
+<tr><td><code>systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional"</code></td><td>Para ver só o nome e a versão. Demora uns 20 segundos. Nesta coleta: Windows 10 Pro for Workstations, <code>10.0.19045</code>.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
@@ -63,24 +63,23 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para filtrar a saída do <code>systeminfo</code>:</p><div class="ex-code">systeminfo | <input data-answer="findstr" aria-label="comando"></div></div>
 <div class="exercise"><h3>2. O recorte</h3><p>Qual chave do <code>findstr</code> pede linhas que começam com o texto?</p><div class="ex-code">findstr <input data-answer="/b" aria-label="chave"></div></div>
-<div class="exercise"><h3>3. A espera</h3><p>Esse pedido demora cerca de quantos segundos?</p><div class="ex-code"><input data-answer="20" aria-label="segundos"></div></div>
+<div class="exercise"><h3>3. A versão desta coleta</h3><p>Qual número de versão apareceu, antes de <code>N/A compilação 19045</code>?</p><div class="ex-code"><input data-answer="10.0.19045" aria-label="versão"></div></div>
 <div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não pede o <code>systeminfo</code> sem filtro?</p>
 <label><input type="radio" name="q4"> Porque o comando não existe sem o <code>findstr</code></label>
 <label><input type="radio" name="q4"> Porque a saída completa traz dados demais da máquina, e a coleta fica só com o nome e a versão</label>
 <label><input type="radio" name="q4"> Porque o <code>systeminfo</code> desliga o computador</label>
 <label><input type="radio" name="q4"> Porque o filtro é mais rápido que o relatório inteiro</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar o nome nem a versão do Windows</label>
-<label><input type="radio" name="q5"> Inventa um “Windows 11” de memória</label>
-<label><input type="radio" name="q5"> Copia a saída de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Roda o <code>systeminfo</code> deste Linux e cola o resultado</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. Qual nome de sistema a coleta mostrou?</p>
+<label><input type="radio" name="q5"> Microsoft Windows 10 Pro for Workstations</label>
+<label><input type="radio" name="q5"> Um nome inventado para preencher a caixa</label>
+<label><input type="radio" name="q5"> O nome deste Linux</label>
+<label><input type="radio" name="q5"> Só o número <code>10.0.19045</code>, sem o nome</label></div>
 <div class="mc" data-answer="3"><p class="mc-q">6. Se o pedido do <code>systeminfo</code> demorar uns 20 segundos, o que isso significa?</p>
 <label><input type="radio" name="q6"> Que o Prompt travou e precisa ser fechado</label>
 <label><input type="radio" name="q6"> Que o filtro está errado</label>
 <label><input type="radio" name="q6"> Que a espera é esperada: o relatório é grande, mesmo quando só duas linhas passam no <code>findstr</code></label>
 <label><input type="radio" name="q6"> Que falta a chave <code>/all</code></label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bsysteminfo\b;;src:\bfindstr\b;;src:/b;;semerro">
+<div class="trycmd" data-goal="src:\bsysteminfo\b;;src:\bfindstr\b;;src:/b;;out:Microsoft Windows 10 Pro for Workstations;;out:10.0.19045">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre só o nome e a versão do sistema com <code>systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional"</code>. O pedido pode demorar uns 20 segundos.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -88,13 +87,17 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 systeminfo | findstr /b /c:"Nome do sistema operacional" /c:"Versão do sistema operacional"
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Nome do sistema operacional:               Microsoft Windows 10 Pro for Workstations
+Versão do sistema operacional:             10.0.19045 N/A compilação 19045
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
 <li>Nesta aula o <code>systeminfo</code> entra só filtrado: nome e versão do sistema operacional.</li>
+<li>A coleta mostrou <code>Microsoft Windows 10 Pro for Workstations</code>, versão <code>10.0.19045 N/A compilação 19045</code>.</li>
 <li>O pedido demora uns 20 segundos: não é travamento.</li>
-<li>A saída real ainda está a coletar: não foi inventada.</li>
 </ul>
 
 

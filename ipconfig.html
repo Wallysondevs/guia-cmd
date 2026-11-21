@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rede (ipconfig) — ver os endereços da rede no Prompt | Guia CMD</title>
-<meta name="description" content="O comando ipconfig no Prompt de Comando: só a forma simples, sem /all (sem MAC, DNS ou nome do host). Saída ainda a coletar; quando chegar, IPs e nomes de adaptador terão sido trocados por valores de exemplo.">
+<meta name="description" content="O comando ipconfig no Prompt de Comando, com a saída real do lote 3: sete adaptadores, a maioria com mídia desconectada; o Wi-Fi em 192.168.0.10 com gateway; e o erro de chave inválida.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,35 +19,137 @@
 <h1>Rede (<span class="hl">ipconfig</span>)</h1>
 
 
-<p class="intro">O <code>ipconfig</code> mostra os <strong>endereços de rede</strong> desta máquina. Nesta aula a coleta usa só a forma simples, sem a chave <code>/all</code>: não entram MAC, DNS nem o nome do host. Mesmo assim a saída traz IPs e nomes de adaptador, que a Mira troca por valores de exemplo na anonimização. A saída real ainda está a coletar. Não inventamos endereço nem nome de placa.</p>
+<p class="intro">O <code>ipconfig</code> mostra os <strong>endereços de rede</strong> desta máquina. Nesta aula a coleta usou só a forma simples, sem a chave <code>/all</code>: não entram MAC, DNS completo nem o nome do host. Mesmo assim a saída trouxe sete adaptadores. A maioria apareceu com <code>mídia desconectada</code>. O que interessa para o dia a dia é o <code>Wi-Fi</code>, que nesta coleta (já anonimizada) mostrou o IPv4 <code>192.168.0.10</code> e o gateway <code>192.168.0.1</code>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>ipconfig</code> simples, sem <code>/all</code>.</li>
-<li>O <code>ipconfig /opcao-invalida</code>, e a mensagem real quando a chave não existe (ainda a coletar).</li>
-<li>Por que esta aula não pede o <code>/all</code>: essa forma mostra MAC, DNS e o nome do host.</li>
+<li>O <code>ipconfig</code> simples, sem <code>/all</code>, e a ler a lista de adaptadores.</li>
+<li>Que um endereço <code>169.254.x</code> é link-local: aparece quando não há DHCP.</li>
+<li>Que <code>192.168.56.1</code>, nesta coleta, é o endereço padrão do adaptador host-only do VirtualBox.</li>
+<li>Que <code>ipconfig /opcao-invalida</code> devolveu <code>Erro: linha de comando não reconhecida ou incompleta</code>, seguido da ajuda.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, com IPs e nomes de adaptador já trocados por valores de exemplo. No seu computador, o comando mostra os endereços da <em>sua</em> máquina. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, e os endereços já vieram anonimizados. No seu computador, o comando mostra os endereços da <em>sua</em> máquina, que podem ser outros. Não inventamos nem traduzimos mensagem de erro.</p>
 <hr>
 <h2>A ideia: olhar o número da casa, sem pedir o documento</h2>
-<p>O <code>ipconfig</code> simples é o número na fachada: os endereços da máquina. O <code>/all</code> seria o documento completo (MAC, DNS, nome do host), e por isso fica de fora desta aula.</p>
+<p>O <code>ipconfig</code> simples é o número na fachada: os endereços da máquina. O <code>/all</code> seria o documento completo (MAC, DNS, nome do host), e por isso ficou de fora desta aula.</p>
 <hr>
 <h2>1. A forma simples</h2>
-<p>O pedido desta coleta é só o <code>ipconfig</code>, sem chave. A saída real ainda está a coletar — IPs e nomes de adaptador entram depois, já anonimizados:</p>
+<p>A coleta mostrou sete adaptadores. Quatro deles (Ethernet, Conexão Local* 1, Conexão Local* 2 e Ethernet 4) vieram com <code>mídia desconectada</code>: o cabo ou o rádio daquela placa não está em uso. Sobram três com endereço, e o que importa no uso normal é o Wi-Fi:</p>
 <!-- coleta: ipconfig -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ipconfig">C:\Users\ana\guia-cmd-teste&gt;ipconfig
 
-« saída a coletar »
+Configuração de IP do Windows
 
+
+Adaptador Ethernet Ethernet:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador Ethernet Ethernet 2:
+
+   Sufixo DNS específico de conexão. . . . . . : 
+   Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.56.1
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.255.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 
+
+Adaptador desconhecido Conexão Local:
+
+   Sufixo DNS específico de conexão. . . . . . : 
+   Endereço IPv6 de link local . . . . . . . . : fe80::1a2b:3c4d:5e6f:7a8b%19
+   Endereço IPv4. . . . . . . .  . . . . . . . : 169.254.10.20
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.0.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 
+
+Adaptador de Rede sem Fio Conexão Local* 1:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador de Rede sem Fio Conexão Local* 2:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador de Rede sem Fio Wi-Fi:
+
+   Sufixo DNS específico de conexão. . . . . . : lan
+   Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.0.10
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.255.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 192.168.0.1
+
+Adaptador Ethernet Ethernet 4:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
 C:\Users\ana\guia-cmd-teste&gt;</pre>
+<p>No <code>Adaptador de Rede sem Fio Wi-Fi</code>, o IPv4 foi <code>192.168.0.10</code>, a máscara <code>255.255.255.0</code> e o gateway padrão <code>192.168.0.1</code>. Também apareceu o sufixo DNS <code>lan</code>. É neste adaptador que a máquina desta coleta fala com a rede da casa.</p>
+<p>O <code>Adaptador Ethernet Ethernet 2</code> mostrou <code>192.168.56.1</code>, sem gateway. Esse é o endereço padrão do adaptador host-only do VirtualBox: uma rede só entre o Windows e as máquinas virtuais, não a rota da internet.</p>
+<p>O <code>Adaptador desconhecido Conexão Local</code> mostrou <code>169.254.10.20</code>, também sem gateway. Endereços <code>169.254.x</code> são link-local: o Windows escolhe um sozinho quando não há DHCP nessa placa. Não é o endereço “de verdade” da rede da casa.</p>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Uma chave que não existe</strong>
-<p>O <code>ipconfig /opcao-invalida</code> devolve uma mensagem de erro. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<p>O <code>ipconfig /opcao-invalida</code> devolveu o erro abaixo e, em seguida, a ajuda completa do comando:</p>
 <!-- coleta: ipconfig /opcao-invalida -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ipconfig /opcao-invalida">C:\Users\ana\guia-cmd-teste&gt;ipconfig /opcao-invalida
 
-« saída a coletar »
+Erro: linha de comando não reconhecida ou incompleta.
 
+USO:
+    ipconfig [/allcompartments] [/? | /all |
+                                 /renew [adapter] | /release [adapter] |
+                                 /renew6 [adapter] | /release6 [adapter] |
+                                 /flushdns | /displaydns | /registerdns |
+                                 /showclassid adapter |
+                                 /setclassid adapter [classid] |
+                                 /showclassid6 adapter |
+                                 /setclassid6 adapter [classid] ]
+
+onde
+    adapter           Nome da conexão
+                     (caracteres curinga * e ? permitidos; consulte exemplos)
+
+    Opções:
+       /?               Exibir esta mensagem de ajuda
+       /all             Exibir informações completas sobre configuração.
+       /release         Liberar o endereço IPv4 para o adaptador especificado.
+       /release6        Liberar o endereço IPv6 para o adaptador especificado.
+       /renew           Renovar o endereço IPv4 para o adaptador especificado.
+       /renew6          Renovar o endereço IPv6 para o adaptador especificado.
+       /flushdns        Limpa o cache do DNS Resolver.
+       /registerdns     Atualiza todas as concessões de DHCP e registra
+                        novamente nomes DNS
+       /displaydns      Exibir o conteúdo do Cache do DNS Resolver.
+       /showclassid     Exibe todas as IDs de classe dhcp permitidas para o
+                        adaptador.
+       /setclassid      Modifica a ID de classe dhcp.
+       /showclassid6    Exibe todas as IDs de classe DHCP IPv6 permitidas para
+                        o adaptador.
+       /setclassid6     Modifica a ID de classe DHCP IPv6.
+
+
+O padrão é exibir apenas o endereço IP, a máscara de sub-rede e
+o gateway padrão para cada adaptador limitado ao TCP/IP.
+
+Para Release e Renew, se nenhum nome de adaptador for especificado,
+as concessões de endereços IP para todos os adaptadores limitados 
+ao TCP/IP serão liberadas ou renovadas.
+
+Para Setclassid e Setclassid6, se nenhuma ClassId for especificada, ClassId 
+será removida.
+
+Exemplos:
+    &gt; ipconfig                       ... Mostrar informações
+    &gt; ipconfig /all                  ... Mostrar informações detalhadas
+    &gt; ipconfig /renew                ... renovar todos os adaptadores
+    &gt; ipconfig /renew EL*            ... renovar qualquer conexão cujo nome
+                                         seja iniciado por EL
+    &gt; ipconfig /release *Con*        ... liberar todas as conexões 
+                                         correspondentes, por exemplo,
+                                          "Conexão Ethernet com Fio 1" ou
+                                         "Conexão Ethernet com Fio 2"
+    &gt; ipconfig /allcompartments      ... Mostra informações sobre todos os
+                                         compartimentos
+    &gt; ipconfig /allcompartments /all ... Mostra informações detalhadas sobre
+                                         todos os compartimentos
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <hr>
@@ -55,14 +157,14 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <p>A chave <code>/all</code> mostra MAC, DNS e o nome do host. Ela aparece aqui só para você reconhecer o que fica de fora, <strong>sem caixa de execução</strong>:</p>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Por que não entra na prática desta aula</th></tr>
-<tr><td><code>ipconfig /all</code></td><td>Mostra MAC, DNS e o nome do host. Esta coleta usa só a forma simples.</td></tr>
+<tr><td><code>ipconfig /all</code></td><td>Mostra MAC, DNS e o nome do host. Esta coleta usou só a forma simples.</td></tr>
 </table></div>
 <hr>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>ipconfig</code></td><td>Para ver os endereços da máquina, sem MAC, DNS ou nome do host.</td></tr>
-<tr><td><code>ipconfig /opcao-invalida</code></td><td>Para ver a mensagem real quando a chave não existe. A mensagem entra com a coleta.</td></tr>
+<tr><td><code>ipconfig</code></td><td>Para ver os endereços da máquina, sem MAC, DNS completo ou nome do host. Nesta coleta, o Wi-Fi veio como <code>192.168.0.10</code>, com gateway.</td></tr>
+<tr><td><code>ipconfig /opcao-invalida</code></td><td>Não use: a coleta devolveu <code>Erro: linha de comando não reconhecida ou incompleta</code>, mais a ajuda.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
@@ -74,25 +176,24 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2>Exercícios</h2>
 <div class="exercise"><h3>1. Complete o comando</h3><p>Complete para ver os endereços, na forma simples:</p><div class="ex-code"><input data-answer="ipconfig" aria-label="comando"></div></div>
-<div class="exercise"><h3>2. O que fica de fora</h3><p>Qual chave desta aula não é pedida, porque mostra MAC, DNS e o nome do host?</p><div class="ex-code">ipconfig <input data-answer="/all" aria-label="chave"></div></div>
-<div class="exercise"><h3>3. Privacidade</h3><p>Os IPs reais da coleta entram no guia?</p><div class="ex-code"><input data-answer="nao|não" aria-label="resposta"></div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não pede o <code>ipconfig /all</code>?</p>
-<label><input type="radio" name="q4"> Porque o <code>ipconfig</code> não tem essa chave</label>
-<label><input type="radio" name="q4"> Porque o <code>/all</code> mostra MAC, DNS e o nome do host, e a coleta desta aula usa só a forma simples</label>
-<label><input type="radio" name="q4"> Porque o <code>/all</code> desliga a rede</label>
-<label><input type="radio" name="q4"> Porque o comando só funciona como administrador</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar IPs nem a mensagem de erro</label>
-<label><input type="radio" name="q5"> Inventa um endereço qualquer para preencher</label>
-<label><input type="radio" name="q5"> Copia a saída de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Mostra os endereços deste Linux</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. Quando a coleta chegar, IPs e nomes de adaptador entram como valores de exemplo porque:</p>
-<label><input type="radio" name="q6"> O Windows sempre usa os mesmos números</label>
-<label><input type="radio" name="q6"> Inventamos os valores para a aula ficar mais bonita</label>
-<label><input type="radio" name="q6"> A Mira anonimiza os dados reais da máquina</label>
-<label><input type="radio" name="q6"> O <code>ipconfig</code> não mostra endereço</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bipconfig\b;;semerro">
+<div class="exercise"><h3>2. O Wi-Fi desta coleta</h3><p>Qual IPv4 apareceu no adaptador Wi-Fi?</p><div class="ex-code"><input data-answer="192.168.0.10" aria-label="ipv4"></div></div>
+<div class="exercise"><h3>3. O gateway</h3><p>Qual foi o gateway padrão do Wi-Fi?</p><div class="ex-code"><input data-answer="192.168.0.1" aria-label="gateway"></div></div>
+<div class="mc" data-answer="2"><p class="mc-q">4. O endereço <code>169.254.10.20</code> desta coleta indica o quê?</p>
+<label><input type="radio" name="q4"> Que essa é a rede da casa, com gateway</label>
+<label><input type="radio" name="q4"> Que não há DHCP nessa placa: é um endereço link-local</label>
+<label><input type="radio" name="q4"> Que o <code>ipconfig</code> falhou</label>
+<label><input type="radio" name="q4"> Que o adaptador é o Wi-Fi</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O <code>192.168.56.1</code> do <code>Ethernet 2</code>, nesta coleta, é:</p>
+<label><input type="radio" name="q5"> O endereço padrão do adaptador host-only do VirtualBox, sem gateway</label>
+<label><input type="radio" name="q5"> O IPv4 do Wi-Fi, com gateway <code>192.168.0.1</code></label>
+<label><input type="radio" name="q5"> Um endereço link-local, como o <code>169.254.x</code></label>
+<label><input type="radio" name="q5"> Um valor inventado para preencher a caixa</label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O que o <code>ipconfig /opcao-invalida</code> mostrou nesta coleta?</p>
+<label><input type="radio" name="q6"> Só a lista de adaptadores, como o <code>ipconfig</code> simples</label>
+<label><input type="radio" name="q6"> Nada: o comando foi ignorado</label>
+<label><input type="radio" name="q6"> <code>Erro: linha de comando não reconhecida ou incompleta</code>, seguido da ajuda</label>
+<label><input type="radio" name="q6"> O relatório com MAC e DNS, como o <code>/all</code></label></div>
+<div class="trycmd" data-goal="src:\bipconfig\b;;out:192.168.0.10;;out:mídia desconectada">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mostre os endereços de rede com o <code>ipconfig</code> simples, sem <code>/all</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -100,13 +201,131 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 ipconfig
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+Configuração de IP do Windows
+
+
+Adaptador Ethernet Ethernet:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador Ethernet Ethernet 2:
+
+   Sufixo DNS específico de conexão. . . . . . : 
+   Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.56.1
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.255.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 
+
+Adaptador desconhecido Conexão Local:
+
+   Sufixo DNS específico de conexão. . . . . . : 
+   Endereço IPv6 de link local . . . . . . . . : fe80::1a2b:3c4d:5e6f:7a8b%19
+   Endereço IPv4. . . . . . . .  . . . . . . . : 169.254.10.20
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.0.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 
+
+Adaptador de Rede sem Fio Conexão Local* 1:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador de Rede sem Fio Conexão Local* 2:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+
+Adaptador de Rede sem Fio Wi-Fi:
+
+   Sufixo DNS específico de conexão. . . . . . : lan
+   Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.0.10
+   Máscara de Sub-rede . . . . . . . . . . . . : 255.255.255.0
+   Gateway Padrão. . . . . . . . . . . . . . . : 192.168.0.1
+
+Adaptador Ethernet Ethernet 4:
+
+   Estado da mídia. . . . . . . . . . . . . .  : mídia desconectada
+   Sufixo DNS específico de conexão. . . . . . : 
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bipconfig\b;;src:/opcao-invalida;;erro:Erro: linha de comando não reconhecida ou incompleta.">
+<p class="try-task"><strong>Missão:</strong> rode <code>ipconfig /opcao-invalida</code> e observe o erro, seguido da ajuda.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ipconfig /opcao-invalida
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+Erro: linha de comando não reconhecida ou incompleta.
+
+USO:
+    ipconfig [/allcompartments] [/? | /all |
+                                 /renew [adapter] | /release [adapter] |
+                                 /renew6 [adapter] | /release6 [adapter] |
+                                 /flushdns | /displaydns | /registerdns |
+                                 /showclassid adapter |
+                                 /setclassid adapter [classid] |
+                                 /showclassid6 adapter |
+                                 /setclassid6 adapter [classid] ]
+
+onde
+    adapter           Nome da conexão
+                     (caracteres curinga * e ? permitidos; consulte exemplos)
+
+    Opções:
+       /?               Exibir esta mensagem de ajuda
+       /all             Exibir informações completas sobre configuração.
+       /release         Liberar o endereço IPv4 para o adaptador especificado.
+       /release6        Liberar o endereço IPv6 para o adaptador especificado.
+       /renew           Renovar o endereço IPv4 para o adaptador especificado.
+       /renew6          Renovar o endereço IPv6 para o adaptador especificado.
+       /flushdns        Limpa o cache do DNS Resolver.
+       /registerdns     Atualiza todas as concessões de DHCP e registra
+                        novamente nomes DNS
+       /displaydns      Exibir o conteúdo do Cache do DNS Resolver.
+       /showclassid     Exibe todas as IDs de classe dhcp permitidas para o
+                        adaptador.
+       /setclassid      Modifica a ID de classe dhcp.
+       /showclassid6    Exibe todas as IDs de classe DHCP IPv6 permitidas para
+                        o adaptador.
+       /setclassid6     Modifica a ID de classe DHCP IPv6.
+
+
+O padrão é exibir apenas o endereço IP, a máscara de sub-rede e
+o gateway padrão para cada adaptador limitado ao TCP/IP.
+
+Para Release e Renew, se nenhum nome de adaptador for especificado,
+as concessões de endereços IP para todos os adaptadores limitados 
+ao TCP/IP serão liberadas ou renovadas.
+
+Para Setclassid e Setclassid6, se nenhuma ClassId for especificada, ClassId 
+será removida.
+
+Exemplos:
+    &gt; ipconfig                       ... Mostrar informações
+    &gt; ipconfig /all                  ... Mostrar informações detalhadas
+    &gt; ipconfig /renew                ... renovar todos os adaptadores
+    &gt; ipconfig /renew EL*            ... renovar qualquer conexão cujo nome
+                                         seja iniciado por EL
+    &gt; ipconfig /release *Con*        ... liberar todas as conexões 
+                                         correspondentes, por exemplo,
+                                          "Conexão Ethernet com Fio 1" ou
+                                         "Conexão Ethernet com Fio 2"
+    &gt; ipconfig /allcompartments      ... Mostra informações sobre todos os
+                                         compartimentos
+    &gt; ipconfig /allcompartments /all ... Mostra informações detalhadas sobre
+                                         todos os compartimentos
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li>O <code>ipconfig</code> desta aula é só a forma simples, sem <code>/all</code>.</li>
-<li>Também entra o erro com <code>ipconfig /opcao-invalida</code>. A mensagem real ainda está a coletar.</li>
-<li>IPs e nomes de adaptador, quando a coleta chegar, entram já anonimizados.</li>
+<li>O <code>ipconfig</code> desta aula é só a forma simples, sem <code>/all</code>. A coleta mostrou sete adaptadores; a maioria com <code>mídia desconectada</code>.</li>
+<li>O Wi-Fi veio com <code>192.168.0.10</code> e gateway <code>192.168.0.1</code>. O <code>169.254.10.20</code> é link-local (sem DHCP). O <code>192.168.56.1</code> é o host-only padrão do VirtualBox.</li>
+<li>O <code>ipconfig /opcao-invalida</code> devolveu <code>Erro: linha de comando não reconhecida ou incompleta</code>, mais a ajuda.</li>
 </ul>
 
 

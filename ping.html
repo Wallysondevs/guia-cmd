@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ping — testar 127.0.0.1 e localhost no Prompt | Guia CMD</title>
-<meta name="description" content="O comando ping no Prompt de Comando: só 127.0.0.1, localhost (também com -4) e um nome .invalid que não resolve, mais o erro de -n inválido. Nada sai para a internet. Saída ainda a coletar.">
+<meta name="description" content="O comando ping no Prompt de Comando, com a saída real do lote 3: 127.0.0.1 com TTL=128, localhost em IPv6 (::1) sem TTL, localhost com -4 em 127.0.0.1, e os dois erros da coleta.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -19,102 +19,120 @@
 <h1><span class="hl">ping</span></h1>
 
 
-<p class="intro">O <code>ping</code> testa se um destino <strong>responde</strong> na rede. Nesta aula ele não mira a internet: a coleta só usa o <code>127.0.0.1</code>, o <code>localhost</code> (também com a chave <code>-4</code>, que força IPv4) e o nome <code>host-que-nao-existe.invalid</code>, que não resolve. Também entra o erro com um <code>-n</code> que não é número. A saída real ainda está a coletar. Se o <code>localhost</code> mostrar o nome da máquina, a Mira troca por <code>NOTEBOOK</code> — não inventamos essa linha.</p>
+<p class="intro">O <code>ping</code> testa se um destino <strong>responde</strong> na rede. Nesta aula ele não mira a internet: a coleta só usou o <code>127.0.0.1</code>, o <code>localhost</code> (também com a chave <code>-4</code>, que força IPv4) e o nome <code>host-que-nao-existe.invalid</code>, que não resolve. Também entra o erro com um <code>-n</code> que não é número. Sem a chave <code>-4</code>, o <code>localhost</code> respondeu em IPv6 (<code>::1</code>), sem TTL; com <code>-4</code>, respondeu em <code>127.0.0.1</code> com <code>TTL=128</code>.</p>
 <div class="note"><strong>Você vai aprender</strong><ul>
-<li>O <code>ping -n 2 127.0.0.1</code>, dois ecos só para a própria máquina.</li>
-<li>O <code>ping -n 2 localhost</code> e o <code>ping -n 1 -4 localhost</code>, este último forçando IPv4.</li>
-<li>O erro com <code>host-que-nao-existe.invalid</code> e o erro com <code>ping -n abc 127.0.0.1</code>, ainda a coletar.</li>
-<li>Por que esta aula não pede um <code>ping</code> para um site ou um IP da internet.</li>
+<li>O <code>ping -n 2 127.0.0.1</code>, dois ecos no loopback IPv4, com <code>TTL=128</code> e 0% de perda.</li>
+<li>Que o <code>ping -n 2 localhost</code>, nesta coleta, disparou <code>NOTEBOOK [::1]</code> e as respostas saíram sem TTL.</li>
+<li>Que o <code>ping -n 1 -4 localhost</code> forçou o IPv4 e mostrou <code>NOTEBOOK [127.0.0.1]</code>, com <code>TTL=128</code>.</li>
+<li>Os erros reais: um nome <code>.invalid</code> que não resolve, e um <code>-n abc</code> fora do intervalo de 1 a 4294967295.</li>
 </ul></div>
-<div class="note"><strong>Saída a coletar.</strong> A coleta deste lote 3, quando a Mira anonimizar, entra em <code>_saidas-anon/cmd-lote3*.txt</code>. Enquanto esse arquivo não chega, as caixas ficam com o placeholder « saída a coletar ». Não inventamos e não traduzimos mensagem de erro.</div>
-<p>Quando as saídas reais chegarem, elas terão sido colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, sem sair para a internet, e o nome da máquina (se aparecer no <code>localhost</code>) virá já como <code>NOTEBOOK</code>. No seu computador, pratique só com o loopback, nunca mirando um host externo só para treinar. Nada nesta aula foi inventado: cada caixa ainda mostra o placeholder <strong>« saída a coletar »</strong>.</p>
+<p>Todas as saídas desta aula foram colhidas no Prompt de Comando de um Windows em português, na pasta de teste <code>C:\Users\ana\guia-cmd-teste</code>, sem sair para a internet. O nome da máquina, quando apareceu no <code>localhost</code>, já veio como <code>NOTEBOOK</code>. No seu computador, pratique só com o loopback, nunca mirando um host externo só para treinar. Não inventamos nem traduzimos mensagem de erro.</p>
 <hr>
 <h2>A ideia: bater na própria porta</h2>
-<p>Você não sai à rua para ver se a campainha funciona: aperta a da sua porta. O <code>127.0.0.1</code> e o <code>localhost</code> são essa porta. A chave <code>-n</code> diz quantas vezes você aperta.</p>
+<p>Você não sai à rua para ver se a campainha funciona: aperta a da sua porta. O <code>127.0.0.1</code> e o <code>localhost</code> são essa porta. A chave <code>-n</code> diz quantas vezes você aperta. A chave <code>-4</code> escolhe a campainha IPv4, quando o nome <code>localhost</code> preferiria a IPv6.</p>
 <hr>
 <h2>1. Dois ecos para o 127.0.0.1</h2>
-<p>O primeiro pedido da coleta é o <code>ping -n 2 127.0.0.1</code>: dois ecos só para o loopback. A saída real ainda está a coletar:</p>
+<p>O primeiro pedido mandou dois ecos só para o loopback IPv4. Cada resposta veio com <code>bytes=32</code>, <code>tempo&lt;1ms</code> e <code>TTL=128</code>. Nenhum pacote se perdeu:</p>
 <!-- coleta: ping -n 2 127.0.0.1 -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ping -n 2 127.0.0.1">C:\Users\ana\guia-cmd-teste&gt;ping -n 2 127.0.0.1
 
-« saída a coletar »
+Disparando 127.0.0.1 com 32 bytes de dados:
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
 
+Estatísticas do Ping para 127.0.0.1:
+    Pacotes: Enviados = 2, Recebidos = 2, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
-<h2>2. O localhost, e o mesmo destino com <code>-4</code></h2>
-<p>O <code>localhost</code> é o mesmo loopback, pelo nome. A coleta pede dois ecos e, em seguida, um eco só com <code>-4</code>, que força o IPv4. Se o nome do computador aparecer na captura, a Mira trata isso na anonimização. A saída real ainda está a coletar:</p>
+<h2>2. O localhost, em IPv6</h2>
+<p>Sem <code>-4</code>, o <code>ping -n 2 localhost</code> não foi para o IPv4. A coleta disparou <code>NOTEBOOK [::1]</code> — o nome da máquina já anonimizado, e o loopback IPv6. As duas respostas saíram como <code>Resposta de ::1: tempo&lt;1ms</code>, <strong>sem</strong> <code>TTL</code> e sem a conta de <code>bytes</code>:</p>
 <!-- coleta: ping -n 2 localhost -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ping -n 2 localhost">C:\Users\ana\guia-cmd-teste&gt;ping -n 2 localhost
 
-« saída a coletar »
+Disparando NOTEBOOK [::1] com 32 bytes de dados:
+Resposta de ::1: tempo&lt;1ms 
+Resposta de ::1: tempo&lt;1ms 
 
+Estatísticas do Ping para ::1:
+    Pacotes: Enviados = 2, Recebidos = 2, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
 C:\Users\ana\guia-cmd-teste&gt;</pre>
+<hr>
+<h2>3. O mesmo localhost, forçando IPv4</h2>
+<p>Com a chave <code>-4</code>, um eco só, o Prompt foi para o IPv4: <code>Disparando NOTEBOOK [127.0.0.1]</code>, e a resposta voltou com <code>bytes=32</code>, <code>tempo&lt;1ms</code> e <code>TTL=128</code>, como no primeiro pedido:</p>
 <!-- coleta: ping -n 1 -4 localhost -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ping -n 1 -4 localhost">C:\Users\ana\guia-cmd-teste&gt;ping -n 1 -4 localhost
 
-« saída a coletar »
+Disparando NOTEBOOK [127.0.0.1] com 32 bytes de dados:
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
 
+Estatísticas do Ping para 127.0.0.1:
+    Pacotes: Enviados = 1, Recebidos = 1, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 <hr>
 <h2 id="errado">Quando dá errado</h2>
 <div class="cenario"><strong>Um nome que não resolve</strong>
-<p>O <code>ping -n 1 host-que-nao-existe.invalid</code> tenta um nome da zona <code>.invalid</code>, que não chega a resolver. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<p>O <code>ping -n 1 host-que-nao-existe.invalid</code> tentou um nome da zona <code>.invalid</code>, que não chega a resolver. A coleta devolveu este erro, quebrado em duas linhas:</p>
 <!-- coleta: ping -n 1 host-que-nao-existe.invalid -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ping -n 1 host-que-nao-existe.invalid">C:\Users\ana\guia-cmd-teste&gt;ping -n 1 host-que-nao-existe.invalid
-
-« saída a coletar »
-
+A solicitação ping não pôde encontrar o host host-que-nao-existe.invalid. Verifique o nome e tente
+novamente.
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <div class="cenario"><strong>Um <code>-n</code> que não é número</strong>
-<p>O <code>ping -n abc 127.0.0.1</code> não é uma quantidade válida de ecos. A mensagem real ainda está a coletar — não inventamos nem traduzimos:</p>
+<p>O <code>ping -n abc 127.0.0.1</code> não é uma quantidade válida de ecos. A coleta devolveu o intervalo aceito, de 1 a 4294967295:</p>
 <!-- coleta: ping -n abc 127.0.0.1 -->
 <pre class="term" data-title="Prompt de Comando" data-coleta="ping -n abc 127.0.0.1">C:\Users\ana\guia-cmd-teste&gt;ping -n abc 127.0.0.1
-
-« saída a coletar »
-
+Valor incorreto para a opção -n. O intervalo válido varia entre 1 e 4294967295.
 C:\Users\ana\guia-cmd-teste&gt;</pre>
 </div>
 <hr>
 <h2>Formas diferentes</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Forma</th><th>Quando usar</th></tr>
-<tr><td><code>ping -n 2 127.0.0.1</code></td><td>Para mandar dois ecos só para o loopback, sem sair desta máquina.</td></tr>
-<tr><td><code>ping -n 2 localhost</code></td><td>O mesmo teste, pelo nome. Se o nome do computador aparecer, entra já como <code>NOTEBOOK</code>.</td></tr>
-<tr><td><code>ping -n 1 -4 localhost</code></td><td>Um eco só, forçando IPv4.</td></tr>
-<tr><td><code>ping -n 1 host-que-nao-existe.invalid</code></td><td>Para ver a mensagem real quando o nome não resolve.</td></tr>
-<tr><td><code>ping -n abc 127.0.0.1</code></td><td>Para ver a mensagem real quando o <code>-n</code> não é um número.</td></tr>
+<tr><td><code>ping -n 2 127.0.0.1</code></td><td>Para mandar dois ecos ao loopback IPv4. Nesta coleta, as respostas vieram com <code>TTL=128</code>.</td></tr>
+<tr><td><code>ping -n 2 localhost</code></td><td>O mesmo teste, pelo nome. Nesta coleta foi para IPv6 (<code>::1</code>), sem TTL, e o nome da máquina apareceu como <code>NOTEBOOK</code>.</td></tr>
+<tr><td><code>ping -n 1 -4 localhost</code></td><td>Um eco só, forçando IPv4: <code>NOTEBOOK [127.0.0.1]</code>, com <code>TTL=128</code>.</td></tr>
+<tr><td><code>ping -n 1 host-que-nao-existe.invalid</code></td><td>Não resolve: a coleta mostrou que a solicitação não pôde encontrar o host.</td></tr>
+<tr><td><code>ping -n abc 127.0.0.1</code></td><td>Não use: <code>-n</code> precisa de um número de 1 a 4294967295.</td></tr>
 </table></div>
 <hr>
 <h2>Referência rápida</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
-<tr><td><code>ping -n 2 127.0.0.1</code></td><td>Manda dois ecos para o loopback.</td></tr>
-<tr><td><code>ping -n 2 localhost</code></td><td>Manda dois ecos para o <code>localhost</code>.</td></tr>
-<tr><td><code>ping -n 1 -4 localhost</code></td><td>Manda um eco, forçando IPv4.</td></tr>
+<tr><td><code>ping -n 2 127.0.0.1</code></td><td>Manda dois ecos para o loopback IPv4. Na coleta, <code>TTL=128</code> e 0% de perda.</td></tr>
+<tr><td><code>ping -n 2 localhost</code></td><td>Nesta coleta, disparou <code>::1</code> (IPv6), sem TTL.</td></tr>
+<tr><td><code>ping -n 1 -4 localhost</code></td><td>Um eco em IPv4: <code>127.0.0.1</code>, com <code>TTL=128</code>.</td></tr>
 </table></div>
 <hr>
 <h2>Exercícios</h2>
-<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para mandar dois ecos ao loopback:</p><div class="ex-code">ping <input data-answer="-n" aria-label="chave"> 2 127.0.0.1</div></div>
-<div class="exercise"><h3>2. O destino desta aula</h3><p>Qual endereço de loopback a coleta testa de verdade?</p><div class="ex-code"><input data-answer="127.0.0.1" aria-label="destino"></div></div>
+<div class="exercise"><h3>1. Complete o comando</h3><p>Complete para mandar dois ecos ao loopback IPv4:</p><div class="ex-code">ping <input data-answer="-n" aria-label="chave"> 2 127.0.0.1</div></div>
+<div class="exercise"><h3>2. O destino IPv4</h3><p>Qual endereço de loopback a coleta testou com <code>TTL=128</code>?</p><div class="ex-code"><input data-answer="127.0.0.1" aria-label="destino"></div></div>
 <div class="exercise"><h3>3. Forçar IPv4</h3><p>Qual chave força o IPv4 no pedido ao <code>localhost</code>?</p><div class="ex-code">ping -n 1 <input data-answer="-4" aria-label="chave"> localhost</div></div>
-<div class="mc" data-answer="2"><p class="mc-q">4. Por que esta aula não pede um <code>ping</code> para um site da internet?</p>
-<label><input type="radio" name="q4"> Porque o <code>ping</code> só funciona com site</label>
-<label><input type="radio" name="q4"> Porque a coleta desta aula fica no loopback e num nome <code>.invalid</code>, sem sair para a internet</label>
-<label><input type="radio" name="q4"> Porque o <code>ping</code> desliga a rede</label>
-<label><input type="radio" name="q4"> Porque o <code>-n</code> proíbe destinos externos</label></div>
-<div class="mc" data-answer="1"><p class="mc-q">5. O que esta aula faz com a saída, enquanto a coleta não chega?</p>
-<label><input type="radio" name="q5"> Deixa a caixa como « saída a coletar », sem inventar estatística nem mensagem de erro</label>
-<label><input type="radio" name="q5"> Inventa um “0% de perda” de memória</label>
-<label><input type="radio" name="q5"> Copia a saída de outro guia e traduz</label>
-<label><input type="radio" name="q5"> Faz um <code>ping</code> deste Linux e cola o resultado</label></div>
-<div class="mc" data-answer="3"><p class="mc-q">6. Se o nome do computador aparecer no <code>ping</code> para <code>localhost</code>, o que o guia faz?</p>
-<label><input type="radio" name="q6"> Publica o nome real</label>
-<label><input type="radio" name="q6"> Inventa um nome qualquer para preencher a caixa agora</label>
-<label><input type="radio" name="q6"> A Mira troca por <code>NOTEBOOK</code> na anonimização; nesta aula a linha ainda não entra, porque a coleta não chegou</label>
-<label><input type="radio" name="q6"> Apaga a aula inteira</label></div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bping\b;;src:-n 2;;src:127\.0\.0\.1;;semerro">
+<div class="mc" data-answer="2"><p class="mc-q">4. Sem a chave <code>-4</code>, o que o <code>ping -n 2 localhost</code> desta coleta mostrou?</p>
+<label><input type="radio" name="q4"> <code>Disparando 127.0.0.1</code>, com <code>TTL=128</code></label>
+<label><input type="radio" name="q4"> <code>Disparando NOTEBOOK [::1]</code>, e respostas sem TTL</label>
+<label><input type="radio" name="q4"> O erro de que o host não foi encontrado</label>
+<label><input type="radio" name="q4"> O intervalo válido do <code>-n</code>, de 1 a 4294967295</label></div>
+<div class="mc" data-answer="1"><p class="mc-q">5. O <code>ping -n 1 -4 localhost</code> desta coleta disparou:</p>
+<label><input type="radio" name="q5"> <code>NOTEBOOK [127.0.0.1]</code>, com <code>TTL=128</code></label>
+<label><input type="radio" name="q5"> <code>NOTEBOOK [::1]</code>, sem TTL</label>
+<label><input type="radio" name="q5"> Um site da internet</label>
+<label><input type="radio" name="q5"> O nome <code>host-que-nao-existe.invalid</code></label></div>
+<div class="mc" data-answer="3"><p class="mc-q">6. O que o <code>ping -n abc 127.0.0.1</code> devolveu nesta coleta?</p>
+<label><input type="radio" name="q6"> Dois ecos com <code>TTL=128</code></label>
+<label><input type="radio" name="q6"> Que o host não foi encontrado</label>
+<label><input type="radio" name="q6"> <code>Valor incorreto para a opção -n</code>, com o intervalo de 1 a 4294967295</label>
+<label><input type="radio" name="q6"> Uma resposta em IPv6, sem TTL</label></div>
+<div class="trycmd" data-goal="src:\bping\b;;src:-n 2;;src:127\.0\.0\.1;;out:TTL=128;;out:Enviados = 2">
 <p class="try-task"><strong>Missão:</strong> na pasta de teste, mande dois ecos para o loopback com <code>ping -n 2 127.0.0.1</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -122,19 +140,41 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <pre class="solucao" data-file="comandos.bat">
 ping -n 2 127.0.0.1
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+Disparando 127.0.0.1 com 32 bytes de dados:
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
+
+Estatísticas do Ping para 127.0.0.1:
+    Pacotes: Enviados = 2, Recebidos = 2, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bping\b;;src:-n 2;;src:\blocalhost\b;;semerro">
-<p class="try-task"><strong>Missão:</strong> repita o teste com dois ecos para o <code>localhost</code>.</p>
+<div class="trycmd" data-goal="src:\bping\b;;src:-n 2;;src:\blocalhost\b;;out:Disparando NOTEBOOK [::1]">
+<p class="try-task"><strong>Missão:</strong> repita o teste com dois ecos para o <code>localhost</code>, e observe a resposta em IPv6.</p>
 <pre class="script" data-file="comandos.bat">
 
 </pre>
 <pre class="solucao" data-file="comandos.bat">
 ping -n 2 localhost
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+Disparando NOTEBOOK [::1] com 32 bytes de dados:
+Resposta de ::1: tempo&lt;1ms 
+Resposta de ::1: tempo&lt;1ms 
+
+Estatísticas do Ping para ::1:
+    Pacotes: Enviados = 2, Recebidos = 2, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
+</pre>
 </div>
-<!-- TODO: finalizar data-goal com a saída real da coleta em _saidas-anon/cmd-lote3*.txt; metas out/outre/erro só depois da saída real. Provisório: src + semerro. -->
-<div class="trycmd" data-goal="src:\bping\b;;src:-n 1;;src:-4;;src:\blocalhost\b;;semerro">
+<div class="trycmd" data-goal="src:\bping\b;;src:-n 1;;src:-4;;src:\blocalhost\b;;out:NOTEBOOK [127.0.0.1];;out:TTL=128">
 <p class="try-task"><strong>Missão:</strong> mande um eco para o <code>localhost</code>, forçando IPv4 com <code>-4</code>.</p>
 <pre class="script" data-file="comandos.bat">
 
@@ -142,13 +182,49 @@ ping -n 2 localhost
 <pre class="solucao" data-file="comandos.bat">
 ping -n 1 -4 localhost
 </pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+
+Disparando NOTEBOOK [127.0.0.1] com 32 bytes de dados:
+Resposta de 127.0.0.1: bytes=32 tempo&lt;1ms TTL=128
+
+Estatísticas do Ping para 127.0.0.1:
+    Pacotes: Enviados = 1, Recebidos = 1, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 0ms, Máximo = 0ms, Média = 0ms
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bping\b;;src:host-que-nao-existe\.invalid;;erro:A solicitação ping não pôde encontrar o host host-que-nao-existe.invalid.">
+<p class="try-task"><strong>Missão:</strong> rode <code>ping -n 1 host-que-nao-existe.invalid</code> e observe o erro de host não encontrado.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ping -n 1 host-que-nao-existe.invalid
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+A solicitação ping não pôde encontrar o host host-que-nao-existe.invalid. Verifique o nome e tente
+novamente.
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\bping\b;;src:-n abc;;erro:Valor incorreto para a opção -n.">
+<p class="try-task"><strong>Missão:</strong> rode <code>ping -n abc 127.0.0.1</code> e observe o erro do valor inválido, com o intervalo de 1 a 4294967295.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+ping -n abc 127.0.0.1
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Valor incorreto para a opção -n. O intervalo válido varia entre 1 e 4294967295.
+</pre>
 </div>
 <hr>
 <h2>Resumo</h2>
 <ul>
-<li>Nesta aula o <code>ping</code> fica no <code>127.0.0.1</code> e no <code>localhost</code> (também com <code>-4</code>). Nada sai para a internet.</li>
-<li>Também entram os erros com <code>host-que-nao-existe.invalid</code> e com <code>ping -n abc 127.0.0.1</code>. As mensagens reais ainda estão a coletar.</li>
-<li>Se o nome da máquina aparecer no <code>localhost</code>, entra já como <code>NOTEBOOK</code>.</li>
+<li>O <code>ping -n 2 127.0.0.1</code> respondeu em IPv4, com <code>TTL=128</code> e 0% de perda.</li>
+<li>O <code>localhost</code> sem <code>-4</code> foi para IPv6 (<code>::1</code>), sem TTL. Com <code>-4</code>, foi para <code>127.0.0.1</code>, com <code>TTL=128</code>. O nome da máquina entrou como <code>NOTEBOOK</code>.</li>
+<li>O nome <code>.invalid</code> não resolveu, e o <code>-n abc</code> caiu fora do intervalo de 1 a 4294967295.</li>
 </ul>
 
 
