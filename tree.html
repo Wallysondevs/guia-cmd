@@ -108,6 +108,19 @@ C:\Users\ana\guia-cmd-teste&gt;</pre>
 <tr><td><code>tree fotos</code></td><td>Para começar a árvore numa subpasta, ainda dentro da pasta de teste. Esta forma não entrou na recoleta; não inventamos a saída.</td></tr>
 </table></div>
 <hr>
+<h2 id="errado">Quando dá errado</h2>
+<div class="cenario"><strong>Um caminho que não existe</strong>
+<p>O <code>tree pasta-nao-existe</code> devolveu esta saída, exatamente assim:</p>
+<pre class="term" data-title="Prompt de Comando">C:\Users\ana\guia-cmd-teste&gt;tree pasta-nao-existe
+Listagem de caminhos de pasta
+O número de série do volume é XXXXXXXX XXXX:XXXX
+C:\USERS\ANA\GUIA-CMD-TESTE\PASTA-NAO-EXISTE
+Caminho inválido - \USERS\ANA\GUIA-CMD-TESTE\PASTA-NAO-EXISTE
+Não existem subpastas 
+
+C:\Users\ana\guia-cmd-teste&gt;</pre>
+</div>
+<hr>
 <h2>Referência rápida</h2>
 <div class="table-wrap"><table class="ref">
 <tr><th>Você digita</th><th>O que faz</th></tr>
@@ -186,6 +199,23 @@ C:.
         um.txt
         velho.tmp
         
+</pre>
+</div>
+<div class="trycmd" data-goal="src:\btree\b;;src:pasta-nao-existe;;outre:Caminho inválido">
+<p class="try-task"><strong>Missão:</strong> na pasta de teste, peça o <code>tree</code> de um caminho que não existe, <code>pasta-nao-existe</code>.</p>
+<pre class="script" data-file="comandos.bat">
+
+</pre>
+<pre class="solucao" data-file="comandos.bat">
+tree pasta-nao-existe
+</pre>
+<pre class="saida-ok" data-file="comandos.bat" hidden>
+Listagem de caminhos de pasta
+O número de série do volume é XXXXXXXX XXXX:XXXX
+C:\USERS\ANA\GUIA-CMD-TESTE\PASTA-NAO-EXISTE
+Caminho inválido - \USERS\ANA\GUIA-CMD-TESTE\PASTA-NAO-EXISTE
+Não existem subpastas 
+
 </pre>
 </div>
 <hr>
